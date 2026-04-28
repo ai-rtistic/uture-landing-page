@@ -96,7 +96,7 @@ function Nav() {
     <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
       <div className="nav-inner">
         <a href="#" className="logo">
-          <img className="nav-logo-img" src="assets/상단로고.png" alt="uture"/>
+          <img className="nav-logo-img" src="assets/nav-logo.png" alt="uture"/>
         </a>
         <div className="nav-links">
           <a href="#sol1">솔루션</a>

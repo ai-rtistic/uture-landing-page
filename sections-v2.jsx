@@ -9,22 +9,22 @@ const Star = ({ size = 14, ...p }) => (
 
 /* ====================== Logo Marquee ====================== */
 function LogoMarquee() {
-  const base = 'assets/고객사로고-회색 ';
+  const base = 'assets/customer-logos';
   const logos = [
-    '유쳐디자인-003.png',
-    '유쳐디자인-004.png',
-    '유쳐디자인-004 (1).png',
-    '유쳐디자인-004 (3).png',
-    '유쳐디자인-004 (4).png',
-    '유쳐디자인-004 (5).png',
-    '유쳐디자인-004 (6).png',
-    '유쳐디자인-004 (7).png',
-    '유쳐디자인-004 (8).png',
-    '유쳐디자인-004 (9).png',
-    '유쳐디자인-004 (10).png',
-    '유쳐디자인-004 (11).png',
-    '유쳐디자인-004 (13).png',
-    '유쳐디자인-004 (14).png',
+    'logo-01.png',
+    'logo-02.png',
+    'logo-03.png',
+    'logo-04.png',
+    'logo-05.png',
+    'logo-06.png',
+    'logo-07.png',
+    'logo-08.png',
+    'logo-09.png',
+    'logo-10.png',
+    'logo-11.png',
+    'logo-12.png',
+    'logo-13.png',
+    'logo-14.png',
   ];
   const topLogos = logos.filter((_, i) => i % 2 === 0);
   const bottomLogos = logos.filter((_, i) => i % 2 === 1);
