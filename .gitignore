@@ -1,0 +1,9 @@
+.DS_Store
+.playwright-mcp/
+*.log
+*.tmp
+
+# Local preview captures
+uture-*-fixed.png
+uture-logo-fix*.png
+
