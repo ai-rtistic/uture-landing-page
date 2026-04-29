@@ -328,18 +328,74 @@ function StatsStrip() {
 function BigCTA() {
   return (
     <section className="big-cta" id="contact-big">
-      <div className="container reveal">
-        <svg className="big-cta-star" viewBox="0 0 100 100" fill="currentColor">
-          <path d="M50 0 L57 38 L95 43 L66 65 L77 100 L50 78 L23 100 L34 65 L5 43 L43 38 Z"/>
-        </svg>
-        <h2>
-          <span className="stroke">기업의 AI를</span><br/>
-          이제 <span className="accent">켜세요.</span>
-        </h2>
-        <p>평균 7일 안에 첫 진단 미팅. 사례집 · 커리큘럼 샘플을 함께 보내드립니다.</p>
-        <div className="actions">
-          <a href="#" className="btn btn-primary">기업교육 무료 진단 신청 <Icon.ArrowRight/></a>
-          <a href="#" className="btn btn-ghost">사례집 다운로드</a>
+      <div className="container big-cta-inner reveal">
+        <div className="proposal-layout">
+          <div className="proposal-copy">
+            <span className="proposal-eyebrow">Proposal Preview</span>
+            <h2>
+              우리 조직에 맞는<br/>
+              <span className="accent">AI 교육 설계안</span>을 받아보세요.
+            </h2>
+            <p>진단 미팅 전, 업종과 부서에 맞춘 사례집 · 커리큘럼 샘플 · 도입 로드맵을 먼저 보내드립니다.</p>
+            <div className="proposal-points" aria-hidden="true">
+              {['업종별 사례집', '직무별 커리큘럼', '도입 로드맵'].map((item) => (
+                <span key={item}>{item}</span>
+              ))}
+            </div>
+            <div className="actions">
+              <a href="#" className="btn btn-primary">무료 진단 신청 <Icon.ArrowRight/></a>
+              <a href="#" className="btn btn-ghost">사례집 다운로드</a>
+            </div>
+          </div>
+
+          <div className="proposal-card" aria-hidden="true">
+            <div className="proposal-card-head">
+              <span>AX Education Proposal</span>
+              <strong>uture</strong>
+            </div>
+            <div className="proposal-status">
+              <span>Preview Package</span>
+              <em>Ready in D+7</em>
+            </div>
+            <div className="proposal-card-title">
+              <span>Prepared for</span>
+              <strong>Your Organization</strong>
+            </div>
+            <div className="proposal-summary">
+              <div>
+                <span>Industry</span>
+                <strong>맞춤 사례</strong>
+              </div>
+              <div>
+                <span>Team</span>
+                <strong>직무 매핑</strong>
+              </div>
+              <div>
+                <span>Scope</span>
+                <strong>파일럿 설계</strong>
+              </div>
+            </div>
+            <div className="proposal-lines">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div className="proposal-checklist">
+              {['조직 진단 미팅', '직무별 커리큘럼', '파일럿 운영 로드맵'].map((item, index) => (
+                <div className="proposal-check" key={item}>
+                  <Icon.Check width={15} height={15}/>
+                  <span>{item}</span>
+                  <small>{String(index + 1).padStart(2, '0')}</small>
+                </div>
+              ))}
+            </div>
+            <div className="proposal-footer">
+              <span>Avg. first meeting</span>
+              <strong>D+7</strong>
+              <span>Included files</span>
+              <strong>3</strong>
+            </div>
+          </div>
         </div>
       </div>
     </section>

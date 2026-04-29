@@ -221,51 +221,250 @@ function FinalCTA() {
   );
 }
 
+/* ====================== Privacy Policy ====================== */
+function PrivacyPolicyModal({ onClose }) {
+  return (
+    <div className="privacy-modal" role="dialog" aria-modal="true" aria-labelledby="privacy-title" onClick={onClose}>
+      <div className="privacy-panel" onClick={(event) => event.stopPropagation()}>
+        <div className="privacy-head">
+          <div>
+            <span>Privacy Policy</span>
+            <h2 id="privacy-title">개인정보처리방침</h2>
+          </div>
+          <button type="button" className="privacy-close" onClick={onClose} aria-label="개인정보처리방침 닫기">×</button>
+        </div>
+
+        <div className="privacy-body">
+          <p>
+            아이솔(이하 "회사")는 개인정보 보호법 제30조에 따라 정보주체의 개인정보를 보호하고,
+            개인정보와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 다음과 같이 개인정보 처리방침을 수립·공개합니다.
+          </p>
+
+          <section>
+            <h3>제1조 개인정보의 처리목적 및 수집 항목</h3>
+            <p>회사는 다음의 목적을 위하여 개인정보를 처리합니다. 처리 중인 개인정보는 해당 목적 이외의 용도로 이용되지 않으며, 이용 목적이 변경되는 경우 별도 동의를 받는 등 필요한 조치를 이행합니다.</p>
+            <ol>
+              <li><strong>문의 및 상담 응대</strong>: 기업교육 문의 확인, 담당자 연락, 상담 일정 조율. 수집 항목은 성명, 회사명, 직함, 연락처, 이메일주소, 문의 내용입니다.</li>
+              <li><strong>서비스 제공 및 계약 이행</strong>: 기업교육·컨설팅 제공, 계약서 및 청구서 발송, 교육 운영 안내, 요금 결제 및 정산. 수집 항목은 성명, 회사명, 부서/직함, 연락처, 이메일주소, 계약 및 정산에 필요한 정보입니다.</li>
+              <li><strong>고충 처리</strong>: 민원인의 신원 확인, 민원사항 확인, 사실조사를 위한 연락·통지, 처리 결과 통보. 수집 항목은 성명, 연락처, 민원 내용 확인에 필요한 정보입니다.</li>
+              <li><strong>마케팅 정보 제공</strong>: 별도 선택 동의를 받은 경우 교육, 세미나, 프로모션, 뉴스레터 안내를 위해 성명, 회사명, 직함, 연락처, 이메일주소, 관심 분야를 처리할 수 있습니다.</li>
+            </ol>
+            <p>인터넷 서비스 이용 과정에서 IP주소, 쿠키, 서비스 이용기록, 방문기록, 불량 이용기록이 자동으로 생성되어 수집될 수 있습니다.</p>
+          </section>
+
+          <section>
+            <h3>제2조 개인정보의 처리 및 보유기간</h3>
+            <p>회사는 법령에 따른 개인정보 보유·이용 기간 또는 정보주체로부터 동의받은 보유·이용 기간 내에서 개인정보를 처리·보유합니다.</p>
+            <ul>
+              <li>문의 및 상담 응대: 문의 처리 완료 후 3년</li>
+              <li>서비스 제공 및 계약 이행: 재화·서비스 공급 완료 및 요금 결제·정산 완료 시까지</li>
+              <li>고충 처리: 민원 처리 및 분쟁 해결 완료 시까지</li>
+              <li>마케팅 정보 제공: 동의 철회 또는 정보주체 요청 시까지</li>
+            </ul>
+            <p>관계 법령에 따라 보존할 필요가 있는 경우에는 해당 법령에서 정한 기간 동안 보관합니다. 계약 또는 청약철회, 대금결제, 재화 등의 공급기록은 5년, 소비자 불만 또는 분쟁 처리에 관한 기록은 3년, 표시·광고에 관한 기록은 6개월 동안 보관될 수 있습니다.</p>
+          </section>
+
+          <section>
+            <h3>제3조 마케팅 정보 활용 수신 동의</h3>
+            <p>회사는 정보주체의 별도 선택 동의를 받은 경우에 한하여 교육 및 세미나, 프로모션, 뉴스레터 등 광고성 정보를 제공할 수 있습니다. 동의하지 않아도 기본 서비스 이용에는 제한이 없습니다.</p>
+          </section>
+
+          <section>
+            <h3>제4조 정보주체와 법정대리인의 권리 및 행사 방법</h3>
+            <p>정보주체는 회사에 대해 언제든지 개인정보 열람, 정정, 삭제, 처리정지 요구 등의 권리를 행사할 수 있습니다. 권리 행사는 전자우편을 통해 요청할 수 있으며, 회사는 이에 대해 지체 없이 조치합니다.</p>
+          </section>
+
+          <section>
+            <h3>제5조 개인정보의 파기</h3>
+            <p>회사는 개인정보 보유기간 경과, 처리목적 달성 등 개인정보가 불필요하게 되었을 때 지체 없이 해당 개인정보를 파기합니다. 전자적 파일은 복구 또는 재생되지 않도록 파기하며, 종이 문서는 분쇄하거나 소각하여 파기합니다.</p>
+          </section>
+
+          <section>
+            <h3>제6조 개인정보의 안전성 확보조치</h3>
+            <p>회사는 개인정보의 안전성 확보를 위해 내부관리계획 수립 및 시행, 개인정보 취급자 교육, 접근 권한 관리, 보안프로그램 설치, 자료보관실 접근통제 등 필요한 조치를 시행합니다.</p>
+          </section>
+
+          <section>
+            <h3>제7조 개인정보 자동 수집 장치의 설치·운영 및 거부</h3>
+            <p>회사는 이용자에게 맞춤형 서비스를 제공하기 위해 쿠키를 사용할 수 있습니다. 이용자는 브라우저 설정을 통해 쿠키 저장을 거부할 수 있으며, 쿠키 저장을 거부할 경우 일부 서비스 이용에 제한이 있을 수 있습니다.</p>
+          </section>
+
+          <section>
+            <h3>제8조 개인정보 보호책임자</h3>
+            <p>회사는 개인정보 처리에 관한 업무를 총괄하고 개인정보 관련 문의, 불만 처리 및 피해구제를 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.</p>
+            <ul>
+              <li>개인정보 보호책임자: 이재준</li>
+              <li>연락처: 070-4571-4871</li>
+              <li>이메일: official.uture@gmail.com</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3>제9조 개인정보 처리방침 시행 및 변경</h3>
+            <p>이 개인정보 처리방침은 2026년 4월 29일부터 적용됩니다. 법령 또는 회사 정책에 따라 내용이 변경될 경우 홈페이지를 통해 고지합니다.</p>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ====================== Terms of Use ====================== */
+function TermsOfUseModal({ onClose }) {
+  return (
+    <div className="privacy-modal" role="dialog" aria-modal="true" aria-labelledby="terms-title" onClick={onClose}>
+      <div className="privacy-panel" onClick={(event) => event.stopPropagation()}>
+        <div className="privacy-head">
+          <div>
+            <span>Terms of Use</span>
+            <h2 id="terms-title">이용약관</h2>
+          </div>
+          <button type="button" className="privacy-close" onClick={onClose} aria-label="이용약관 닫기">×</button>
+        </div>
+
+        <div className="privacy-body">
+          <p>
+            본 이용약관은 아이솔(이하 "회사")이 운영하는 유쳐 uture 웹사이트와 기업 AI·AX 교육 및 컨설팅 관련 서비스의 이용조건,
+            절차, 권리와 의무 및 책임사항을 정함을 목적으로 합니다.
+          </p>
+
+          <section>
+            <h3>제1조 목적</h3>
+            <p>본 약관은 회사가 제공하는 웹사이트, 교육 문의, 상담, 제안, 기업교육, 컨설팅 및 이에 부수하는 서비스의 이용과 운영에 관한 기본 사항을 규정합니다.</p>
+          </section>
+
+          <section>
+            <h3>제2조 용어의 정의</h3>
+            <ol>
+              <li><strong>사이트</strong>란 회사가 서비스 안내, 문의 접수, 자료 제공 등을 위해 운영하는 웹사이트를 말합니다.</li>
+              <li><strong>이용자</strong>란 사이트에 접속하여 회사가 제공하는 정보를 열람하거나 문의, 상담 신청, 자료 요청 등을 하는 자를 말합니다.</li>
+              <li><strong>서비스</strong>란 회사가 제공하는 기업 AI·AX 교육, 진단, 컨설팅, 워크숍, 자료 제공 및 관련 부가 서비스를 말합니다.</li>
+              <li><strong>콘텐츠</strong>란 사이트와 서비스에서 제공되는 텍스트, 이미지, 영상, 교육자료, 제안서, 커리큘럼, 사례집 등 일체의 자료를 말합니다.</li>
+            </ol>
+          </section>
+
+          <section>
+            <h3>제3조 약관의 효력 및 변경</h3>
+            <p>본 약관은 사이트에 게시함으로써 효력이 발생합니다. 회사는 관련 법령을 위배하지 않는 범위에서 약관을 변경할 수 있으며, 변경 시 적용일자와 주요 변경 내용을 사이트에 공지합니다.</p>
+          </section>
+
+          <section>
+            <h3>제4조 서비스의 제공</h3>
+            <p>회사는 이용자에게 기업교육 및 컨설팅 소개, 문의 접수, 상담 안내, 제안 자료 제공, 교육 운영 안내 등의 서비스를 제공합니다. 구체적인 교육 범위, 일정, 비용, 산출물, 운영 방식은 별도 제안서 또는 계약에서 정합니다.</p>
+          </section>
+
+          <section>
+            <h3>제5조 서비스 이용 및 상담 신청</h3>
+            <p>이용자는 회사가 요청하는 정보가 있는 경우 정확한 정보를 제공해야 합니다. 허위 정보, 타인의 정보, 부정확한 연락처를 제공하여 발생하는 불이익에 대해서 회사는 책임을 지지 않습니다.</p>
+          </section>
+
+          <section>
+            <h3>제6조 개인정보 보호</h3>
+            <p>회사는 서비스 제공과 문의 응대를 위해 필요한 범위에서 개인정보를 처리하며, 개인정보의 처리 목적, 보유기간, 보호조치 등은 사이트에 게시된 개인정보처리방침에 따릅니다.</p>
+          </section>
+
+          <section>
+            <h3>제7조 회사의 의무</h3>
+            <ol>
+              <li>회사는 관련 법령과 본 약관을 준수하며 안정적인 서비스 제공을 위해 노력합니다.</li>
+              <li>회사는 이용자로부터 제기되는 정당한 의견이나 불만을 확인하고 합리적인 범위에서 신속히 처리하기 위해 노력합니다.</li>
+              <li>회사는 설비 장애, 시스템 점검, 보안 이슈 등 부득이한 사유가 있는 경우 서비스의 전부 또는 일부를 일시 중지할 수 있습니다.</li>
+            </ol>
+          </section>
+
+          <section>
+            <h3>제8조 이용자의 의무</h3>
+            <p>이용자는 관련 법령, 본 약관, 사이트에 공지된 이용 안내를 준수해야 하며 다음 행위를 해서는 안 됩니다.</p>
+            <ol>
+              <li>허위 정보 또는 타인의 정보를 이용하여 문의하거나 신청하는 행위</li>
+              <li>회사의 서비스 운영을 방해하거나 시스템에 비정상적으로 접근하는 행위</li>
+              <li>회사, 임직원, 강사, 파트너 또는 제3자의 명예와 권리를 침해하는 행위</li>
+              <li>회사의 콘텐츠를 무단 복제, 배포, 판매, 2차 가공하거나 상업적으로 이용하는 행위</li>
+              <li>기타 관계 법령이나 공서양속에 위반되는 행위</li>
+            </ol>
+          </section>
+
+          <section>
+            <h3>제9조 지식재산권 및 콘텐츠 이용</h3>
+            <p>사이트와 서비스에서 제공되는 콘텐츠의 저작권 및 지식재산권은 회사 또는 정당한 권리자에게 귀속됩니다. 이용자는 회사의 사전 서면 동의 없이 콘텐츠를 복제, 배포, 전송, 전시, 판매, 편집, 강의자료로 활용하거나 외부에 공개할 수 없습니다.</p>
+          </section>
+
+          <section>
+            <h3>제10조 계약 및 유료 서비스</h3>
+            <p>기업교육, 컨설팅, 워크숍 등 유료 서비스는 별도 제안서, 견적서, 계약서 또는 합의된 문서에 따라 제공됩니다. 유료 서비스의 일정 변경, 취소, 환불, 산출물 범위 및 비용 정산은 해당 계약 또는 개별 합의에 따릅니다.</p>
+          </section>
+
+          <section>
+            <h3>제11조 서비스의 변경 및 중단</h3>
+            <p>회사는 운영상 또는 기술상 필요한 경우 서비스의 전부 또는 일부를 변경하거나 중단할 수 있습니다. 천재지변, 정전, 통신 장애, 보안 사고, 외부 플랫폼 장애 등 회사가 통제하기 어려운 사유로 서비스가 중단될 수 있습니다.</p>
+          </section>
+
+          <section>
+            <h3>제12조 책임의 제한</h3>
+            <p>회사는 사이트에 게시된 정보의 최신성과 정확성을 유지하기 위해 노력하나, 이용자가 해당 정보를 바탕으로 독자적으로 판단하거나 실행하여 발생한 손해에 대해서는 회사의 고의 또는 중대한 과실이 없는 한 책임을 지지 않습니다.</p>
+            <p>회사는 이용자의 귀책사유, 제3자 서비스 장애, 불가항력적 사유로 인한 서비스 이용 장애나 손해에 대해 책임을 지지 않습니다.</p>
+          </section>
+
+          <section>
+            <h3>제13조 분쟁 해결 및 준거법</h3>
+            <p>본 약관은 대한민국 법령에 따라 해석됩니다. 회사와 이용자 간 분쟁이 발생한 경우 상호 협의를 통해 해결하며, 협의가 어려운 경우 관할 법원은 민사소송법 등 관련 법령에 따릅니다.</p>
+          </section>
+
+          <section>
+            <h3>부칙</h3>
+            <p>본 약관은 2026년 4월 29일부터 시행합니다.</p>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ====================== Footer ====================== */
 function Footer() {
+  const [activeLegalModal, setActiveLegalModal] = useStateS(null);
+
+  useEffectS(() => {
+    if (!activeLegalModal) return undefined;
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setActiveLegalModal(null);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [activeLegalModal]);
+
   return (
-    <footer className="footer">
+    <footer className="footer" id="site-footer">
       <div className="container">
-        <div className="footer-grid">
-          <div className="footer-brand">
-            <a href="#" className="logo">
-              <span className="logo-mark">u</span>
-              <span>uture</span>
-            </a>
-            <p className="desc">기업의 AI 전환을 설계하는 AX 에이전시. 진단 · 교육 · 인프라 · 정착까지 한 팀이 책임집니다.</p>
+        <div className="footer-simple">
+          <div className="footer-logo" aria-label="uture">
+            <img src="assets/footer-logo.png" alt="uture"/>
           </div>
-          <div className="footer-col">
-            <h4>Service</h4>
-            <ul>
-              <li><a href="#">AX 진단</a></li>
-              <li><a href="#">기업교육</a></li>
-              <li><a href="#">AI 인프라</a></li>
-              <li><a href="#">사내 정착</a></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h4>Company</h4>
-            <ul>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Cases</a></li>
-              <li><a href="#">Careers</a></li>
-              <li><a href="#">Newsroom</a></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h4>Contact</h4>
-            <ul>
-              <li><a href="#">biz@uture.ai</a></li>
-              <li><a href="#">+82 010-0000-0000</a></li>
-              <li><a href="#">서울 강남구</a></li>
-            </ul>
+          <div className="footer-info">
+            <p>
+              <span>상호 아이솔</span>
+              <span>대표 이재준</span>
+              <span>사업자등록번호 766-17-02203</span>
+            </p>
+            <p>
+              <span>서울특별시 용산구 원효로 115(원효로3가), 1102호</span>
+              <span>대표번호 070-4571-4871</span>
+              <span>이메일 official.uture@gmail.com</span>
+            </p>
+            <p>
+              <span>개인정보보호책임자 : 이재준</span>
+              <span><button type="button" className="footer-policy-button" onClick={() => setActiveLegalModal('terms')}>이용약관</button></span>
+              <span><button type="button" className="footer-policy-button" onClick={() => setActiveLegalModal('privacy')}>개인정보처리방침</button></span>
+            </p>
           </div>
         </div>
         <div className="footer-bottom">
-          <span>© 2026 uture Inc. All rights reserved.</span>
-          <span>사업자등록번호 000-00-00000 · 대표 김유쳐</span>
+          <span>© 2026 아이솔. All rights reserved.</span>
+          <span>유쳐 uture | AI AX 에이전시</span>
         </div>
       </div>
+      {activeLegalModal === 'terms' && <TermsOfUseModal onClose={() => setActiveLegalModal(null)}/>}
+      {activeLegalModal === 'privacy' && <PrivacyPolicyModal onClose={() => setActiveLegalModal(null)}/>}
     </footer>
   );
 }
