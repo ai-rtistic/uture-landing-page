@@ -32,13 +32,14 @@
 /* Logo marquee */
 .logo-row {
   position: relative;
-  z-index: 3;
+  z-index: 1;
   margin-top: -250px;
   background: transparent;
   border-top: 0;
   border-bottom: 0;
   padding: 176px 0 96px;
   overflow: visible;
+  pointer-events: none;
 }
 .logo-row::before {
   content: "";
@@ -73,10 +74,12 @@
   max-width: 1320px;
   margin: 0 auto;
   overflow: hidden;
+  pointer-events: auto;
 }
 .logo-stack {
   display: grid;
   gap: 42px;
+  pointer-events: auto;
 }
 .logo-marquee.reverse .marquee-track {
   animation-duration: 46s;
@@ -241,7 +244,7 @@
 }
 .hero.v-impact .hero-title {
   font-size: clamp(38px, 4.7vw, 74px) !important;
-  line-height: 1.44;
+  line-height: 1.5;
   font-weight: 600;
   letter-spacing: -0.035em;
   text-shadow: 0 3px 20px rgba(0,0,0,0.72);
@@ -255,68 +258,122 @@
 }
 .hero.v-impact .hero-sub {
   font-size: 17px;
-  margin-top: 26px;
+  margin-top: 30px;
   max-width: none;
   color: rgba(245,245,247,0.86);
   text-shadow: 0 2px 14px rgba(0,0,0,0.74);
 }
 .hero.v-impact .hero-actions {
-  margin-top: 34px;
+  position: relative;
+  z-index: 8;
+  pointer-events: auto;
+  margin-top: 36px;
 }
 .hero.v-impact .hero-main-cta {
+  --cta-x: 0px;
+  --cta-y: 0px;
   position: relative;
   isolation: isolate;
   overflow: hidden;
   padding: 14px 26px;
   border-radius: 10px;
-  background: linear-gradient(180deg, rgba(30,30,32,0.94), rgba(12,12,14,0.96));
-  border-color: rgba(255,255,255,0.12);
+  background: transparent;
+  border-color: transparent;
   color: var(--text-0);
   font-size: 16px;
+  cursor: pointer;
+  pointer-events: auto;
+  outline: 0 solid rgba(255,122,31,0);
+  outline-offset: 0;
+  transform: translate3d(var(--cta-x), var(--cta-y), 0);
   box-shadow:
     0 14px 44px rgba(0,0,0,0.26),
     inset 0 1px 0 rgba(255,255,255,0.05);
+  transition:
+    transform 0.18s ease,
+    color 0.24s ease,
+    border-color 0.24s ease,
+    outline-color 0.24s ease,
+    outline-width 0.24s ease,
+    outline-offset 0.24s ease,
+    box-shadow 0.24s ease,
+    filter 0.24s ease;
 }
 .hero.v-impact .hero-main-cta::before {
   content: "";
   position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    radial-gradient(circle at 50% 120%, rgba(255,106,26,0.28), transparent 58%),
-    linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-  opacity: 0;
-  transform: translateY(18%) scale(0.96);
-  transition: opacity 0.28s ease, transform 0.28s ease;
+  inset: -90%;
+  z-index: -2;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0 52%,
+    rgba(255,106,26,0.3) 62%,
+    rgba(255,196,144,0.9) 72%,
+    rgba(255,106,26,0.34) 82%,
+    transparent 92% 100%
+  );
+  opacity: 0.86;
+  animation: ctaOrbit 4.8s linear infinite;
+  transition: opacity 0.28s ease;
 }
 .hero.v-impact .hero-main-cta::after {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: 1px;
   z-index: -1;
   border-radius: inherit;
-  box-shadow: inset 0 0 0 1px rgba(255,106,26,0);
-  transition: box-shadow 0.28s ease;
+  background:
+    radial-gradient(circle at 50% 120%, rgba(255,106,26,0.16), transparent 58%),
+    linear-gradient(180deg, rgba(30,30,32,0.96), rgba(12,12,14,0.98));
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+  transition: box-shadow 0.28s ease, background 0.28s ease;
 }
 .hero.v-impact .hero-main-cta svg {
   transition: transform 0.24s ease;
 }
-.hero.v-impact .hero-main-cta:hover {
-  transform: translateY(-2px);
+.hero.v-impact .hero-main-cta:hover,
+.hero.v-impact .hero-main-cta.is-magnetic {
+  color: #08080a;
+  border-color: rgba(255,145,57,0.86);
+  outline-color: rgba(255,122,31,0.2);
+  outline-width: 5px;
+  outline-offset: 3px;
+  transform: translate3d(var(--cta-x), var(--cta-y), 0) translateY(-3px) scale(1.025);
+  filter: brightness(1.08);
   box-shadow:
-    0 0 26px rgba(255,106,26,0.18),
-    0 18px 50px rgba(0,0,0,0.34),
-    inset 0 1px 0 rgba(255,255,255,0.08);
+    0 0 0 3px rgba(255,122,31,0.16),
+    0 0 42px rgba(255,106,26,0.42),
+    0 22px 56px rgba(0,0,0,0.42),
+    inset 0 1px 0 rgba(255,255,255,0.34);
 }
-.hero.v-impact .hero-main-cta:hover::before {
+.hero.v-impact .hero-main-cta:hover::before,
+.hero.v-impact .hero-main-cta.is-magnetic::before {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  animation-duration: 2.4s;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0 42%,
+    rgba(255,106,26,0.64) 56%,
+    rgba(255,214,179,1) 70%,
+    rgba(255,106,26,0.7) 84%,
+    transparent 96% 100%
+  );
 }
-.hero.v-impact .hero-main-cta:hover::after {
-  box-shadow: inset 0 0 0 1px rgba(255,106,26,0.28);
+.hero.v-impact .hero-main-cta:hover::after,
+.hero.v-impact .hero-main-cta.is-magnetic::after {
+  background:
+    radial-gradient(circle at 50% 120%, rgba(255,214,179,0.66), transparent 60%),
+    linear-gradient(180deg, rgba(255,146,64,1), rgba(255,106,26,0.98));
+  box-shadow:
+    inset 0 0 0 1px rgba(255,213,176,0.58),
+    inset 0 -20px 38px rgba(135,49,0,0.18);
 }
-.hero.v-impact .hero-main-cta:hover svg {
+.hero.v-impact .hero-main-cta:hover svg,
+.hero.v-impact .hero-main-cta.is-magnetic svg {
   transform: translateX(4px);
+}
+.hero.v-impact .hero-main-cta:active {
+  transform: translate3d(var(--cta-x), var(--cta-y), 0) translateY(-1px) scale(0.99);
 }
 .hero.v-impact .hero-meta {
   display: none;
@@ -348,8 +405,11 @@
 .hero-type-title .typed-line {
   position: relative;
   display: block;
-  line-height: 1.24;
+  line-height: 1.34;
   white-space: nowrap;
+}
+.hero-type-title .typed-line + .typed-line {
+  margin-top: 0.03em;
 }
 .hero-type-title .typed-ghost {
   visibility: hidden;
@@ -490,13 +550,17 @@
   color: var(--text-2);
 }
 .philosophy-meta .avatar {
-  width: 44px; height: 44px;
+  width: 56px; height: 56px;
   border-radius: 50%;
+  display: block;
+  flex: 0 0 auto;
+  object-fit: cover;
+  object-position: center;
   background: linear-gradient(135deg, var(--orange), var(--orange-hot));
-  display: grid; place-items: center;
-  color: #0A0A0B;
-  font-weight: 700;
-  font-family: var(--font-mono);
+  border: 1px solid rgba(255,122,31,0.34);
+  box-shadow:
+    0 0 0 5px rgba(255,106,26,0.08),
+    0 14px 34px rgba(0,0,0,0.34);
 }
 
 /* ============== Bento Services ============== */
@@ -1077,7 +1141,7 @@
   }
   .hero.v-impact .hero-title {
     font-size: clamp(22px, 6.4vw, 28px) !important;
-    line-height: 1.56;
+    line-height: 1.62;
     letter-spacing: -0.035em;
   }
   .hero-type-title {
@@ -1086,11 +1150,14 @@
   .hero-mobile-title {
     display: block;
     font-size: clamp(29px, 8vw, 36px) !important;
-    line-height: 1.34;
+    line-height: 1.42;
     letter-spacing: -0.04em;
   }
   .hero-mobile-title span {
     display: block;
+  }
+  .hero-mobile-title span + span {
+    margin-top: 0.02em;
   }
   .hero-mobile-title span:not(.accent) {
     color: #fff;
@@ -1102,7 +1169,7 @@
   .hero-type-title .typed-line {
     width: 100%;
     min-height: 1.34em;
-    line-height: 1.34;
+    line-height: 1.42;
     white-space: nowrap;
   }
   .hero-type-title .typed-ghost {

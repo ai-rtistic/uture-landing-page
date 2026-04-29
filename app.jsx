@@ -114,6 +114,8 @@ function Hero({ variant }) {
   const heroRef = useRef(null);
   useEffect(() => {
     const el = heroRef.current; if (!el) return;
+    const cta = el.querySelector('.hero-main-cta');
+    const canHover = window.matchMedia('(hover: hover)').matches;
     const onScroll = () => {
       const y = window.scrollY;
       const glow = el.querySelector('.hero-glow');
@@ -128,11 +130,39 @@ function Hero({ variant }) {
       el.style.setProperty('--hero-aura-x', `${(x * 18).toFixed(2)}px`);
       el.style.setProperty('--hero-aura-y', `${(y * 14).toFixed(2)}px`);
     };
+    const onCtaMove = (event) => {
+      if (!cta) return;
+      cta.classList.add('is-magnetic');
+      const rect = cta.getBoundingClientRect();
+      const x = event.clientX - (rect.left + rect.width / 2);
+      const y = event.clientY - (rect.top + rect.height / 2);
+      cta.style.setProperty('--cta-x', `${(x * 0.13).toFixed(2)}px`);
+      cta.style.setProperty('--cta-y', `${(y * 0.18).toFixed(2)}px`);
+    };
+    const onCtaEnter = () => {
+      if (cta) cta.classList.add('is-magnetic');
+    };
+    const onCtaLeave = () => {
+      if (!cta) return;
+      cta.classList.remove('is-magnetic');
+      cta.style.setProperty('--cta-x', '0px');
+      cta.style.setProperty('--cta-y', '0px');
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
     el.addEventListener('pointermove', onPointerMove, { passive: true });
+    if (cta && canHover) {
+      cta.addEventListener('pointerenter', onCtaEnter);
+      cta.addEventListener('pointermove', onCtaMove, { passive: true });
+      cta.addEventListener('pointerleave', onCtaLeave);
+    }
     return () => {
       window.removeEventListener('scroll', onScroll);
       el.removeEventListener('pointermove', onPointerMove);
+      if (cta && canHover) {
+        cta.removeEventListener('pointerenter', onCtaEnter);
+        cta.removeEventListener('pointermove', onCtaMove);
+        cta.removeEventListener('pointerleave', onCtaLeave);
+      }
     };
   }, []);
 
@@ -190,7 +220,7 @@ function Hero({ variant }) {
             <span className="accent">바꾸다</span>
           </h1>
           <p className="hero-sub reveal">
-            기업을 위한 맞춤형 AI/AX 교육
+            기업을 위한 맞춤형 AI / AX 솔루션
           </p>
           <div className="hero-actions reveal">
             <a href="#contact" className="btn btn-ghost hero-main-cta"><span>기업교육 문의하기</span> <Icon.ArrowRight/></a>

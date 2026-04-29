@@ -41,7 +41,10 @@ function LogoMarquee() {
   );
   return (
     <section className="logo-row">
-      <div className="logo-row-head">성과 중심 실무 교육, 지금 당신의 조직도 함께하세요.</div>
+      <div className="logo-row-head">
+        많은 조직이 유쳐와 함께<br/>
+        AI를 ‘배우는 단계’에서 ‘쓰는 단계’로 이동하고 있습니다.
+      </div>
       <div className="logo-stack">
         {renderRow(topLogos, true)}
         {renderRow(bottomLogos, false)}
@@ -119,10 +122,10 @@ function ApproachIllust2() {
       <circle cx="34" cy="41" r="4" fill="#FF6A1A"/>
       <circle cx="48" cy="41" r="4" fill="rgba(255,255,255,0.2)"/>
       <circle cx="62" cy="41" r="4" fill="rgba(255,255,255,0.2)"/>
-      <text x="36" y="80" fontFamily="JetBrains Mono" fontSize="11" fill="#9DD49C">$ python train.py</text>
-      <text x="36" y="100" fontFamily="JetBrains Mono" fontSize="11" fill="#8E8E9A">› loading dataset...</text>
-      <text x="36" y="120" fontFamily="JetBrains Mono" fontSize="11" fill="#FF6A1A">✓ epoch 1/3 acc=0.92</text>
-      <text x="36" y="140" fontFamily="JetBrains Mono" fontSize="11" fill="#FF6A1A">✓ epoch 2/3 acc=0.96</text>
+      <text x="36" y="80" fontFamily="JetBrains Mono" fontSize="11" fill="#9DD49C">$ uture agent run</text>
+      <text x="36" y="100" fontFamily="JetBrains Mono" fontSize="11" fill="#8E8E9A">› mapping team workflow...</text>
+      <text x="36" y="120" fontFamily="JetBrains Mono" fontSize="11" fill="#FF6A1A">✓ agent: report_ops ready</text>
+      <text x="36" y="140" fontFamily="JetBrains Mono" fontSize="11" fill="#FF6A1A">✓ action: draft → review</text>
       <rect x="36" y="150" width="6" height="11" fill="#FF6A1A">
         <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
       </rect>
@@ -159,10 +162,10 @@ function Philosophy() {
           바꿔야 할 때입니다."
         </p>
         <div className="philosophy-meta">
-          <div className="avatar">U</div>
+          <img className="avatar founder-avatar" src="assets/founder-avatar.png" alt="이재준 대표 프로필"/>
           <div style={{textAlign:'left'}}>
-            <div style={{color:'var(--text-0)', fontWeight: 600}}>Kim Future</div>
-            <div>Founder · Head of AX, uture</div>
+            <div style={{color:'var(--text-0)', fontWeight: 600}}>이재준</div>
+            <div>CEO · Head of AX, uture</div>
           </div>
         </div>
       </div>
