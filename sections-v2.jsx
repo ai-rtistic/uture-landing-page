@@ -202,7 +202,7 @@ function BentoServices() {
         <div className="bento-head reveal">
           <div>
             <span className="eyebrow">Services</span>
-            <h2 className="section-title"><Star/> AX의 전 과정,<br/>한 팀에서 끝냅니다</h2>
+            <h2 className="section-title">AX의 전 과정,<br/>한 팀에서 끝냅니다</h2>
           </div>
           <p className="section-sub" style={{marginTop:0}}>
             컨설팅 · 커리큘럼 · 인프라 · 사내 정착까지.<br/>
