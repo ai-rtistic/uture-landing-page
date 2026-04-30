@@ -41,13 +41,12 @@ function LogoMarquee() {
   );
   return (
     <section className="logo-row">
-      <div className="logo-row-head">
-        많은 조직이 유쳐와 함께<br/>
-        AI를 ‘배우는 단계’에서 ‘쓰는 단계’로 이동하고 있습니다.
-      </div>
       <div className="logo-stack">
         {renderRow(topLogos, true)}
         {renderRow(bottomLogos, false)}
+      </div>
+      <div className="logo-row-head">
+        많은 조직이 유쳐와 함께 AI를 ‘배우는 단계’에서 ‘쓰는 단계’로 이동시키고 있습니다.
       </div>
     </section>
   );
@@ -165,7 +164,7 @@ function Philosophy() {
           <img className="avatar founder-avatar" src="assets/founder-avatar.png" alt="이재준 대표 프로필"/>
           <div style={{textAlign:'left'}}>
             <div style={{color:'var(--text-0)', fontWeight: 600}}>이재준</div>
-            <div>CEO · Head of AX, uture</div>
+            <div>Head of AX, AI Solution Engineer, uture</div>
           </div>
         </div>
       </div>
@@ -294,10 +293,10 @@ function BentoServices() {
 /* ====================== Big Stats Strip ====================== */
 function StatsStrip() {
   const stats = [
-    { num: 38000, suffix: '+', label: '교육생 수료', accent: true },
-    { num: 4.9, suffix: '/5', label: '평균 만족도', accent: false },
-    { num: 210, suffix: '+', label: '도입 기업', accent: false },
-    { num: 94, suffix: '%', label: '재계약률', accent: true },
+    { num: 6000, suffix: '+', label: '교육생 수료', accent: true },
+    { num: 4.8, suffix: '/5', label: '평균 만족도', accent: false },
+    { num: 50, suffix: '+', label: '도입 기업', accent: false },
+    { num: 300, suffix: '+', label: '완료된 AX 실무 프로젝트', accent: true },
   ];
   return (
     <section className="stats-strip">

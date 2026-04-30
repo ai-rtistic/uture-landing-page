@@ -37,7 +37,7 @@
   background: transparent;
   border-top: 0;
   border-bottom: 0;
-  padding: 176px 0 96px;
+  padding: 220px 0 96px;
   overflow: visible;
   pointer-events: none;
 }
@@ -67,6 +67,7 @@
   font-size: 15px;
   color: rgba(245,245,247,0.5);
   letter-spacing: -0.01em;
+  margin-top: 32px;
   margin-bottom: 22px;
 }
 .logo-row .marquee {

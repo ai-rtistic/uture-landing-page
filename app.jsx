@@ -334,16 +334,16 @@ function HeroMeta() {
   return (
     <div className="hero-meta reveal">
       <div className="hero-meta-item">
-        <div className="num"><Counter to={210} suffix="+"/></div>
+        <div className="num"><Counter to={50} suffix="+"/></div>
         <div className="label">밀착 컨설팅 기업</div>
       </div>
       <div className="hero-meta-item">
-        <div className="num"><Counter to={38000} suffix="+"/></div>
+        <div className="num"><Counter to={6000} suffix="+"/></div>
         <div className="label">1:1 코칭 받은 구성원</div>
       </div>
       <div className="hero-meta-item">
-        <div className="num"><Counter to={94}/><span className="unit">%</span></div>
-        <div className="label">재계약률</div>
+        <div className="num"><Counter to={300} suffix="+"/></div>
+        <div className="label">완료된 AX 실무 프로젝트</div>
       </div>
       <div className="hero-meta-item">
         <div className="num"><Counter to={11}/><span className="unit">h</span></div>

@@ -18,8 +18,8 @@ function Concerns() {
             <h2 className="section-title">조직과 사람에<br/>맞춰야 비로소 작동합니다</h2>
           </div>
           <p className="section-sub">
-            우리는 210여 개 기업과 일하며, AI가 "책상 밖"으로 나가지 못하는 4가지 이유를 정리했습니다.
-            uture는 그 지점을 한 명 한 명 옆에서 풀어냅니다.
+            우리는 50여 개 기업과 일하며, AI가 실무에 안착하지 못하는 4가지 이유를 정리했습니다.
+            <br/>유쳐는 그 지점을 각 구성원 곁에서 함께 풀어냅니다.
           </p>
         </div>
         <div className="concerns-grid reveal-stagger">
