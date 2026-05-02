@@ -48,7 +48,7 @@ function Solution1() {
           <h2 className="section-title">기업 맞춤 · 조직원 맞춤,<br/><span style={{color:'var(--orange)'}}>두 축으로 설계</span>합니다</h2>
           <p className="section-sub">
             회사의 산업 · 환경 · 보안에 맞추고, 그 안에서 한 명 한 명의 직무와 숙련도까지 들여다봅니다.
-            uture의 컨설팅은 두 축이 함께 움직일 때 진짜 변화가 시작된다고 믿습니다.
+            유쳐의 컨설팅은 두 축이 함께 움직일 때 진짜 변화가 시작된다고 믿습니다.
           </p>
         </div>
         <div className="sol1-grid reveal-stagger">
@@ -86,12 +86,12 @@ function Solution1() {
 function Cases() {
   const trackRef = useRefS(null);
   const cases = [
-    { tag: '통신 · 개발직', visual: 'v-comm', label: 'TEL', title: 'AI Agent 개발을 위한\n150명 이상 실무형 인재 양성', stat: '152', label2: '명 수료' },
-    { tag: '제조 · 기술직', visual: 'v-mfg', label: 'MFG', title: '제조 현장 데이터 활용\n극대화 직무별 맞춤 교육', stat: '4.8', label2: '/ 5.0 만족도' },
-    { tag: 'IT · 플랫폼', visual: 'v-it', label: 'IT', title: '나이 · 전공 · 직업 불문\nN사와 함께한 전사 AI 교육', stat: '2,300', label2: '명 동시 운영' },
-    { tag: '공공 · 행정', visual: 'v-pub', label: 'GOV', title: 'AX를 통한 공기업\n생산성 향상 대표 사례', stat: '37', label2: '% 업무 시간 단축' },
-    { tag: '연구 · 교육', visual: 'v-edu', label: 'EDU', title: '학점 연계 과정 Y대 학생들의\n마음을 사로잡은 AI 교육', stat: '98', label2: '% 재수강 의향' },
-    { tag: '금융 · 전사 공통', visual: 'v-fin', label: 'FIN', title: '리스크 부서 실무자 대상\nAI 워크플로 도입 프로젝트', stat: '12', label2: '주 단축' },
+    { tag: 'IT · FinTech', visual: 'v-comm', label: 'FIN', title: '핀테크 실무자의\n10주 업무자동화 도전', stat: '94', label2: '% 재수강 의향', img: '카카오페이 하반기 PBL (Project Based Learning).jpg' },
+    { tag: '제조 · 대기업', visual: 'v-mfg', label: 'MFG', title: '반기마다 찾아오는\n전사 생성형 AI 정착 과정', stat: '3', label2: '기+ 연속 운영', img: '삼성전자_생성형AI.jpg' },
+    { tag: 'IT · 플랫폼', visual: 'v-it', label: 'IT', title: '게임사 신입 공채\nAI와 함께 첫 출근', stat: '100', label2: '% 신입 이수율', img: 'NC 신입공채 입문교육_생성형AI.jpg' },
+    { tag: '금융 · 공공', visual: 'v-pub', label: 'GOV', title: '신입 행원부터\nAI로 데이터를 분석하다', stat: '32', label2: '% 업무 시간 단축', img: '한국은행 G5 신입 행원_생성형AI.jpg' },
+    { tag: '금융 · 신입', visual: 'v-fin', label: 'FIN', title: '비개발직도 AI를 쓴다\n신입사원 집중 과정', stat: '4.8', label2: '/ 5.0 만족도', img: '미래에셋증권 비개발직군 신입사원 교육_생성형AI.jpg' },
+    { tag: '금융 · 승진', visual: 'v-fin', label: 'FIN', title: '승진자가 먼저 익히는\nAI 코딩 실전', stat: '98', label2: '% 승진자 이수율', img: '[현대카드커머셜] 승진자 생성형 AI 교육 (바이브코딩).jpg' },
   ];
   const scroll = (dir) => {
     const el = trackRef.current; if (!el) return;
@@ -107,7 +107,7 @@ function Cases() {
           </div>
           <div style={{display:'flex', flexDirection:'column', gap:24, alignItems:'flex-end'}}>
             <p className="section-sub" style={{textAlign:'right'}}>
-              통신 · 제조 · 공공 · 금융까지.<br/>uture가 설계하고 운영한 산업별 교육 사례입니다.
+              통신 · 제조 · 공공 · 금융까지.<br/>유쳐가 설계하고 운영한 산업별 교육 사례입니다.
             </p>
             <div className="cases-controls">
               <button className="case-btn" onClick={() => scroll(-1)} aria-label="prev">
@@ -125,8 +125,10 @@ function Cases() {
           {cases.map((c, i) => (
             <div className="case-card" key={i}>
               <div className={`case-visual ${c.visual}`}>
+                {c.img && <img src={`assets/case-images/${c.img}`} alt={c.tag} className="case-visual-img"/>}
+                {c.img && <div className="case-visual-overlay"/>}
                 <div className="case-visual-pin"><span className="dot"></span>{c.tag}</div>
-                <div className="case-visual-label">{c.label}</div>
+                {!c.img && <div className="case-visual-label">{c.label}</div>}
               </div>
               <div className="case-body">
                 <div className="meta">CASE · {String(i+1).padStart(2,'0')}</div>
@@ -176,7 +178,7 @@ function Process() {
           <span className="eyebrow">Process</span>
           <h2 className="section-title">한 명 한 명의 일하는<br/>방식을 바꾸는 4단계</h2>
           <p className="section-sub">
-            교육이 아니라 조직과 사람의 일하는 맥락을 설계합니다. uture는 4단계 내내 염에서 함께 갑니다.
+            교육이 아니라 조직과 사람의 일하는 맥락을 설계합니다. 유쳐는 4단계 내내 옆에서 함께 갑니다.
           </p>
         </div>
         <div className="process-list" ref={stepsRef}>
@@ -209,7 +211,7 @@ function FinalCTA() {
         <span className="eyebrow" style={{justifyContent:'center'}}>Get Started</span>
         <h2 style={{marginTop: 24}}>
           성과와 혁신이 필요한 지금,<br/>
-          <span className="accent">uture</span>를 켜세요.
+          <span className="accent">유쳐</span>를 켜세요.
         </h2>
         <p>맞춤 진단부터 운영까지, 평균 7일 안에 첫 미팅을 잡아드립니다.</p>
         <div className="actions">

@@ -669,6 +669,18 @@ section {
     repeating-linear-gradient(45deg, transparent 0 12px, rgba(255,255,255,0.025) 12px 13px),
     linear-gradient(135deg, #18181f, #0e0e12);
 }
+.case-visual-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.case-visual-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(10,10,12,0.6), rgba(10,10,12,0.35));
+}
 .case-visual-label {
   position: absolute;
   inset: 0;
