@@ -1091,6 +1091,93 @@
     min-height: auto;
   }
 }
+
+@media (max-width: 768px) {
+  .hero.v-impact {
+    min-height: auto;
+  }
+  .hero.v-impact .hero-bg {
+    background-position: center top;
+  }
+  .hero.v-impact .hero-content::before {
+    top: 46%;
+    width: 108vw;
+    height: 360px;
+    filter: blur(20px);
+  }
+  .hero-aura {
+    width: 110vw;
+    height: 62vw;
+    filter: blur(44px);
+  }
+
+  .logo-row {
+    overflow: hidden;
+  }
+  .marquee {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  }
+
+  .approach,
+  .bento {
+    padding: 94px 0;
+  }
+  .approach-head {
+    margin-bottom: 42px;
+  }
+  .approach-card {
+    padding: 28px 22px;
+    border-radius: 18px;
+  }
+  .approach-illust {
+    height: 176px;
+    margin-bottom: 22px;
+  }
+
+  .philosophy {
+    padding: 108px 0;
+  }
+  .philosophy::before {
+    top: 34px;
+    left: 0;
+    font-size: 190px;
+  }
+  .philosophy-text {
+    font-size: clamp(28px, 8vw, 42px);
+    line-height: 1.28;
+  }
+  .philosophy-meta {
+    margin-top: 36px;
+  }
+
+  .bento-head {
+    gap: 18px;
+    margin-bottom: 42px;
+  }
+  .bento-card {
+    padding: 26px 22px;
+    border-radius: 18px;
+  }
+  .bento-stat-num {
+    font-size: clamp(52px, 14vw, 72px);
+  }
+
+  .stats-strip {
+    padding: 76px 0;
+  }
+  .stat-cell .num {
+    font-size: clamp(46px, 12vw, 64px);
+  }
+
+  .big-cta {
+    padding: 104px 0 116px;
+  }
+  .proposal-layout {
+    gap: 38px;
+  }
+}
+
 @media (max-width: 640px) {
   .nav {
     padding: 10px 12px;
@@ -1113,13 +1200,45 @@
     height: 64px;
     transform: translate(-6px, -2px);
   }
+  .nav-mobile-cta {
+    position: relative;
+    z-index: 101;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-width: 72px;
+    height: 42px;
+    padding: 0 13px;
+    border: 1px solid rgba(255,132,52,0.34);
+    border-radius: 999px;
+    background:
+      radial-gradient(circle at 50% 120%, rgba(255,106,26,0.14), transparent 58%),
+      linear-gradient(180deg, rgba(30,30,32,0.96), rgba(12,12,14,0.98));
+    color: var(--text-0);
+    box-shadow:
+      0 12px 28px rgba(0,0,0,0.26),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+  .nav-mobile-cta svg {
+    color: var(--orange);
+  }
   .nav-cta {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
     flex: 0 0 auto;
     height: 42px;
+    min-width: 72px;
     padding: 0 13px;
     gap: 8px;
     font-size: 13px;
     white-space: nowrap;
+    opacity: 1;
+    visibility: visible;
   }
   .nav-cta span {
     font-size: 0;
@@ -1190,6 +1309,7 @@
     margin-top: 30px;
   }
   .hero.v-impact .hero-main-cta {
+    width: 100%;
     padding: 13px 22px;
     font-size: 15px;
   }
@@ -1219,8 +1339,25 @@
   }
   .bento-grid { grid-template-columns: 1fr; }
   .bento-card.b-plan, .bento-card.b-code, .bento-card.b-flow,
-  .bento-card.b-stat-1, .bento-card.b-stat-2 { grid-column: span 1; }
+  .bento-card.b-stat-1, .bento-card.b-stat-2 {
+    grid-column: span 1;
+    min-height: auto;
+  }
+  .bento-card.b-stat-1,
+  .bento-card.b-stat-2 {
+    flex-direction: column;
+    align-items: flex-start;
+  }
   .stats-strip-grid { grid-template-columns: 1fr; }
+  .stat-cell {
+    padding: 24px 0;
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+  .stat-cell:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
   .stat-cell:nth-child(even) { padding-left: 0; border-left: none; }
   .big-cta {
     padding: 96px 0 110px;
@@ -1306,8 +1443,47 @@
 }
 
 @media (max-width: 390px) {
+  .nav-inner {
+    min-height: 54px;
+    padding-left: 16px;
+    padding-right: 10px;
+  }
+  .logo {
+    flex-basis: 108px;
+    width: 108px;
+  }
+  .nav-logo-img {
+    height: 58px;
+  }
+  .nav-mobile-cta {
+    right: auto;
+    top: auto;
+    min-width: 66px;
+    height: 38px;
+    padding: 0 11px;
+    font-size: 12px;
+  }
+  .nav-cta {
+    height: 38px;
+    padding: 0 11px;
+  }
   .hero-mobile-title {
     font-size: 29px !important;
     letter-spacing: -0.045em;
+  }
+  .hero.v-impact .hero-badge {
+    max-width: 100%;
+    font-size: 12px;
+  }
+  .logo-row {
+    margin-top: -100px;
+    padding-top: 110px;
+  }
+  .proposal-card {
+    padding: 18px 16px;
+  }
+  .proposal-footer {
+    grid-template-columns: 1fr;
+    align-items: start;
   }
 }

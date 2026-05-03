@@ -86,12 +86,12 @@ function Solution1() {
 function Cases() {
   const trackRef = useRefS(null);
   const cases = [
-    { tag: 'IT · FinTech', visual: 'v-comm', label: 'FIN', title: '핀테크 실무자의\n10주 업무자동화 도전', stat: '94', label2: '% 재수강 의향', img: '카카오페이 하반기 PBL (Project Based Learning).jpg' },
-    { tag: '제조 · 대기업', visual: 'v-mfg', label: 'MFG', title: '반기마다 찾아오는\n전사 생성형 AI 정착 과정', stat: '3', label2: '기+ 연속 운영', img: '삼성전자_생성형AI.jpg' },
-    { tag: 'IT · 플랫폼', visual: 'v-it', label: 'IT', title: '게임사 신입 공채\nAI와 함께 첫 출근', stat: '100', label2: '% 신입 이수율', img: 'NC 신입공채 입문교육_생성형AI.jpg' },
-    { tag: '금융 · 공공', visual: 'v-pub', label: 'GOV', title: '신입 행원부터\nAI로 데이터를 분석하다', stat: '32', label2: '% 업무 시간 단축', img: '한국은행 G5 신입 행원_생성형AI.jpg' },
-    { tag: '금융 · 신입', visual: 'v-fin', label: 'FIN', title: '비개발직도 AI를 쓴다\n신입사원 집중 과정', stat: '4.8', label2: '/ 5.0 만족도', img: '미래에셋증권 비개발직군 신입사원 교육_생성형AI.jpg' },
-    { tag: '금융 · 승진', visual: 'v-fin', label: 'FIN', title: '승진자가 먼저 익히는\nAI 코딩 실전', stat: '98', label2: '% 승진자 이수율', img: '[현대카드커머셜] 승진자 생성형 AI 교육 (바이브코딩).jpg' },
+    { tag: 'IT · FinTech', visual: 'v-comm', label: 'FIN', title: '핀테크 실무자의\n10주 업무자동화 도전', stat: '94', label2: '% 재수강 의향' },
+    { tag: '제조 · 대기업', visual: 'v-mfg', label: 'MFG', title: '반기마다 찾아오는\n전사 생성형 AI 정착 과정', stat: '3', label2: '기+ 연속 운영' },
+    { tag: 'IT · 플랫폼', visual: 'v-it', label: 'IT', title: '게임사 신입 공채\nAI와 함께 첫 출근', stat: '100', label2: '% 신입 이수율' },
+    { tag: '금융 · 공공', visual: 'v-pub', label: 'GOV', title: '신입 행원부터\nAI로 데이터를 분석하다', stat: '32', label2: '% 업무 시간 단축' },
+    { tag: '금융 · 신입', visual: 'v-fin', label: 'FIN', title: '비개발직도 AI를 쓴다\n신입사원 집중 과정', stat: '4.8', label2: '/ 5.0 만족도' },
+    { tag: '금융 · 승진', visual: 'v-fin', label: 'FIN', title: '승진자가 먼저 익히는\nAI 코딩 실전', stat: '98', label2: '% 승진자 이수율' },
   ];
   const scroll = (dir) => {
     const el = trackRef.current; if (!el) return;

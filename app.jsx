@@ -98,6 +98,7 @@ function Nav() {
         <a href="#" className="logo">
           <img className="nav-logo-img" src="assets/nav-logo.png" alt="uture"/>
         </a>
+        <a href="#contact" className="nav-mobile-cta" aria-label="기업교육 문의">문의 <Icon.ArrowRight width={13} height={13}/></a>
         <div className="nav-links">
           <a href="#sol1">솔루션</a>
           <a href="#cases">교육 사례</a>

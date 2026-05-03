@@ -329,7 +329,7 @@ function StatsStrip() {
 /* ====================== Big Final CTA ====================== */
 function BigCTA() {
   return (
-    <section className="big-cta" id="contact-big">
+    <section className="big-cta" id="contact">
       <div className="container big-cta-inner reveal">
         <div className="proposal-layout">
           <div className="proposal-copy">
