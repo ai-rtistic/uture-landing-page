@@ -46,7 +46,7 @@ function LogoMarquee() {
         {renderRow(bottomLogos, false)}
       </div>
       <div className="logo-row-head">
-        많은 조직이 유쳐와 함께 AI를 ‘배우는 단계’에서 ‘쓰는 단계’로 이동시키고 있습니다.
+        많은 조직이 유쳐와 함께 ‘배우는 단계’를 지나, ‘현장에서 실행하고 만드는 단계’로 이동하고 있습니다.
       </div>
     </section>
   );
@@ -61,13 +61,13 @@ function Approach() {
       illust: <ApproachIllust1/>,
     },
     {
-      title: 'Hands-on 실습 중심',
-      desc: '듣기만 하는 강의의 50% 수준 비중. 사내 데이터·도구로 직접 만들어보고, 코칭으로 결과물을 가다듬습니다.',
+      title: '현장 밀착 실행',
+      desc: '교육이 끝나면 강의실을 떠나 현장으로 갑니다. 구성원과 정기 미팅하며 실제 업무 안건 위에서 AX를 함께 실행합니다.',
       illust: <ApproachIllust2/>,
     },
     {
-      title: '장기 파트너십',
-      desc: '교육이 끝나면 우리도 끝나는 모델이 아닙니다. 분기별 리뷰와 인프라 자문으로 사내 정착까지 함께 책임집니다.',
+      title: '필요한 도구는 직접 구축',
+      desc: '기존 툴로 안 되는 지점이 나오면, 현장에서 발견한 요구 그대로 사내 환경·보안에 맞는 도구를 협업해 만들어 정착시킵니다.',
       illust: <ApproachIllust3/>,
     },
   ];
@@ -77,7 +77,7 @@ function Approach() {
         <div className="approach-head reveal">
           <span className="eyebrow">Our Approach</span>
           <h2 className="section-title">우리는 이렇게 일합니다</h2>
-          <p className="section-sub">교육 회사가 아니라 AX 파트너로서, 도입 이전과 이후를 함께 설계합니다.</p>
+          <p className="section-sub">강의만 하는 교육 회사가 아닙니다. 배움 이후의 실행과 구축까지, 현장에서 함께 책임집니다.</p>
         </div>
         <div className="approach-grid reveal-stagger">
           {cards.map((c, i) => (
@@ -116,18 +116,16 @@ function ApproachIllust2() {
   return (
     <svg viewBox="0 0 320 200" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
       <rect width="320" height="200" fill="#16161A"/>
-      <rect x="20" y="30" width="280" height="140" rx="8" fill="#0A0A0B" stroke="rgba(255,255,255,0.06)"/>
-      <rect x="20" y="30" width="280" height="22" rx="8" fill="#1B1B22"/>
-      <circle cx="34" cy="41" r="4" fill="#FF6A1A"/>
-      <circle cx="48" cy="41" r="4" fill="rgba(255,255,255,0.2)"/>
-      <circle cx="62" cy="41" r="4" fill="rgba(255,255,255,0.2)"/>
-      <text x="36" y="80" fontFamily="JetBrains Mono" fontSize="11" fill="#9DD49C">$ uture agent run</text>
-      <text x="36" y="100" fontFamily="JetBrains Mono" fontSize="11" fill="#8E8E9A">› mapping team workflow...</text>
-      <text x="36" y="120" fontFamily="JetBrains Mono" fontSize="11" fill="#FF6A1A">✓ agent: report_ops ready</text>
-      <text x="36" y="140" fontFamily="JetBrains Mono" fontSize="11" fill="#FF6A1A">✓ action: draft → review</text>
-      <rect x="36" y="150" width="6" height="11" fill="#FF6A1A">
-        <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
-      </rect>
+      <rect x="28" y="36" width="170" height="34" rx="10" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)"/>
+      <text x="42" y="57" fontFamily="Pretendard" fontSize="12" fill="#C8C8D2">이 보고서, 매번 4시간 걸려요</text>
+      <rect x="108" y="82" width="184" height="34" rx="10" fill="rgba(255,106,26,0.12)" stroke="rgba(255,106,26,0.35)"/>
+      <text x="122" y="103" fontFamily="Pretendard" fontSize="12" fill="#F5F5F7">수요일에 같이 자동화해볼까요?</text>
+      <rect x="28" y="128" width="146" height="34" rx="10" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)"/>
+      <text x="42" y="149" fontFamily="Pretendard" fontSize="12" fill="#C8C8D2">좋아요, 데이터 준비할게요</text>
+      <circle cx="282" cy="48" r="5" fill="#FF6A1A">
+        <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <text x="36" y="184" fontFamily="JetBrains Mono" fontSize="10" fill="#FF6A1A">#ax-working-meeting · weekly</text>
     </svg>
   );
 }
@@ -135,17 +133,18 @@ function ApproachIllust3() {
   return (
     <svg viewBox="0 0 320 200" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
       <rect width="320" height="200" fill="#16161A"/>
-      <line x1="40" y1="100" x2="280" y2="100" stroke="rgba(255,255,255,0.1)" strokeDasharray="4 6"/>
-      <circle cx="60" cy="100" r="14" fill="#1F1F25" stroke="rgba(255,255,255,0.15)"/>
-      <circle cx="140" cy="100" r="14" fill="#1F1F25" stroke="rgba(255,255,255,0.15)"/>
-      <circle cx="220" cy="100" r="14" fill="#FF6A1A"/>
-      <circle cx="280" cy="100" r="6" fill="#FF6A1A" opacity="0.6"/>
-      <text x="48" y="135" fontFamily="JetBrains Mono" fontSize="10" fill="#8E8E9A">Q1</text>
-      <text x="128" y="135" fontFamily="JetBrains Mono" fontSize="10" fill="#8E8E9A">Q2</text>
-      <text x="208" y="135" fontFamily="JetBrains Mono" fontSize="10" fill="#FF6A1A" fontWeight="700">NOW</text>
-      <text x="60" y="76" fontFamily="JetBrains Mono" fontSize="9" fill="#5A5A66" textAnchor="middle">진단</text>
-      <text x="140" y="76" fontFamily="JetBrains Mono" fontSize="9" fill="#5A5A66" textAnchor="middle">교육</text>
-      <text x="220" y="76" fontFamily="JetBrains Mono" fontSize="9" fill="#FF6A1A" textAnchor="middle" fontWeight="700">정착</text>
+      <rect x="20" y="30" width="280" height="140" rx="8" fill="#0A0A0B" stroke="rgba(255,255,255,0.06)"/>
+      <rect x="20" y="30" width="280" height="22" rx="8" fill="#1B1B22"/>
+      <circle cx="34" cy="41" r="4" fill="#FF6A1A"/>
+      <circle cx="48" cy="41" r="4" fill="rgba(255,255,255,0.2)"/>
+      <circle cx="62" cy="41" r="4" fill="rgba(255,255,255,0.2)"/>
+      <text x="36" y="80" fontFamily="JetBrains Mono" fontSize="11" fill="#9DD49C">$ uture build report-bot</text>
+      <text x="36" y="100" fontFamily="JetBrains Mono" fontSize="11" fill="#8E8E9A">› 사내 시스템 연동 중...</text>
+      <text x="36" y="120" fontFamily="JetBrains Mono" fontSize="11" fill="#FF6A1A">✓ 보안 검토 통과 · on-prem</text>
+      <text x="36" y="140" fontFamily="JetBrains Mono" fontSize="11" fill="#FF6A1A">→ deployed · 재무팀 v1.0</text>
+      <rect x="36" y="150" width="6" height="11" fill="#FF6A1A">
+        <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+      </rect>
     </svg>
   );
 }
@@ -175,10 +174,10 @@ function Philosophy() {
 /* ====================== Chip Marquee ====================== */
 function ChipMarquee() {
   const chips = [
-    'AI-Driven Curriculum', '★ Custom AX Consulting', 'Cloud Integration',
-    '★ On-prem 보안 환경', 'AI Agent 개발', '★ LLM Fine-tuning',
-    'Prompt Engineering', '★ MLOps 운영 정착', '데이터 거버넌스',
-    '★ 임원 AX 워크숍', 'Multi-modal AI', '★ 디자인 씽킹',
+    '현장 밀착 실행', '★ 현업 워킹 미팅', 'AI-Driven Curriculum',
+    '★ 사내 도구 공동 구축', 'AI Agent 개발', '★ On-prem 보안 환경',
+    'Workflow Automation', '★ Custom AX Consulting', 'Prompt Engineering',
+    '★ 임원 AX 워크숍', 'LLM Fine-tuning', '★ 데이터 거버넌스',
   ];
   return (
     <section className="chip-row">
@@ -207,7 +206,7 @@ function BentoServices() {
             <h2 className="section-title">AX의 전 과정,<br/>한 팀에서 끝냅니다</h2>
           </div>
           <p className="section-sub" style={{marginTop:0}}>
-            컨설팅 · 커리큘럼 · 인프라 · 사내 정착까지.<br/>
+            컨설팅 · 교육 · 현장 실행 · 도구 구축 · 사내 정착까지.<br/>
             우리는 단계별로 분리된 모델이 아니라, 한 팀이 끝까지 책임지는 모델로 일합니다.
           </p>
         </div>
@@ -229,20 +228,20 @@ function BentoServices() {
               </div>
               <div className="plan-row">
                 <div className="check"><Icon.Check width={10} height={10}/></div>
-                <span>커리큘럼 v2 배포</span>
+                <span>재무팀 워킹 미팅 W6</span>
               </div>
               <div className="plan-row">
                 <div className="check" style={{background:'rgba(255,255,255,0.08)', color:'var(--text-3)'}}><Icon.Plus width={10} height={10}/></div>
-                <span style={{color:'var(--text-3)'}}>Q3 사내 해커톤</span>
+                <span style={{color:'var(--text-3)'}}>정산 자동화 봇 v1 배포</span>
               </div>
             </div>
           </div>
 
           {/* Custom Projects (code) */}
           <div className="bento-card b-code">
-            <div className="bento-tag"><Star size={10}/> Custom Projects</div>
-            <h3>사내 데이터로<br/>맞춤 AI 프로젝트</h3>
-            <p>실제 사내 데이터·시스템과 연결되는 AI 워크플로를 함께 만듭니다.</p>
+            <div className="bento-tag"><Star size={10}/> Co-Build</div>
+            <h3>현장의 요구로<br/>함께 만드는 도구</h3>
+            <p>현장 미팅에서 발견한 요구 그대로, 사내 데이터·시스템과 연결되는 도구를 협업해 구축합니다.</p>
             <div className="code-block">
               <div><span className="ln">01</span><span className="com"># uture custom agent</span></div>
               <div><span className="ln">02</span><span className="kw">from</span> uture <span className="kw">import</span> Agent</div>
@@ -336,23 +335,23 @@ function BigCTA() {
             <span className="proposal-eyebrow">Proposal Preview</span>
             <h2>
               우리 조직에 맞는<br/>
-              <span className="accent">AI 교육 설계안</span>을 받아보세요.
+              <span className="accent">AX 실행 설계안</span>을 받아보세요.
             </h2>
-            <p>진단 미팅 전, 업종과 부서에 맞춘 사례집 · 커리큘럼 샘플 · 도입 로드맵을 먼저 보내드립니다.</p>
+            <p>진단 미팅 전, 업종과 부서에 맞춘 사례집 · 교육 커리큘럼 · 밀착 실행과 도구 구축 로드맵을 먼저 보내드립니다.</p>
             <div className="proposal-points" aria-hidden="true">
-              {['업종별 사례집', '직무별 커리큘럼', '도입 로드맵'].map((item) => (
+              {['업종별 사례집', '직무별 커리큘럼', '실행 · 구축 로드맵'].map((item) => (
                 <span key={item}>{item}</span>
               ))}
             </div>
             <div className="actions">
-              <a href="#" className="btn btn-primary">무료 진단 신청 <Icon.ArrowRight/></a>
-              <a href="#" className="btn btn-ghost">사례집 다운로드</a>
+              <a href="mailto:official.uture@gmail.com?subject=%5B%EC%9C%A0%EC%B3%90%5D%20AX%20%EB%AC%B4%EB%A3%8C%20%EC%A7%84%EB%8B%A8%20%EC%8B%A0%EC%B2%AD" className="btn btn-primary">무료 진단 신청 <Icon.ArrowRight/></a>
+              <a href="mailto:official.uture@gmail.com?subject=%5B%EC%9C%A0%EC%B3%90%5D%20%EC%82%AC%EB%A1%80%EC%A7%91%20%EC%9A%94%EC%B2%AD" className="btn btn-ghost">사례집 받아보기</a>
             </div>
           </div>
 
           <div className="proposal-card" aria-hidden="true">
             <div className="proposal-card-head">
-              <span>AX Education Proposal</span>
+              <span>AX Execution Proposal</span>
               <strong>uture</strong>
             </div>
             <div className="proposal-status">
@@ -374,7 +373,7 @@ function BigCTA() {
               </div>
               <div>
                 <span>Scope</span>
-                <strong>파일럿 설계</strong>
+                <strong>교육 → 구축</strong>
               </div>
             </div>
             <div className="proposal-lines">
@@ -383,7 +382,7 @@ function BigCTA() {
               <span></span>
             </div>
             <div className="proposal-checklist">
-              {['조직 진단 미팅', '직무별 커리큘럼', '파일럿 운영 로드맵'].map((item, index) => (
+              {['조직 진단 미팅', '직무별 커리큘럼', '밀착 실행 · 도구 구축 플랜'].map((item, index) => (
                 <div className="proposal-check" key={item}>
                   <Icon.Check width={15} height={15}/>
                   <span>{item}</span>

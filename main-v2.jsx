@@ -15,6 +15,10 @@ function AppV2() {
   useReveal();
 
   useEffectM2(() => {
+    if (window.initInteractive) window.initInteractive();
+  }, []);
+
+  useEffectM2(() => {
     const root = document.documentElement;
     const h = tweaks.orangeHue;
     root.style.setProperty('--orange', `hsl(${h}, 100%, 55%)`);
@@ -51,9 +55,9 @@ function AppV2() {
       <Nav/>
       <Hero variant={tweaks.heroVariant}/>
       {tweaks.showMarquees && <LogoMarquee/>}
-      <Approach/>
-      <Philosophy/>
       <Concerns/>
+      <Philosophy/>
+      <FDEJourney/>
       <BentoServices/>
       {tweaks.showMarquees && <ChipMarquee/>}
       <Solution1/>

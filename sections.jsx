@@ -6,8 +6,8 @@ function Concerns() {
   const items = [
     { num: '01', icon: <Icon.Users/>, title: <>모두에게 <em>같은 강의</em>만 반복되는 교육</>, desc: '직무도 숙련도도 다른데 강의는 한 가지. 정작 "내 업무에 어떻게?"가 빠집니다.' },
     { num: '02', icon: <Icon.Compass/>, title: <>실무로 <em>이어지지 않는</em> 학습</>, desc: '강의는 들었지만 다음 날 자기 일에 어떻게 적용할지 막막한 상태로 끝납니다.' },
-    { num: '03', icon: <Icon.Lock/>, title: <>회사 환경에 <em>맞지 않는</em> 도구</>, desc: '보안 · 데이터 정책 · 사내 시스템과 어긋나, 결국 책상 위에서만 멈추는 AI.' },
-    { num: '04', icon: <Icon.Trend/>, title: <>혼자 남는 <em>교육 이후</em></>, desc: '교육이 끝나면 끝. 막힐 때 물어볼 사람이 없어 점점 다시 안 쓰게 됩니다.' },
+    { num: '03', icon: <Icon.Lock/>, title: <>회사 환경에 <em>맞지 않는</em> 도구</>, desc: '보안 · 데이터 정책 · 사내 시스템과 어긋나는 범용 툴. 정작 우리 업무에 필요한 도구는 어디에도 없습니다.' },
+    { num: '04', icon: <Icon.Trend/>, title: <>혼자 남는 <em>교육 이후</em></>, desc: '교육이 끝나면 끝. 막힐 때 옆에서 같이 풀어줄 사람이 없어 점점 다시 안 쓰게 됩니다.' },
   ];
   return (
     <section className="concerns" id="concerns">
@@ -48,7 +48,7 @@ function Solution1() {
           <h2 className="section-title">기업 맞춤 · 조직원 맞춤,<br/><span style={{color:'var(--orange)'}}>두 축으로 설계</span>합니다</h2>
           <p className="section-sub">
             회사의 산업 · 환경 · 보안에 맞추고, 그 안에서 한 명 한 명의 직무와 숙련도까지 들여다봅니다.
-            유쳐의 컨설팅은 두 축이 함께 움직일 때 진짜 변화가 시작된다고 믿습니다.
+            교육에서 시작해 현장 실행과 도구 구축까지 — 두 축이 함께 움직일 때 진짜 변화가 시작됩니다.
           </p>
         </div>
         <div className="sol1-grid reveal-stagger">
@@ -60,8 +60,8 @@ function Solution1() {
             <ul className="sol1-list">
               <li><Icon.Check/><span>산업 · 직무군별 AX 진단 워크숍 운영</span></li>
               <li><Icon.Check/><span>보안 정책 · 데이터 거버넌스 검토와 인프라 자문</span></li>
-              <li><Icon.Check/><span>경영진과 함께 만드는 12개월 AX 로드맵</span></li>
-              <li><Icon.Check/><span>분기별 성과 리뷰 + 로드맵 업데이트</span></li>
+              <li><Icon.Check/><span>현업 워크플로에 맞춘 사내 도구 공동 구축</span></li>
+              <li><Icon.Check/><span>경영진과 함께 만드는 12개월 AX 로드맵 + 분기 리뷰</span></li>
             </ul>
           </div>
           <div className="sol1-card long">
@@ -71,9 +71,9 @@ function Solution1() {
             <p className="sol1-desc">구성원 한 명 한 명의 실제 업무를 함께 들여다보고, AI로 일하는 방식까지 바꿔드립니다.</p>
             <ul className="sol1-list">
               <li><Icon.Check/><span>1:1 직무 인터뷰로 "내 업무에 AI 어떻게" 매핑</span></li>
-              <li><Icon.Check/><span>숙련도별 학습 트랙 + 동료 페어 코칭</span></li>
-              <li><Icon.Check/><span>실제 업무 산출물로 진행하는 핸즈온 워크샵</span></li>
-              <li><Icon.Check/><span>전담 코치가 12주간 슬랙·미팅으로 밀착 동행</span></li>
+              <li><Icon.Check/><span>숙련도별 학습 트랙 + 실제 업무 산출물 핸즈온</span></li>
+              <li><Icon.Check/><span>교육 이후, 구성원과의 정기 워킹 미팅으로 실행 동행</span></li>
+              <li><Icon.Check/><span>막히는 지점은 전담 파트너가 메신저 · 현장에서 즉시 해결</span></li>
             </ul>
           </div>
         </div>
@@ -167,18 +167,19 @@ function Process() {
 
   const steps = [
     { num: 'STEP 01', title: '조직 진단 · 구성원 인터뷰', desc: '회사의 산업 · 환경과 함께, 구성원 개개인의 직무 · 숙련도 · AI 경험까지 들여다봅니다.', tags: ['기업 진단', '1:1 인터뷰'], time: '~ 5일' },
-    { num: 'STEP 02', title: '맞춤 커리큘럼 · 코칭 설계', desc: '구성원 그룹별 다른 트랙을 설계하고, 1:1 코칭 패어와 실제 업무 산출물까지 정의합니다.', tags: ['그룹별 트랙', '코치 매칭'], time: '5 ~ 7일' },
-    { num: 'STEP 03', title: '밀착 컨설팅 · 실전 적용', desc: '강의가 아닌 "내 업무"를 다뤄서 함께 개선합니다. 주간 슬랙 · 워크숍으로 진짜 결과물을 만듭니다.', tags: ['1:1 코칭', '종합 워크샵'], time: '8 ~ 12주' },
-    { num: 'STEP 04', title: '사내 정착 · 장기 파트너십', desc: '교육 종료 후에도 분기별 리뷰와 사내 챔피언 육성으로 구성원이 쓰는 AI가 시스템으로 자리잡도록 계속 옆에 있습니다.', tags: ['분기 리뷰', '사내 챔피언'], time: '장기 운영' },
+    { num: 'STEP 02', title: '맞춤 교육 · 기준 세우기', desc: '구성원 그룹별 다른 트랙을 설계하고, 실제 업무 산출물로 진행하는 핸즈온으로 조직의 AI 기준선을 끌어올립니다.', tags: ['그룹별 트랙', '핸즈온 워크샵'], time: '4 ~ 6주' },
+    { num: 'STEP 03', title: '현장 밀착 실행', desc: '교육이 끝나면 현장으로 들어갑니다. 구성원과 정기 워킹 미팅을 하며 실제 업무 안건 위에서 AX를 함께 실행합니다.', tags: ['현업 워킹 미팅', '1:1 코칭'], time: '8 ~ 12주' },
+    { num: 'STEP 04', title: '필요한 도구 공동 구축', desc: '기존 툴로 안 되는 지점이 나오면, 현장에서 발견한 요구 그대로 사내 환경 · 보안에 맞는 도구를 협업해 만들어 배포합니다.', tags: ['사내 도구 개발', '보안 검토'], time: '2 ~ 6주' },
+    { num: 'STEP 05', title: '사내 정착 · 장기 파트너십', desc: '분기별 리뷰와 사내 챔피언 육성, 구축한 도구의 운영 고도화까지 — AI가 시스템으로 자리잡도록 계속 옆에 있습니다.', tags: ['분기 리뷰', '도구 운영 고도화'], time: '장기 운영' },
   ];
   return (
     <section className="process" id="process">
       <div className="container">
         <div className="process-head reveal" style={{maxWidth: 720}}>
           <span className="eyebrow">Process</span>
-          <h2 className="section-title">한 명 한 명의 일하는<br/>방식을 바꾸는 4단계</h2>
+          <h2 className="section-title">교육에서 도구까지,<br/>현장을 바꾸는 5단계</h2>
           <p className="section-sub">
-            교육이 아니라 조직과 사람의 일하는 맥락을 설계합니다. 유쳐는 4단계 내내 옆에서 함께 갑니다.
+            강의가 아니라 조직과 사람의 일하는 맥락을 설계합니다. 유쳐는 5단계 내내 현장에 함께 있습니다.
           </p>
         </div>
         <div className="process-list" ref={stepsRef}>

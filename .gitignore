@@ -7,3 +7,6 @@
 uture-*-fixed.png
 uture-logo-fix*.png
 
+
+# Local Claude Code config
+.claude/

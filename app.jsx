@@ -100,10 +100,11 @@ function Nav() {
         </a>
         <a href="#contact" className="nav-mobile-cta" aria-label="기업교육 문의">문의 <Icon.ArrowRight width={13} height={13}/></a>
         <div className="nav-links">
+          <a href="#fde">유쳐의 방식</a>
           <a href="#sol1">솔루션</a>
-          <a href="#cases">교육 사례</a>
-          <a href="#process">설계 프로세스</a>
-          <a href="#contact" className="nav-cta"><span>기업교육 문의</span> <Icon.ArrowRight width={14} height={14}/></a>
+          <a href="#cases">고객 사례</a>
+          <a href="#process">프로세스</a>
+          <a href="#contact" className="nav-cta"><span>AX 도입 문의</span> <Icon.ArrowRight width={14} height={14}/></a>
         </div>
       </div>
     </nav>
@@ -180,17 +181,17 @@ function Hero({ variant }) {
             <span>2026 AX Transformation Partner</span>
           </div>
           <h1 className="hero-title reveal" style={{maxWidth: 1100}}>
-            기업과 구성원,<br/>
-            <span className="accent">한 명 한 명</span>에 맞추는<br/>
-            AX 컨설팅
+            교육에서 시작해,<br/>
+            <span className="accent">현장에서 완성</span>하는<br/>
+            AX 파트너
           </h1>
           <p className="hero-sub reveal">
-            uture는 회사와 직무, 그리고 사람을 함께 봅니다.<br/>
-            구성원이 실제 업무에서 AI를 써서 일을 혁신할 때까지 — 밀착해서 동행합니다.
+            uture는 교육으로 기준을 세우고, 구성원 곁에서 함께 실행합니다.<br/>
+            필요한 도구가 없다면 — 사내 환경에 맞게 함께 만들어 정착시킵니다.
           </p>
           <div className="hero-actions reveal">
-            <a href="#contact" className="btn btn-primary">기업교육 문의하기 <Icon.ArrowRight/></a>
-            <a href="#sol1" className="btn btn-ghost">솔루션 살펴보기</a>
+            <a href="#contact" className="btn btn-primary">AX 도입 문의하기 <Icon.ArrowRight/></a>
+            <a href="#fde" className="btn btn-ghost">유쳐의 방식 보기</a>
           </div>
           <HeroMeta/>
         </div>
@@ -210,21 +211,20 @@ function Hero({ variant }) {
         <div className="container hero-content">
           <div className="hero-badge reveal">
             <span className="pulse"></span>
-            <span>지금 바로 유쳐와 함께하세요</span>
+            <span>교육 그 다음까지 책임지는 AX 파트너</span>
           </div>
           <HeroTypingTitle/>
           <h1 className="hero-title hero-mobile-title reveal">
-            <span className="accent">기업에 진짜 필요한</span>
-            <span className="accent">AI 교육</span>
-            <span>배움에서 ✦ 실무로.</span>
-            <span className="accent">지식을 성과로</span>
-            <span className="accent">바꾸다</span>
+            <span>AI를 아는 조직에서</span>
+            <span className="accent">AI로 일하는</span>
+            <span className="accent">조직으로 ✦</span>
+            <span>끝까지 함께 만듭니다</span>
           </h1>
           <p className="hero-sub reveal">
-            기업을 위한 맞춤형 AI / AX 솔루션
+            교육 · 현장 밀착 실행 · 도구 구축 — 기업을 위한 풀사이클 AX 파트너
           </p>
           <div className="hero-actions reveal">
-            <a href="#contact" className="btn btn-ghost hero-main-cta"><span>기업교육 문의하기</span> <Icon.ArrowRight/></a>
+            <a href="#contact" className="btn btn-ghost hero-main-cta"><span>AX 도입 문의하기</span> <Icon.ArrowRight/></a>
           </div>
           <HeroMeta/>
         </div>
@@ -251,12 +251,12 @@ function Hero({ variant }) {
           <span style={{fontFamily:'var(--font-mono)', fontWeight: 600}}>uture.</span>
         </h1>
         <p className="hero-sub reveal">
-          기업 맞춤 · 조직원 맞춤 · 밀착 컨설팅.<br/>
-          구성원이 실제 업무에서 AI로 일하는 방식을 바꿀 때까지, uture가 함께 갑니다.
+          교육 · 현장 밀착 실행 · 도구 구축.<br/>
+          구성원이 실제 업무에서 AI로 일하는 방식을 바꿀 때까지, uture가 현장에 함께 있습니다.
         </p>
         <div className="hero-actions reveal">
-          <a href="#contact" className="btn btn-primary">기업교육 문의하기 <Icon.ArrowRight/></a>
-          <a href="#sol1" className="btn btn-ghost">솔루션 살펴보기</a>
+          <a href="#contact" className="btn btn-primary">AX 도입 문의하기 <Icon.ArrowRight/></a>
+          <a href="#fde" className="btn btn-ghost">유쳐의 방식 보기</a>
         </div>
         <HeroMeta/>
       </div>
@@ -266,9 +266,9 @@ function Hero({ variant }) {
 
 function HeroTypingTitle() {
   const lines = useMemo(() => [
-    { text: '기업에 진짜 필요한 AI 교육', className: 'accent' },
-    { text: '배움에서 ✦ 실무로.', className: '' },
-    { text: '지식을 성과로 바꾸다', className: 'accent' },
+    { text: 'AI를 아는 조직에서', className: '' },
+    { text: 'AI로 ✦ 일하는 조직으로.', className: 'accent' },
+    { text: '끝까지 함께 만듭니다', className: '' },
   ], []);
   const [visible, setVisible] = useState(() => lines.map(() => 0));
   const [activeLine, setActiveLine] = useState(0);
