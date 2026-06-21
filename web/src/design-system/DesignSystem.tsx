@@ -15,6 +15,7 @@ import {
   BuildGraphic,
   WorkflowGraphic,
   SceneGraphic,
+  axAssets,
 } from '../components/graphics/composed'
 import { MotionGraphic } from '../components/graphics/MotionGraphic'
 import { Placeholder } from '../components/graphics/Placeholder'
@@ -83,6 +84,7 @@ const NAV = [
   ['controls', '버튼·배지'],
   ['primitives', '그래픽 프리미티브'],
   ['composed', '조합 그래픽'],
+  ['assets', 'AX 에셋 예시'],
   ['text-fx', '텍스트 효과'],
   ['motion', '모션·배경영상'],
   ['usage', '사용 가이드'],
@@ -358,8 +360,25 @@ export function DesignSystem() {
           </div>
         </Section>
 
+        {/* AX ASSETS */}
+        <Section id="assets" kicker="07 · Spot graphics" title="AX 에셋 예시">
+          <p className="ds-note">
+            유쳐가 만드는 실제 산출물을 미니멀한 다이어그램으로. 모노크롬 우선 + 색은 whisper.
+            새 에셋이 필요하면 <strong>uture-spot-graphics 스킬</strong>로 같은 결로 추가.
+          </p>
+          <div className="ds-grid ds-grid-2">
+            {axAssets.map((a) => (
+              <Specimen key={a.id} title={a.label} desc={a.desc} code={`<${a.Comp.name} />`}>
+                <div className="ds-fixed">
+                  <a.Comp />
+                </div>
+              </Specimen>
+            ))}
+          </div>
+        </Section>
+
         {/* TEXT FX */}
-        <Section id="text-fx" kicker="07 · Motion" title="텍스트 효과">
+        <Section id="text-fx" kicker="08 · Motion" title="텍스트 효과">
           <Specimen
             title="WordReveal — 단어 컬러 리빌"
             desc="스크롤 진행에 따라 회색 → 본문색으로 채워지고, 일부 단어만 옅은 색 강조. (아래로 스크롤하면 재생)"
@@ -376,7 +395,7 @@ export function DesignSystem() {
         </Section>
 
         {/* MOTION */}
-        <Section id="motion" kicker="08 · Motion" title="모션 · 배경 영상">
+        <Section id="motion" kicker="09 · Motion" title="모션 · 배경 영상">
           <p className="ds-note">
             <strong>측정 결과 twelvelabs의 배경 모션은 압축 MP4 <code>{'<video autoplay loop muted playsinline>'}</code></strong>
             (object-fit: cover, CDN 호스팅)입니다. 유쳐도 동일하게 — 가벼운 모션은 CSS/GSAP,
@@ -408,7 +427,7 @@ export function DesignSystem() {
         </Section>
 
         {/* USAGE */}
-        <Section id="usage" kicker="09 · Guide" title="사용 가이드">
+        <Section id="usage" kicker="10 · Guide" title="사용 가이드">
           <div className="ds-guide">
             <ol>
               <li>

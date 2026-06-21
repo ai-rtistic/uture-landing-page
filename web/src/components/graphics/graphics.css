@@ -277,3 +277,6 @@
   padding: 3px 8px;
   border-radius: var(--r-pill);
 }
+
+/* ---- AX asset: classification buckets ---- */
+.g-buckets { display: flex; gap: 8px; }

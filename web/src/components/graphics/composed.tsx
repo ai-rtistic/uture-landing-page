@@ -126,3 +126,79 @@ export function SceneGraphic({ name }: { name: string }) {
     </GFrame>
   )
 }
+
+/* ============================================================
+   AX 에셋 예시 — concrete uture deliverables (detailed, minimal)
+   ============================================================ */
+
+/** 사내 문서 검색 (Search형): 자연어 질의 → 문서 타일 그리드, 적중 1개. */
+export function AssetSearchGraphic() {
+  return (
+    <GFrame tint="peach">
+      <GStack>
+        <GNode icon="search">정산 규정 어디 있더라?</GNode>
+        <GConn />
+        <div className="g-grid-tiles">
+          <GTile active tag="HIT" icon="text" />
+          <GTile icon="text" />
+          <GTile icon="image" />
+          <GTile icon="text" />
+          <GTile icon="image" />
+          <GTile icon="text" />
+        </div>
+      </GStack>
+    </GFrame>
+  )
+}
+
+/** 리포트 자동 생성 (Analyze형): 업무 로그 → AI 생성 → 산출 문서. */
+export function AssetReportGraphic() {
+  return (
+    <GFrame tint="amber">
+      <GStack>
+        <GNode icon="text">주간 업무 로그</GNode>
+        <GConn />
+        <GNode tone="dark" icon="sparkle">
+          AI 자동 생성
+        </GNode>
+        <GConn />
+        <div className="g-doc">
+          <span className="g-doc-spark">
+            <GIcon name="sparkle" size={16} />
+          </span>
+          <GStrip cells={[5, 3]} fill={[0]} />
+          <GStrip cells={[4, 4, 2]} />
+          <GStrip cells={[6, 2]} />
+          <GStrip cells={[3]} />
+        </div>
+      </GStack>
+    </GFrame>
+  )
+}
+
+/** VOC 분류 파이프라인: 인입 → AI 분류 → 카테고리 버킷. */
+export function AssetPipelineGraphic() {
+  return (
+    <GFrame tint="sky" grid>
+      <GStack>
+        <GNode icon="flow">VOC 인입</GNode>
+        <GConn />
+        <GNode tone="dark" icon="sparkle">
+          AI 자동 분류
+        </GNode>
+        <GConn />
+        <div className="g-buckets">
+          <span className="tag">불만</span>
+          <span className="tag">문의</span>
+          <span className="tag">칭찬</span>
+        </div>
+      </GStack>
+    </GFrame>
+  )
+}
+
+export const axAssets = [
+  { id: 'search', label: '사내 문서 검색', desc: '자연어로 묻고 사내 문서에서 바로 찾기', Comp: AssetSearchGraphic },
+  { id: 'report', label: '리포트 자동 생성', desc: '업무 로그 → AI가 주간 리포트로', Comp: AssetReportGraphic },
+  { id: 'pipeline', label: 'VOC 분류 파이프라인', desc: '인입 즉시 AI가 카테고리로 분류', Comp: AssetPipelineGraphic },
+]
