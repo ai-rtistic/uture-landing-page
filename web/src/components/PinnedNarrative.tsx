@@ -2,16 +2,18 @@ import { useEffect, useRef } from 'react'
 import { narrative } from '../data/content'
 import { Container } from '../ui/primitives'
 import { Placeholder } from './graphics/Placeholder'
+import { BeadChain } from './graphics/BeadChain'
 import { gsap, prefersReduced } from '../lib/gsap'
 
-// Floating background clips/capsules (parallax). `kind: clip` slots take a real
-// image/video later — see design-system 자산 스펙. `speed` drives parallax amount.
+// Flowing background: gradient bead-chains + clip slots (parallax).
+// `kind: clip` slots take a real image/video later — see design-system 자산 스펙.
 const FIELD = [
-  { top: '8%', left: '4%', speed: 1.2, kind: 'capsule', tint: 'peach' },
-  { top: '64%', left: '7%', speed: 1.7, kind: 'clip', w: 200, h: 124, time: '0:28–0:42' },
-  { top: '22%', left: '84%', speed: 1.0, kind: 'capsule', tint: 'mint' },
-  { top: '68%', left: '80%', speed: 1.9, kind: 'clip', w: 220, h: 138, time: '0:00–0:12' },
-  { top: '44%', left: '92%', speed: 0.8, kind: 'capsule', tint: 'lilac' },
+  { top: '6%', left: '-4%', speed: 1.1, rot: -14, kind: 'chain', count: 12, curve: 26 },
+  { top: '30%', left: '60%', speed: 1.5, rot: -22, kind: 'chain', count: 14, curve: 34 },
+  { top: '78%', left: '-6%', speed: 1.8, rot: -16, kind: 'chain', count: 13, curve: 30 },
+  { top: '88%', left: '52%', speed: 0.9, rot: -20, kind: 'chain', count: 10, curve: 22 },
+  { top: '62%', left: '6%', speed: 1.7, rot: 0, kind: 'clip', w: 200, h: 124, time: '0:28–0:42' },
+  { top: '66%', left: '80%', speed: 1.4, rot: 0, kind: 'clip', w: 220, h: 138, time: '0:00–0:12' },
 ] as const
 
 export function PinnedNarrative() {
@@ -90,10 +92,10 @@ export function PinnedNarrative() {
               className="float-item"
               key={i}
               data-speed={f.speed}
-              style={{ top: f.top, left: f.left }}
+              style={{ top: f.top, left: f.left, rotate: `${f.rot}deg` }}
             >
-              {f.kind === 'capsule' ? (
-                <span className={`float-capsule float-${f.tint}`} />
+              {f.kind === 'chain' ? (
+                <BeadChain count={f.count} curve={f.curve} />
               ) : (
                 <div className="float-clip">
                   <Placeholder w={f.w} h={f.h} kind="video" />

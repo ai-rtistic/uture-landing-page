@@ -1,5 +1,6 @@
 import { hero } from '../data/content'
 import { Button, Pill } from '../ui/primitives'
+import { HeroVisual } from './HeroVisual'
 
 export function Hero() {
   return (
@@ -29,6 +30,7 @@ export function Hero() {
           </Button>
         </div>
       </div>
+      <HeroVisual />
       <div className="hero-aura" aria-hidden />
     </section>
   )
