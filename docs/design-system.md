@@ -120,6 +120,21 @@ twelvelabs는 배경 모션을 **압축 MP4 `<video>`** 로 처리:
 - 정적 비주얼(로고·고객사) → `<img loading="lazy">`.
 - 모든 모션은 `prefers-reduced-motion` 폴백 필수.
 
+**스크롤 패럴럭스 배경(narrative "흐르는 클립")** = twelvelabs처럼 1장의 큰 영상이 아니라, **DOM 클립 카드 + 그라디언트 캡슐을 GSAP으로 패럴럭스**하는 방식(`PinnedNarrative`의 `.narrative-field`). 실제 이미지/영상으로 교체하기 쉽도록.
+
+### 4.1 자산 슬롯 사이즈 (지금은 `Placeholder`로 대체, 나중에 교체)
+모든 미디어 슬롯에 **사이즈가 박힌 `Placeholder`** 가 들어가 있음(`<Placeholder w h kind>`). 교체 시 같은 크기로:
+| 슬롯 | 권장 사이즈(px) | 비율 | 포맷 | 비고 |
+|---|---|---|---|---|
+| narrative 플로팅 클립 ① | **200×124** | ~16:10 | mp4/webm(muted loop) 또는 jpg | `<video>` 권장, 2x면 400×248 |
+| narrative 플로팅 클립 ② | **220×138** | ~16:10 | 동일 | |
+| (선택) 히어로 배경 영상 | **1280×720** | 16:9 | 압축 mp4/webm, muted loop | object-fit cover |
+| 서비스 Plan 탭 모션 | 900×680 | 4:3 | webm(Remotion 렌더, 완료) | `spot-search.webm` |
+| 창업자 아바타 | 96×96 (표시 48) | 1:1 | png/jpg | 원형 크롭 |
+| 고객사 로고 | 높이 46(가변폭) | - | 투명 png/svg | 그레이스케일 처리됨 |
+
+교체 방법: `<Placeholder .../>` 자리에 동일 크기의 `<img>` 또는 `<video autoplay loop muted playsinline>` 삽입. 클립은 `aspect-ratio` 유지.
+
 ---
 
 ## 5. 모션 원칙

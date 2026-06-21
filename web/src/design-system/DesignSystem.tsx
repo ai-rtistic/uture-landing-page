@@ -17,6 +17,7 @@ import {
   SceneGraphic,
 } from '../components/graphics/composed'
 import { MotionGraphic } from '../components/graphics/MotionGraphic'
+import { Placeholder } from '../components/graphics/Placeholder'
 
 /* ---------- gallery scaffolding ---------- */
 
@@ -395,6 +396,18 @@ export function DesignSystem() {
           >
             <div className="ds-fixed">
               <MotionGraphic src="/assets/motion/spot-search.webm" />
+            </div>
+          </Specimen>
+          <Specimen
+            title="Placeholder — 미디어 슬롯"
+            desc="실제 이미지/영상 들어갈 자리. 사이즈가 박혀 있어 그대로 같은 크기로 교체하면 됨."
+            code={`<Placeholder w={220} h={138} kind="video" />`}
+            wide
+          >
+            <div className="ds-row" style={{ alignItems: 'flex-end' }}>
+              <div style={{ width: 200 }}><Placeholder w={200} h={124} kind="video" /></div>
+              <div style={{ width: 220 }}><Placeholder w={220} h={138} kind="video" /></div>
+              <div style={{ width: 160 }}><Placeholder w={96} h={96} label="아바타" /></div>
             </div>
           </Specimen>
         </Section>
