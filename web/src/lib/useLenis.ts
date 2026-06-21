@@ -13,6 +13,7 @@ export function useLenis() {
     })
 
     lenis.on('scroll', ScrollTrigger.update)
+    ;(window as unknown as { __lenis?: Lenis }).__lenis = lenis
 
     let raf = 0
     const loop = (time: number) => {

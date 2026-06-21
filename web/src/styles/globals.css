@@ -13,13 +13,23 @@
   --border: #d3d1cf;
   --border-2: #dbdad8;
 
-  /* word-highlight palette */
-  --c-pink: #ff77a8;
-  --c-blue: #0099ff;
-  --c-green: #1bbf86;
-  --c-orange: #f0a417;
-  --c-purple: #7c7fff;
-  --c-neon: #60e21c;
+  /* ---- 유쳐 brand palette — orange-led, soft/pastel, one tonal family ---- */
+  --brand: #ff7a33; /* main */
+  --c-orange: #ff7a33;
+  --c-peach: #ff9e6b;
+  --c-amber: #efb34a;
+  --c-rose: #ff8fa8;
+  --c-lilac: #b49df5;
+  --c-sky: #82b4f0;
+  --c-mint: #5fcba0;
+  --brand-glow: rgba(255, 122, 51, 0.2);
+
+  /* aliases kept so existing rules resolve into the brand family */
+  --c-pink: var(--c-rose);
+  --c-blue: var(--c-sky);
+  --c-green: var(--c-mint);
+  --c-purple: var(--c-lilac);
+  --c-neon: var(--c-peach); /* warm glow accent */
 
   --container: 1200px;
   --pad-x: 40px;

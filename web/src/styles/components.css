@@ -127,9 +127,9 @@
   max-height: 820px;
   background: radial-gradient(
     circle at 50% 50%,
-    rgba(96, 226, 28, 0.16),
-    rgba(124, 127, 255, 0.12) 38%,
-    rgba(255, 119, 168, 0.08) 60%,
+    rgba(255, 122, 51, 0.16),
+    rgba(180, 157, 245, 0.12) 38%,
+    rgba(255, 143, 168, 0.08) 60%,
     transparent 72%
   );
   filter: blur(20px);
@@ -411,9 +411,9 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(96, 226, 28, 0.14),
-    rgba(124, 127, 255, 0.14),
-    rgba(255, 119, 168, 0.12),
+    rgba(255, 122, 51, 0.14),
+    rgba(180, 157, 245, 0.14),
+    rgba(255, 143, 168, 0.12),
     transparent
   );
   background-size: 250% 100%;
@@ -564,7 +564,7 @@
 .demo-flow-v { font-size: 14px; }
 .demo-flow-blob {
   position: absolute; inset: -20% -10% auto auto; width: 60%; height: 60%;
-  background: radial-gradient(circle, rgba(124,127,255,0.4), rgba(255,119,168,0.25) 50%, transparent 70%);
+  background: radial-gradient(circle, rgba(180, 157, 245,0.4), rgba(255, 143, 168,0.25) 50%, transparent 70%);
   filter: blur(30px); animation: aura-drift 12s ease-in-out infinite alternate;
 }
 
@@ -585,7 +585,7 @@
 .glow-cta { position: relative; border-radius: 32px; overflow: hidden; }
 .glow-cta-border {
   position: absolute; inset: 0; border-radius: 32px; padding: 2px;
-  background: conic-gradient(from 0deg, var(--c-neon), #b6f09a, var(--c-neon), #d9ffc7, var(--c-neon));
+  background: conic-gradient(from 0deg, var(--c-neon), #ffd9b6, var(--c-neon), #ffe6cf, var(--c-neon));
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
   animation: spin 8s linear infinite; opacity: 0.9;
@@ -595,7 +595,7 @@
   position: relative;
   border-radius: 30px;
   background:
-    radial-gradient(120% 120% at 50% 0%, rgba(96,226,28,0.12), transparent 55%),
+    radial-gradient(120% 120% at 50% 0%, rgba(255, 122, 51,0.12), transparent 55%),
     var(--surface);
   padding: 96px 40px;
   text-align: center;
@@ -656,9 +656,9 @@
   filter: blur(14px); opacity: 0.55;
   animation: capsule-float 16s ease-in-out infinite alternate;
 }
-.capsule-0 { background: linear-gradient(90deg, var(--c-neon), #d9ffc7); top: 8%; left: -4%; transform: rotate(-18deg); }
+.capsule-0 { background: linear-gradient(90deg, var(--c-neon), #ffe6cf); top: 8%; left: -4%; transform: rotate(-18deg); }
 .capsule-1 { background: linear-gradient(90deg, var(--c-orange), var(--c-pink)); top: 22%; right: -3%; transform: rotate(22deg); animation-delay: -3s; }
-.capsule-2 { background: linear-gradient(90deg, var(--c-purple), #d7d8ff); bottom: 14%; left: 4%; transform: rotate(12deg); animation-delay: -6s; }
+.capsule-2 { background: linear-gradient(90deg, var(--c-purple), #e6def9); bottom: 14%; left: 4%; transform: rotate(12deg); animation-delay: -6s; }
 .capsule-3 { background: linear-gradient(90deg, var(--c-pink), #ffd9e6); bottom: 6%; right: 8%; transform: rotate(-12deg); animation-delay: -2s; }
 .capsule-4 { background: linear-gradient(90deg, var(--c-green), var(--c-neon)); top: 46%; left: 42%; transform: rotate(28deg); animation-delay: -8s; opacity: 0.4; }
 @keyframes capsule-float {
@@ -679,7 +679,7 @@
 .footer-wordmark { position: relative; display: grid; place-items: center; padding: 30px 0 10px; }
 .footer-wordmark-bg {
   position: absolute; inset: 0;
-  background: linear-gradient(100deg, rgba(96,226,28,0.35), rgba(124,127,255,0.18) 45%, rgba(255,119,168,0.3) 90%);
+  background: linear-gradient(100deg, rgba(255, 122, 51,0.35), rgba(180, 157, 245,0.18) 45%, rgba(255, 143, 168,0.3) 90%);
   filter: blur(40px); opacity: 0.7;
 }
 .footer-wordmark span {

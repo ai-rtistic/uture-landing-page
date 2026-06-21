@@ -2,11 +2,13 @@ import { useEffect, useRef } from 'react'
 import { gsap, prefersReduced } from '../lib/gsap'
 
 const PALETTE = [
-  'var(--c-pink)',
-  'var(--c-blue)',
-  'var(--c-green)',
   'var(--c-orange)',
-  'var(--c-purple)',
+  'var(--c-peach)',
+  'var(--c-amber)',
+  'var(--c-rose)',
+  'var(--c-lilac)',
+  'var(--c-sky)',
+  'var(--c-mint)',
 ]
 const BASE = '#c7c5c2'
 
@@ -49,7 +51,7 @@ export function WordReveal({ text, className }: Props) {
       })
       // a few words pop into palette colour for the multicolour accent
       words.forEach((w, i) => {
-        if (i % 4 === 2) {
+        if (i % 3 === 1) {
           gsap.fromTo(
             w,
             { color: BASE },
