@@ -1,0 +1,282 @@
+/* ============================================================
+   Design system gallery (design-system.html)
+   ============================================================ */
+.ds {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* top bar */
+.ds-top {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(244, 243, 243, 0.82);
+  backdrop-filter: saturate(150%) blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+.ds-top-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.ds-brand {
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.02em;
+}
+.ds-brand span {
+  color: var(--muted);
+  font-weight: 500;
+}
+.ds-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+.ds-nav a:hover {
+  color: var(--text);
+}
+
+/* hero */
+.ds-hero {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 70px 32px 30px;
+}
+.ds-hero h1 {
+  font-size: clamp(32px, 5vw, 56px);
+  letter-spacing: -0.03em;
+}
+.ds-hero p {
+  margin-top: 18px;
+  max-width: 60ch;
+  color: var(--text-2);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.ds-main {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 32px 60px;
+}
+
+/* section */
+.ds-section {
+  padding: 60px 0;
+  border-top: 1px solid var(--border);
+}
+.ds-section-head {
+  margin-bottom: 26px;
+}
+.ds-kicker {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.ds-section-head h2 {
+  margin-top: 8px;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+}
+.ds-note {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.7;
+  margin: 0 0 24px;
+  max-width: 70ch;
+}
+.ds-note strong {
+  color: var(--text);
+}
+
+/* grids */
+.ds-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+}
+.ds-grid-2 {
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+}
+
+/* specimen card */
+.ds-spec {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.ds-spec-wide {
+  grid-column: 1 / -1;
+}
+.ds-spec-head {
+  padding: 16px 18px 0;
+}
+.ds-spec-head h3 {
+  font-size: 15px;
+  font-weight: 600;
+}
+.ds-spec-head p {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.ds-preview {
+  padding: 28px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  min-height: 120px;
+  background:
+    linear-gradient(var(--bg), var(--bg)) padding-box,
+    repeating-conic-gradient(#00000005 0% 25%, transparent 0% 50%) 0 / 18px 18px;
+}
+.ds-code {
+  margin: 0;
+  padding: 14px 18px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #e8e6e1;
+  background: #14130f;
+  white-space: pre-wrap;
+  border-top: 1px solid var(--border);
+}
+
+.ds-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+.ds-fixed {
+  width: 100%;
+  max-width: 420px;
+  height: 330px;
+}
+
+/* swatches */
+.ds-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.ds-swatch {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+.ds-chip {
+  width: 40px;
+  height: 40px;
+  border-radius: 9px;
+  flex: none;
+}
+.ds-chip-bordered {
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+.ds-swatch-name {
+  font-size: 12px;
+}
+.ds-swatch-hex {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* typography list */
+.ds-type-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.ds-type-row {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 24px;
+  align-items: baseline;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+.ds-type-tag {
+  font-size: 11px;
+  color: var(--muted);
+}
+@media (max-width: 640px) {
+  .ds-type-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+/* tint row */
+.ds-tint-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+.ds-scene-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.ds-quote {
+  font-size: clamp(22px, 3vw, 32px);
+  line-height: 1.45;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* guide */
+.ds-guide ol {
+  margin: 0 0 20px;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-2);
+  max-width: 80ch;
+}
+.ds-guide strong {
+  color: var(--text);
+}
+.ds-guide a {
+  color: var(--c-blue);
+  text-decoration: underline;
+}
+
+.ds-foot {
+  border-top: 1px solid var(--border);
+  padding: 30px 32px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+.ds-foot span {
+  font-weight: 700;
+  color: var(--text);
+}

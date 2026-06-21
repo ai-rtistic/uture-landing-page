@@ -1,16 +1,19 @@
 import { useEffect, useRef } from 'react'
 import { gsap, prefersReduced } from '../lib/gsap'
 
+// soft, low-saturation accents — twelvelabs tints only a few words, gently
 const PALETTE = [
-  'var(--c-orange)',
-  'var(--c-peach)',
-  'var(--c-amber)',
-  'var(--c-rose)',
-  'var(--c-lilac)',
-  'var(--c-sky)',
-  'var(--c-mint)',
+  '#f0a878',
+  '#f3c79a',
+  '#ecca8a',
+  '#f2a9bb',
+  '#c2b6ee',
+  '#a9c6ee',
+  '#9bd3ba',
 ]
 const BASE = '#c7c5c2'
+// which word indices get a colour accent (sparse, like the reference)
+const ACCENT_AT = (i: number) => i % 5 === 2
 
 type Props = {
   text: string
@@ -49,9 +52,9 @@ export function WordReveal({ text, className }: Props) {
           scrub: 0.6,
         },
       })
-      // a few words pop into palette colour for the multicolour accent
+      // a few words pop into a soft palette colour for the multicolour accent
       words.forEach((w, i) => {
-        if (i % 3 === 1) {
+        if (ACCENT_AT(i)) {
           gsap.fromTo(
             w,
             { color: BASE },
