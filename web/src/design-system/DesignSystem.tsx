@@ -69,24 +69,34 @@ const BRAND: [string, string][] = [
   ['--c-mint', '#5fcba0'],
 ]
 const NEUTRAL: [string, string][] = [
-  ['--bg', '#f4f3f3'],
+  ['--bg', '#f5f5f5'],
+  ['--panel', '#f4f3f3'],
   ['--surface', '#ffffff'],
   ['--surface-2', '#ececec'],
   ['--text', '#1d1c1b'],
   ['--text-2', '#3e3e3c'],
   ['--muted', '#8e8d8d'],
-  ['--border', '#d3d1cf'],
+  ['--border', '#e0e0e0'],
 ]
 const TINTS: Tint[] = ['peach', 'amber', 'sky', 'rose', 'lilac', 'mint', 'neutral']
 const NAV = [
   ['tokens', '색상·토큰'],
   ['type', '타이포그래피'],
+  ['layout', '간격·라운드·컨테이너'],
   ['controls', '버튼·배지'],
   ['primitives', '그래픽 프리미티브'],
   ['composed', '조합 그래픽'],
   ['text-fx', '텍스트 효과'],
-  ['motion', '모션(Remotion)'],
+  ['motion', '모션·배경영상'],
   ['usage', '사용 가이드'],
+]
+
+const SPACING = [4, 8, 12, 16, 20, 24, 40, 80, 100]
+const RADII: [string, string][] = [
+  ['pill', '9px'],
+  ['button', '14px'],
+  ['tile', '12–16px'],
+  ['card', '22px'],
 ]
 
 /* ---------- page ---------- */
@@ -153,14 +163,14 @@ export function DesignSystem() {
           <p className="ds-note">한글 Pretendard · 라틴/숫자 Geist · 코드 Geist Mono.</p>
           <div className="ds-type-list">
             <div className="ds-type-row">
-              <span className="ds-type-tag mono">Display / 56–78px</span>
-              <span style={{ fontSize: 56, fontWeight: 600, letterSpacing: '-0.03em', lineHeight: 1.05 }}>
+              <span className="ds-type-tag mono">Display / 56px · LH64 · LS-1.12</span>
+              <span style={{ fontSize: 56, fontWeight: 600, letterSpacing: '-0.02em', lineHeight: '64px' }}>
                 AI로 일하는 조직으로.
               </span>
             </div>
             <div className="ds-type-row">
-              <span className="ds-type-tag mono">H2 / 40–50px</span>
-              <span style={{ fontSize: 40, fontWeight: 600, letterSpacing: '-0.025em' }}>
+              <span className="ds-type-tag mono">Statement / 48px · LH56 · LS-0.96</span>
+              <span style={{ fontSize: 48, fontWeight: 600, letterSpacing: '-0.02em', lineHeight: '56px' }}>
                 교육에서 도구까지
               </span>
             </div>
@@ -175,8 +185,8 @@ export function DesignSystem() {
               </span>
             </div>
             <div className="ds-type-row">
-              <span className="ds-type-tag mono">Caption / 13px</span>
-              <span style={{ fontSize: 13, color: 'var(--muted)' }}>IT · FinTech</span>
+              <span className="ds-type-tag mono">Caption / 12px · LS0.24</span>
+              <span style={{ fontSize: 12, letterSpacing: '0.02em', color: 'var(--muted)' }}>IT · FinTech</span>
             </div>
             <div className="ds-type-row">
               <span className="ds-type-tag mono">Mono / Geist</span>
@@ -185,16 +195,67 @@ export function DesignSystem() {
           </div>
         </Section>
 
-        {/* BUTTONS + BADGES */}
-        <Section id="controls" kicker="03 · Components" title="버튼 · 배지">
+        {/* LAYOUT */}
+        <Section id="layout" kicker="03 · Foundations" title="간격 · 라운드 · 컨테이너">
+          <p className="ds-note">
+            twelvelabs 측정값: 콘텐츠 컨테이너 <strong>max 1600px</strong> / 좌우 패딩{' '}
+            <strong>40px</strong> / 텍스트 컬럼 <strong>640px</strong> · 섹션 세로 패딩{' '}
+            <strong>80–100px</strong> · 8px 베이스 스페이싱.
+          </p>
           <div className="ds-grid">
-            <Specimen title="Button — dark" code={`<Button href="#">AX 도입 문의하기</Button>`}>
+            <Specimen title="Spacing scale (px)" code={`4 · 8 · 12 · 16 · 20 · 24 · 40 · 80 · 100`} wide>
+              <div className="ds-space-row">
+                {SPACING.map((s) => (
+                  <div className="ds-space-item" key={s}>
+                    <span className="ds-space-bar" style={{ width: s, height: s }} />
+                    <span className="ds-space-label mono">{s}</span>
+                  </div>
+                ))}
+              </div>
+            </Specimen>
+            <Specimen title="Radius scale" code={`--r-pill 9 · --r-btn 14 · --r-card 22`}>
+              <div className="ds-row">
+                {RADII.map(([n, v]) => (
+                  <div className="ds-radius-item" key={n}>
+                    <span className="ds-radius-box" style={{ borderRadius: v.split('–')[0] }} />
+                    <span className="ds-space-label mono">{n} · {v}</span>
+                  </div>
+                ))}
+              </div>
+            </Specimen>
+            <Specimen title="Container" desc="넓은 컨테이너 + 좁은 텍스트 컬럼" code={`max-width: 1600px; padding: 0 40px;\n/* text column ~640px */`}>
+              <div className="ds-container-demo">
+                <div className="ds-container-outer">
+                  <span className="mono">1600px</span>
+                  <div className="ds-container-inner"><span className="mono">text 640</span></div>
+                </div>
+              </div>
+            </Specimen>
+          </div>
+        </Section>
+
+        {/* BUTTONS + BADGES */}
+        <Section id="controls" kicker="04 · Components" title="버튼 · 배지">
+          <div className="ds-grid">
+            <Specimen
+              title="Button — dark"
+              desc="bg #1d1c1b · 텍스트 16px/LH24/LS0.16px · radius 14px · height 44px · padding 12–18px · gap 8px · ↗"
+              code={`<Button href="#">AX 도입 문의하기</Button>`}
+            >
               <Button href="#dummy">AX 도입 문의하기</Button>
             </Specimen>
-            <Specimen title="Button — ghost" code={`<Button href="#" variant="ghost">유쳐의 방식 보기</Button>`}>
+            <Specimen
+              title="Button — ghost"
+              desc="투명 배경 · 1px #e0e0e0 보더 · 나머지 dark와 동일"
+              code={`<Button href="#" variant="ghost">유쳐의 방식 보기</Button>`}
+            >
               <Button href="#dummy" variant="ghost">유쳐의 방식 보기</Button>
             </Specimen>
-            <Specimen title="Pill / badge" code={`<Pill>고객 이야기</Pill>`}>
+            <Specimen
+              title="Pill / badge"
+              desc="12px / LS0.24px · radius 9px · padding 6×12 · 1px #e0e0e0 · bg #f4f3f3"
+              code={`<Pill>고객 이야기</Pill>`}
+            >
               <Pill>고객 이야기</Pill>
             </Specimen>
             <Specimen title="Arrow" code={`<Arrow />  ·  <Arrow up={false} />`}>
@@ -207,7 +268,7 @@ export function DesignSystem() {
         </Section>
 
         {/* PRIMITIVES */}
-        <Section id="primitives" kicker="04 · Spot graphics" title="그래픽 프리미티브">
+        <Section id="primitives" kicker="05 · Spot graphics" title="그래픽 프리미티브">
           <p className="ds-note">
             모든 스팟 그래픽은 이 프리미티브 조합으로 만듭니다. (`web/src/components/graphics/primitives.tsx`)
           </p>
@@ -268,7 +329,7 @@ export function DesignSystem() {
         </Section>
 
         {/* COMPOSED */}
-        <Section id="composed" kicker="05 · Spot graphics" title="조합 그래픽">
+        <Section id="composed" kicker="06 · Spot graphics" title="조합 그래픽">
           <p className="ds-note">프리미티브를 조합한 완성 그래픽. 섹션/탭/카드에 그대로 사용.</p>
           <div className="ds-grid ds-grid-2">
             <Specimen title="PlanGraphic" code={`<PlanGraphic />`}>
@@ -293,7 +354,7 @@ export function DesignSystem() {
         </Section>
 
         {/* TEXT FX */}
-        <Section id="text-fx" kicker="06 · Motion" title="텍스트 효과">
+        <Section id="text-fx" kicker="07 · Motion" title="텍스트 효과">
           <Specimen
             title="WordReveal — 단어 컬러 리빌"
             desc="스크롤 진행에 따라 회색 → 본문색으로 채워지고, 일부 단어만 옅은 색 강조. (아래로 스크롤하면 재생)"
@@ -310,7 +371,14 @@ export function DesignSystem() {
         </Section>
 
         {/* MOTION */}
-        <Section id="motion" kicker="07 · Motion" title="모션 (Remotion)">
+        <Section id="motion" kicker="08 · Motion" title="모션 · 배경 영상">
+          <p className="ds-note">
+            <strong>측정 결과 twelvelabs의 배경 모션은 압축 MP4 <code>{'<video autoplay loop muted playsinline>'}</code></strong>
+            (object-fit: cover, CDN 호스팅)입니다. 유쳐도 동일하게 — 가벼운 모션은 CSS/GSAP,
+            무거운 모션은 Remotion(<span className="mono">motion/</span>)으로 만들어 압축 WebM/MP4로 렌더 →
+            <span className="mono"> web/public/assets/motion/</span>에 출력 → <code>MotionGraphic</code>으로 임베드.
+            정적 비주얼은 <code>{'<img loading="lazy">'}</code>. 그라디언트 블롭은 radial-gradient.
+          </p>
           <Specimen
             title="MotionGraphic — 렌더된 영상"
             desc="무거운 모션은 Remotion(motion/)으로 만들어 WebM 렌더 후 <video>로 임베드."
@@ -323,7 +391,7 @@ export function DesignSystem() {
         </Section>
 
         {/* USAGE */}
-        <Section id="usage" kicker="08 · Guide" title="사용 가이드">
+        <Section id="usage" kicker="09 · Guide" title="사용 가이드">
           <div className="ds-guide">
             <ol>
               <li>

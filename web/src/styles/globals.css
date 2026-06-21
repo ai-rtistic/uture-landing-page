@@ -4,13 +4,16 @@
    유쳐 — design tokens (twelvelabs.io reference, 1:1)
    ============================================================ */
 :root {
-  --bg: #f4f3f3;
+  /* ---- colour (measured from twelvelabs.io live) ---- */
+  --bg: #f5f5f5; /* body */
+  --panel: #f4f3f3; /* sections / badges */
   --surface: #ffffff;
   --surface-2: #ececec;
   --text: #1d1c1b;
   --text-2: #3e3e3c;
   --muted: #8e8d8d;
-  --border: #d3d1cf;
+  --border: #e0e0e0; /* hairline divider */
+  --border-strong: #d3d1cf;
   --border-2: #dbdad8;
 
   /* ---- 유쳐 brand palette — orange-led, soft/pastel, one tonal family ---- */
@@ -31,8 +34,27 @@
   --c-purple: var(--c-lilac);
   --c-neon: var(--c-peach); /* warm glow accent */
 
-  --container: 1200px;
+  /* ---- layout (measured) ---- */
+  --container: 1600px;
   --pad-x: 40px;
+  --text-col: 640px; /* narrow text column inside wide container */
+  --section-y: 100px;
+
+  /* ---- type scale (measured px / line-height / letter-spacing) ---- */
+  --fs-display: clamp(36px, 5vw, 56px);
+  --lh-display: 1.07; /* 64/56 */
+  --fs-statement: clamp(28px, 4vw, 48px);
+  --lh-statement: 1.16; /* 56/48 */
+  --fs-title: 20px;
+  --fs-body: 16px;
+  --lh-body: 1.5; /* 24/16 */
+  --fs-caption: 12px;
+  --ls-tight: -0.02em;
+
+  /* ---- radius (measured) ---- */
+  --r-btn: 14px;
+  --r-pill: 9px;
+  --r-card: 22px;
 
   --font-sans: 'Pretendard Variable', Pretendard, 'Geist', -apple-system,
     BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', sans-serif;
@@ -104,7 +126,7 @@ button {
 
 .section {
   position: relative;
-  padding-block: 140px;
+  padding-block: var(--section-y);
 }
 
 .hairline {
@@ -128,11 +150,12 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 14px;
+  padding: 6px 12px;
   border: 1px solid var(--border);
-  border-radius: 16px;
-  background: var(--surface);
-  font-size: 13px;
+  border-radius: var(--r-pill);
+  background: var(--panel);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.02em;
   font-weight: 500;
   color: var(--text);
 }
@@ -142,9 +165,10 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 13px 20px;
-  border-radius: 14px;
-  font-size: 15px;
+  padding: 12px 18px;
+  border-radius: var(--r-btn);
+  font-size: var(--fs-body);
+  letter-spacing: 0.01em;
   font-weight: 600;
   border: 1px solid transparent;
   transition: transform 0.25s var(--ease), background 0.25s var(--ease),

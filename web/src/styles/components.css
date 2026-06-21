@@ -94,9 +94,9 @@
   margin-bottom: 30px;
 }
 .hero-title {
-  font-size: clamp(40px, 6.2vw, 78px);
-  line-height: 1.02;
-  letter-spacing: -0.03em;
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-tight);
   font-weight: 600;
   max-width: 16ch;
 }
@@ -155,7 +155,7 @@
   align-items: start;
 }
 .split-title {
-  font-size: clamp(30px, 3.6vw, 50px);
+  font-size: var(--fs-statement);
   line-height: 1.08;
   letter-spacing: -0.03em;
 }
@@ -191,7 +191,7 @@
   border-bottom: 1px solid var(--border);
 }
 .narrative-title {
-  font-size: clamp(30px, 3.6vw, 50px);
+  font-size: var(--fs-statement);
   line-height: 1.08;
 }
 .narrative-title span { display: block; }
@@ -242,7 +242,7 @@
 }
 .narrative-text {
   margin: 0;
-  font-size: clamp(24px, 3.2vw, 40px);
+  font-size: var(--fs-statement);
   line-height: 1.4;
   letter-spacing: -0.02em;
   font-weight: 500;
