@@ -8,8 +8,17 @@ AI·AX 에이전시 "유쳐" 랜딩페이지를 **`references/`의 레퍼런스 
 |------|------|------|
 | `legacy/` | 기존(구) 랜딩페이지 소스 — 콘텐츠/문구/에셋 원본 | **읽기 전용. 절대 수정·삭제 금지.** 새 사이트 콘텐츠는 여기서 가져온다. |
 | `references/reference.html` | twelvelabs.io/ko 캡처본 (2.9MB, minified) | 디자인 정답지. 실제 인터랙션은 라이브 사이트로 확인. |
-| `web/` | **새 리디자인 소스 코드 (작업 결과물)** | 모든 신규 코드·에셋은 여기에. |
+| `web/` | **새 리디자인 소스 코드 (Vite+React+TS, 작업 결과물)** | 모든 신규 코드·에셋은 여기에. |
+| `motion/` | **Remotion 프로젝트** — 영상으로 렌더할 모션 그래픽 | 렌더 결과(WebM)는 `web/public/assets/motion/`으로 출력. |
+| `.claude/skills/` | 프로젝트 전용 스킬 (`uture-spot-graphics`) | 추적됨(커밋). |
+| `.agents/skills/` | 설치한 외부 스킬 (`remotion-best-practices`) | skills.sh로 설치. |
 | 루트(`/`) | `AGENTS.md`, `CLAUDE.md`, `.gitignore` 등 **필수 파일만** | 그 외 파일은 만들지 말고 하위 폴더로 분리. |
+
+## 그래픽 시스템 & 스킬
+
+- **스팟 그래픽**(노드·커넥터·타일·글로우 패널·씬스트립·임베딩 닷클라우드 등 추상 UI 일러스트): `web/src/components/graphics/`. 새로 만들 땐 **`uture-spot-graphics` 스킬**을 따른다(프리미티브 재사용, 브랜드 톤 유지).
+- **모션/영상 요소**: 기본은 in-page SVG+GSAP. 무거운 모션은 `motion/`에서 Remotion으로 만들어 투명/패널 WebM으로 렌더 → `<video>`로 임베드(`web/src/components/graphics/MotionGraphic.tsx`). 예: Plan 탭 데모.
+- **브랜드 색**: 오렌지 메인 + 톤 일관 파스텔 7색. `web/src/styles/globals.css` `:root` 토큰만 사용.
 
 ## 루트 정리 원칙
 

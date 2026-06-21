@@ -1,6 +1,6 @@
 import { features } from '../data/content'
 import { Container } from '../ui/primitives'
-import { Icon } from '../ui/Icon'
+import { SceneGraphic } from './graphics/composed'
 
 export function FeatureCards() {
   return (
@@ -9,8 +9,8 @@ export function FeatureCards() {
         <div className="features-grid">
           {features.items.map((f, i) => (
             <div className="feature-card reveal" key={f.title} data-delay={i * 90}>
-              <div className="feature-icon">
-                <Icon name={f.icon as never} />
+              <div className="feature-art">
+                <SceneGraphic name={f.icon} />
               </div>
               <h3 className="feature-title">{f.title}</h3>
               <p className="feature-desc">{f.desc}</p>

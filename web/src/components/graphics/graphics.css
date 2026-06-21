@@ -1,0 +1,241 @@
+/* ============================================================
+   Spot-graphics — branded UI illustration primitives
+   (paired with components/graphics/*.tsx)
+   ============================================================ */
+
+.g-frame {
+  --g-accent: var(--c-orange);
+  --g-glow: rgba(255, 122, 51, 0.22);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  border-radius: 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 30px;
+}
+.g-tint-peach { --g-accent: var(--c-peach); --g-glow: rgba(255, 158, 107, 0.28); }
+.g-tint-amber { --g-accent: var(--c-amber); --g-glow: rgba(239, 179, 74, 0.3); }
+.g-tint-sky { --g-accent: var(--c-sky); --g-glow: rgba(130, 180, 240, 0.3); }
+.g-tint-rose { --g-accent: var(--c-rose); --g-glow: rgba(255, 143, 168, 0.28); }
+.g-tint-lilac { --g-accent: var(--c-lilac); --g-glow: rgba(180, 157, 245, 0.3); }
+.g-tint-mint { --g-accent: var(--c-mint); --g-glow: rgba(95, 203, 160, 0.28); }
+.g-tint-neutral { --g-accent: var(--muted); --g-glow: rgba(0, 0, 0, 0.05); }
+
+.g-glow {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  background: radial-gradient(circle at 50% 45%, var(--g-glow), transparent 68%);
+  filter: blur(8px);
+  animation: g-glow-pulse 6s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes g-glow-pulse {
+  from { opacity: 0.7; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1.08); }
+}
+.g-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 26px 26px;
+  opacity: 0.35;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 75%);
+  pointer-events: none;
+}
+.g-stage { position: relative; z-index: 1; width: 100%; display: grid; place-items: center; }
+.g-stack { display: flex; flex-direction: column; align-items: center; }
+
+/* ---- node (pill chip) ---- */
+.g-node {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--surface);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  box-shadow: 0 6px 16px -12px rgba(29, 28, 27, 0.5);
+  white-space: nowrap;
+}
+.g-node-ico { display: grid; place-items: center; color: var(--text-2); }
+.g-node-dark { background: var(--text); color: #fff; border-color: var(--text); }
+.g-node-dark .g-node-ico { color: #fff; }
+.g-node-ghost { background: transparent; box-shadow: none; }
+
+/* ---- connector ---- */
+.g-conn {
+  width: 1.5px;
+  background: var(--border);
+  position: relative;
+  overflow: hidden;
+  flex: none;
+  margin: 4px 0;
+}
+.g-conn.is-flow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent, var(--g-accent), transparent);
+  height: 60%;
+  animation: g-flow 1.8s linear infinite;
+}
+@keyframes g-flow {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(260%); }
+}
+
+/* ---- tiles ---- */
+.g-grid-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: min(360px, 80%);
+}
+.g-tile {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  overflow: hidden;
+}
+.g-tile.is-active {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--g-accent), color-mix(in srgb, var(--g-accent) 40%, #fff));
+  color: #fff;
+  box-shadow: 0 0 0 1px var(--g-accent), 0 10px 30px -12px var(--g-accent);
+  animation: g-tile-pulse 2.6s ease-in-out infinite;
+}
+@keyframes g-tile-pulse {
+  0%, 100% { filter: saturate(1); }
+  50% { filter: saturate(1.25) brightness(1.05); }
+}
+.g-tile-ico { display: grid; place-items: center; }
+.g-tile-tag {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--text);
+}
+.g-tile-thumb { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---- strip (scene/waveform bars) ---- */
+.g-strip { display: flex; gap: 6px; width: 100%; max-width: 230px; }
+.g-bar {
+  height: 16px;
+  border-radius: 5px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  flex-basis: 0;
+}
+.g-bar.is-fill { background: var(--g-accent); border-color: transparent; }
+.g-strip.is-dashed .g-bar { border-style: dashed; background: transparent; }
+.g-strip.is-dashed .g-bar.is-fill { background: var(--g-accent); border-style: solid; }
+
+/* ---- embedding dots ---- */
+.g-embed { display: flex; align-items: center; gap: 16px; width: 100%; justify-content: center; }
+.g-embed-inputs { display: flex; flex-direction: column; gap: 10px; }
+.g-bracket {
+  width: 22px;
+  align-self: stretch;
+  margin: 18px 0;
+  border: 1px solid var(--border);
+  border-left: none;
+  border-radius: 0 10px 10px 0;
+  flex: none;
+}
+.g-dots {
+  position: relative;
+  width: 190px;
+  height: 190px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.g-dot {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+  background: var(--text);
+  transform: translate(-50%, -50%);
+  animation: g-dot-float 4s ease-in-out infinite alternate;
+}
+@keyframes g-dot-float {
+  from { transform: translate(-50%, -50%); }
+  to { transform: translate(-50%, -64%); }
+}
+.g-dots-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--g-accent);
+  box-shadow: 0 0 0 6px var(--g-glow);
+}
+
+/* ---- document (analyze) ---- */
+.g-doc {
+  position: relative;
+  width: min(260px, 78%);
+  padding: 22px 20px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.g-doc-spark { color: var(--g-accent); margin-bottom: 4px; }
+
+/* ---- feature scene grid ---- */
+.g-scene-grid { display: flex; flex-direction: column; gap: 9px; width: 100%; align-items: center; }
+
+@media (max-width: 540px) {
+  .g-frame { min-height: 240px; padding: 22px; }
+  .g-grid-tiles { width: 90%; }
+}
+
+/* ---- Remotion video embed (full-bleed framed panel) ---- */
+.g-video-frame {
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.g-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}

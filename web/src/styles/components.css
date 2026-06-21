@@ -315,32 +315,34 @@
 .features-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 }
 .feature-card {
-  padding: 0 32px;
-  border-left: 1px solid var(--border);
-  min-height: 280px;
   display: flex;
   flex-direction: column;
 }
-.feature-card:first-child { border-left: none; padding-left: 0; }
-.feature-icon { color: var(--text); margin-bottom: auto; padding-top: 6px; }
+.feature-art {
+  margin-bottom: 22px;
+}
 .feature-title {
-  font-size: 21px; font-weight: 600; margin-top: 60px;
+  font-size: 19px;
+  font-weight: 600;
 }
 .feature-desc {
-  margin-top: 14px; font-size: 14px; line-height: 1.65; color: var(--text-2);
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text-2);
 }
 @media (max-width: 880px) {
-  .features-grid { grid-template-columns: repeat(2, 1fr); gap: 40px 0; }
-  .feature-card { min-height: 0; }
-  .feature-card:nth-child(odd) { border-left: none; padding-left: 0; }
-  .feature-card:nth-child(even) { padding-right: 0; }
+  .features-grid { grid-template-columns: repeat(2, 1fr); gap: 30px 20px; }
 }
 @media (max-width: 520px) {
   .features-grid { grid-template-columns: 1fr; }
-  .feature-card { border-left: none; padding: 0; }
 }
+
+/* compact graphic frame for feature cards */
+.g-frame.is-compact { min-height: 160px; padding: 22px; border-radius: 18px; }
 
 /* ---------- FDE pipeline ---------- */
 .pipeline {

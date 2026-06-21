@@ -8,5 +8,9 @@ uture-*-fixed.png
 uture-logo-fix*.png
 
 
-# Local Claude Code config
-.claude/
+# Local Claude Code config — ignore everything except project skills
+.claude/*
+!.claude/skills/
+
+# Installed agent skills: keep markdown, drop any deps
+.agents/**/node_modules/

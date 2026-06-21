@@ -2,10 +2,13 @@ import { useState } from 'react'
 import { serviceTabs } from '../data/content'
 import { Container } from '../ui/primitives'
 import { Icon } from '../ui/Icon'
+import { serviceGraphics } from './graphics/composed'
+import { MotionGraphic } from './graphics/MotionGraphic'
 
 export function ServiceTabs() {
   const [active, setActive] = useState(0)
   const tab = serviceTabs.tabs[active]
+  const Graphic = serviceGraphics[active] ?? serviceGraphics[0]
 
   return (
     <section className="section services" id="services">
@@ -26,7 +29,11 @@ export function ServiceTabs() {
 
           <div className="services-body">
             <div className="services-demo" key={tab.id}>
-              <ServiceDemo index={active} />
+              {active === 0 ? (
+                <MotionGraphic src="/assets/motion/spot-search.webm" />
+              ) : (
+                <Graphic />
+              )}
             </div>
             <div className="services-text">
               <h2 className="services-title">
@@ -41,45 +48,4 @@ export function ServiceTabs() {
       </Container>
     </section>
   )
-}
-
-function ServiceDemo({ index }: { index: number }) {
-  const tab = serviceTabs.tabs[index]
-  if (tab.items) {
-    return (
-      <div className="demo-plan">
-        {tab.items.map((it, i) => (
-          <div className={`demo-row ${it.done ? 'is-done' : ''}`} key={i} style={{ animationDelay: `${i * 90}ms` }}>
-            <span className="demo-check">{it.done ? '✓' : '+'}</span>
-            <span>{it.text}</span>
-          </div>
-        ))}
-      </div>
-    )
-  }
-  if (tab.code) {
-    return (
-      <pre className="demo-code mono">
-        {tab.code.map((line, i) => (
-          <div key={i} style={{ animationDelay: `${i * 60}ms` }}>
-            {line || ' '}
-          </div>
-        ))}
-      </pre>
-    )
-  }
-  if (tab.flow) {
-    return (
-      <div className="demo-flow">
-        {tab.flow.map((f, i) => (
-          <div className="demo-flow-step" key={i} style={{ animationDelay: `${i * 120}ms` }}>
-            <span className="demo-flow-k mono">{f.k}</span>
-            <span className="demo-flow-v">{f.v}</span>
-          </div>
-        ))}
-        <div className="demo-flow-blob" aria-hidden />
-      </div>
-    )
-  }
-  return null
 }
