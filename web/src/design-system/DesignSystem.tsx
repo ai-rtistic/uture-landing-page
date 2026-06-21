@@ -258,6 +258,15 @@ export function DesignSystem() {
             >
               <Pill>고객 이야기</Pill>
             </Specimen>
+            <Specimen
+              title="Tag — meta 라벨 (.tag)"
+              desc="배지의 회색 형제 · 같은 DNA(radius7·12px·LS0.25). 프로세스 태그·노드 태그·기간 등 보조 라벨은 전부 이걸로."
+              code={`<span className="tag">EDUCATE</span>`}
+            >
+              <span className="tag">EDUCATE</span>
+              <span className="tag">~ 5일</span>
+              <span className="tag">보안 검토</span>
+            </Specimen>
             <Specimen title="Arrow" code={`<Arrow />  ·  <Arrow up={false} />`}>
               <span style={{ display: 'inline-flex', gap: 16 }}>
                 <Arrow />

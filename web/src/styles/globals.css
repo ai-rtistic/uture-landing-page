@@ -53,8 +53,9 @@
 
   /* ---- radius (measured) ---- */
   --r-btn: 14px;
-  --r-pill: 7px;
-  --r-card: 22px;
+  --r-pill: 7px; /* labels · tags · badges */
+  --r-node: 10px; /* graphic nodes · tiles */
+  --r-card: 22px; /* cards · graphic frames */
 
   --font-sans: 'Pretendard Variable', Pretendard, 'Geist', -apple-system,
     BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', sans-serif;
@@ -160,6 +161,23 @@ button {
   letter-spacing: 0.25px;
   font-weight: 400;
   color: var(--text);
+}
+
+/* muted sibling of .pill — meta labels / tags / in-graphic captions.
+   same DNA (radius 7 · 12px · LS0.25 · 1px border), greyer. */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2.5px 6px 1px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  background: transparent;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.25px;
+  font-weight: 400;
+  color: var(--text-2);
 }
 
 /* ---------- buttons ---------- */
