@@ -1,11 +1,13 @@
 import { hero } from '../data/content'
-import { Button } from '../ui/primitives'
+import { Button, Pill } from '../ui/primitives'
 
 export function Hero() {
   return (
     <section className="hero" id="top">
       <div className="container hero-inner">
-        <p className="hero-badge reveal">{hero.badge}</p>
+        <div className="hero-badge reveal">
+          <Pill>{hero.badge}</Pill>
+        </div>
         <h1 className="hero-title">
           {hero.titleLines.map((line, i) => (
             <span

@@ -83,14 +83,6 @@
   z-index: 2;
 }
 .hero-badge {
-  display: inline-block;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-2);
-  border: 1px solid var(--border);
-  background: var(--surface);
-  border-radius: 18px;
-  padding: 8px 16px;
   margin-bottom: 30px;
 }
 .hero-title {

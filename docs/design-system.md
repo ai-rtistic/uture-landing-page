@@ -69,9 +69,11 @@ twelvelabs는 디스플레이체 `Milling Duplex 1mm`(커스텀) 사용 → 유�
 | 보더/섀도우 | 없음 | `inset 0 0 0 1px rgba(0,0,0,.1)` | 1px `#e0e0e0` |
 | 아이콘 | 우측 화살표 ↗ (14px) | ↗ | ↗ |
 
-### 2.2 배지 / Pill (measured)
-- 텍스트 12px / LS 0.24px / `#1d1c1b`, 배경 `#f4f3f3` 또는 흰색.
-- radius ~7px, padding ~`3px 6px`(작은 라벨) ~ `8px 14px`(큰 배지), 1px `#e0e0e0` 보더.
+### 2.2 배지 / Pill (measured 1:1 — "고객 이야기")
+- 텍스트 **12px / LH 20px / weight 400 / LS 0.25px / `#1d1c1b`**.
+- 배경 **투명**, 보더 **1px solid `#1d1c1b`**(다크, 회색 아님), radius **7px**.
+- padding **2.5px 6px 1px**, height 24px, display flex / align center.
+- ⚠️ Framer 원본은 보더를 `::after` 가상요소로 그림. 유쳐는 `.pill` 클래스로 동일 스펙 구현.
 
 ### 2.3 Nav
 - 링크 16px / weight400 / LH24 / `#1d1c1b`, 링크 간격 ~30px.

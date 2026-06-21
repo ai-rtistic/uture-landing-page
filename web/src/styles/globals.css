@@ -53,7 +53,7 @@
 
   /* ---- radius (measured) ---- */
   --r-btn: 14px;
-  --r-pill: 9px;
+  --r-pill: 7px;
   --r-card: 22px;
 
   --font-sans: 'Pretendard Variable', Pretendard, 'Geist', -apple-system,
@@ -147,16 +147,18 @@ button {
 
 /* ---------- pill / badge ---------- */
 .pill {
+  /* measured 1:1 from twelvelabs "고객 이야기" badge */
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
-  border: 1px solid var(--border);
+  padding: 2.5px 6px 1px;
+  border: 1px solid var(--text);
   border-radius: var(--r-pill);
-  background: var(--panel);
-  font-size: var(--fs-caption);
-  letter-spacing: 0.02em;
-  font-weight: 500;
+  background: transparent;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  font-weight: 400;
   color: var(--text);
 }
 

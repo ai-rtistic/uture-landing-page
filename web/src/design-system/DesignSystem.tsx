@@ -93,7 +93,7 @@ const NAV = [
 
 const SPACING = [4, 8, 12, 16, 20, 24, 40, 80, 100]
 const RADII: [string, string][] = [
-  ['pill', '9px'],
+  ['pill', '7px'],
   ['button', '14px'],
   ['tile', '12–16px'],
   ['card', '22px'],
@@ -253,7 +253,7 @@ export function DesignSystem() {
             </Specimen>
             <Specimen
               title="Pill / badge"
-              desc="12px / LS0.24px · radius 9px · padding 6×12 · 1px #e0e0e0 · bg #f4f3f3"
+              desc="측정 1:1 — 12px/LH20 · weight400 · LS0.25 · radius 7px · padding 2.5/6/1 · 1px #1d1c1b · bg 투명 · h24"
               code={`<Pill>고객 이야기</Pill>`}
             >
               <Pill>고객 이야기</Pill>
