@@ -333,6 +333,7 @@ export const footer = {
   legal: [
     { label: '이용약관', href: '#' },
     { label: '개인정보처리방침', href: '#' },
+    { label: '디자인 시스템', href: '/design-system.html' },
   ],
   copyright: '© 2026 아이솔. All rights reserved.',
 }

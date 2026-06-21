@@ -60,24 +60,20 @@ function Section({ id, kicker, title, children }: { id: string; kicker: string; 
 
 /* ---------- data ---------- */
 
-const BRAND: [string, string][] = [
-  ['--c-orange', '#ff7a33'],
-  ['--c-peach', '#ff9e6b'],
-  ['--c-amber', '#efb34a'],
-  ['--c-rose', '#ff8fa8'],
-  ['--c-lilac', '#b49df5'],
-  ['--c-sky', '#82b4f0'],
-  ['--c-mint', '#5fcba0'],
-]
-const NEUTRAL: [string, string][] = [
-  ['--bg', '#f5f5f5'],
-  ['--panel', '#f4f3f3'],
-  ['--surface', '#ffffff'],
-  ['--surface-2', '#ececec'],
-  ['--text', '#1d1c1b'],
-  ['--text-2', '#3e3e3c'],
-  ['--muted', '#8e8d8d'],
-  ['--border', '#e0e0e0'],
+// Read the REAL token values from CSS at runtime so the gallery can never
+// drift from globals.css — this page is the living source, not a copy.
+const cssVar = (name: string) =>
+  typeof window === 'undefined'
+    ? ''
+    : getComputedStyle(document.documentElement).getPropertyValue(name).trim()
+
+const BRAND_KEYS = ['--c-orange', '--c-peach', '--c-amber', '--c-rose', '--c-lilac', '--c-sky', '--c-mint']
+const NEUTRAL_KEYS = ['--bg', '--panel', '--surface', '--surface-2', '--text', '--text-2', '--muted', '--border']
+const RADII_KEYS: [string, string][] = [
+  ['pill', '--r-pill'],
+  ['node', '--r-node'],
+  ['button', '--r-btn'],
+  ['card', '--r-card'],
 ]
 const TINTS: Tint[] = ['peach', 'amber', 'sky', 'rose', 'lilac', 'mint', 'neutral']
 const NAV = [
@@ -93,16 +89,14 @@ const NAV = [
 ]
 
 const SPACING = [4, 8, 12, 16, 20, 24, 40, 80, 100]
-const RADII: [string, string][] = [
-  ['pill', '7px'],
-  ['button', '14px'],
-  ['tile', '12–16px'],
-  ['card', '22px'],
-]
 
 /* ---------- page ---------- */
 
 export function DesignSystem() {
+  const BRAND = BRAND_KEYS.map((k) => [k, cssVar(k)] as const)
+  const NEUTRAL = NEUTRAL_KEYS.map((k) => [k, cssVar(k)] as const)
+  const RADII = RADII_KEYS.map(([label, k]) => [label, cssVar(k)] as const)
+
   return (
     <div className="ds">
       <header className="ds-top">
@@ -123,8 +117,9 @@ export function DesignSystem() {
       <div className="ds-hero">
         <h1>유쳐 디자인 시스템</h1>
         <p>
-          랜딩 사이트를 구성하는 토큰·컴포넌트·그래픽을 한곳에서 미리보기와 사용법으로 정리했습니다.
-          새 요소를 만들 땐 여기 컴포넌트를 재사용하고, 색은 토큰만 사용합니다.
+          이 페이지는 문서가 아니라 <strong>실제 코드/토큰을 그대로 렌더하는 살아있는 디자인 시스템</strong>입니다.
+          색·라운드 값은 사이트와 동일한 CSS 변수를 직접 읽어 표시하므로 절대 어긋나지 않습니다.
+          새 요소는 여기 컴포넌트를 재사용하고, 색은 토큰만 사용하세요.
         </p>
       </div>
 
