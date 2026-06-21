@@ -67,7 +67,9 @@ export function WorkflowGraphic() {
   )
 }
 
-export const serviceGraphics = [PlanGraphic, BuildGraphic, WorkflowGraphic]
+// service tabs now show concrete AX assets (검색 / 생성 / 자동화);
+// tab 0 (검색) uses the rendered Remotion video, others use these SVG assets.
+export const serviceGraphics = [AssetSearchGraphic, AssetReportGraphic, AssetPipelineGraphic]
 
 /* ---- Feature-card scene illustrations (tinted mini panels) ---- */
 
