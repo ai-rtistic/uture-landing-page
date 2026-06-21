@@ -5,7 +5,18 @@ description: Use when adding or editing the uture landing site's abstract UI "sp
 
 # Uture Spot Graphics
 
-Branded twelvelabs-style "spot graphics" = abstract UI illustrations built from a tiny shared vocabulary, themed with the uture pastel palette. Two delivery paths:
+Branded twelvelabs-style "spot graphics" = abstract UI illustrations built from a tiny shared vocabulary.
+
+## Colour rule (most important)
+
+**Spot graphics are monochrome-first.** Reference twelvelabs diagrams are white/surface tiles, thin grey borders (`--border`), dark line-icons, grey connectors — on a near-neutral panel. Colour appears only as a **whisper**: a very faint glow wash (alpha ≤ 0.12) and at most one small accent (a tag ring, a single muted-tinted bar). 
+
+- ❌ Do NOT fill tiles/nodes with saturated brand colour, stack bright glows, or colour every bar.
+- ✅ Match tile = neutral tile + a bordered tag (e.g. `HIGH`) + faint accent *ring*, nothing more.
+- ✅ Filled bars use a **muted** tint (`color-mix(... 32%, #d6d4d1)`), not the raw accent.
+- This is scoped to spot-graphics. Text effects elsewhere (hero word-reveal) keep the fuller multicolour palette — see [[brand-palette]].
+
+Two delivery paths:
 
 | Path | Use for | Tech |
 |------|---------|------|

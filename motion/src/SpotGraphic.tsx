@@ -55,15 +55,15 @@ export const SpotGraphic: React.FC = () => {
         backgroundColor: "#ffffff",
       }}
     >
-      {/* ambient brand glow (over the white panel) */}
+      {/* ambient glow — a faint whisper of brand warmth only */}
       <div
         style={{
           position: "absolute",
-          width: width * 0.62,
-          height: width * 0.62,
+          width: width * 0.64,
+          height: width * 0.64,
           borderRadius: "50%",
-          background: `radial-gradient(circle, rgba(255,158,107,${0.34 * glowPulse}), transparent 62%)`,
-          filter: "blur(28px)",
+          background: `radial-gradient(circle, rgba(255,158,107,${0.12 * glowPulse}), transparent 64%)`,
+          filter: "blur(34px)",
         }}
       />
 
@@ -107,9 +107,9 @@ export const SpotGraphic: React.FC = () => {
             position: "absolute",
             left: 0,
             right: 0,
-            height: "60%",
+            height: "55%",
             top: `${((frame * 4) % 160) - 60}%`,
-            background: `linear-gradient(180deg, transparent, ${BRAND.accent}, transparent)`,
+            background: `linear-gradient(180deg, transparent, ${BRAND.muted}, transparent)`,
           }}
         />
       </div>
@@ -140,13 +140,11 @@ export const SpotGraphic: React.FC = () => {
                 width: 120,
                 borderRadius: 14,
                 border: isMatch
-                  ? "1px solid transparent"
+                  ? `1px solid rgba(255,122,51,${0.45 * hi})`
                   : `1px solid ${BRAND.border}`,
-                background: isMatch
-                  ? `linear-gradient(135deg, ${BRAND.accent}, ${BRAND.accentSoft})`
-                  : BRAND.surface,
+                background: BRAND.surface,
                 boxShadow: isMatch
-                  ? `0 0 0 ${2 * hi}px ${BRAND.accent}, 0 14px 34px -14px rgba(255,122,51,${0.6 * hi * glowPulse})`
+                  ? `0 0 0 ${1 * hi}px rgba(255,122,51,${0.3 * hi})`
                   : "none",
                 display: "grid",
                 placeItems: "center",
@@ -163,15 +161,16 @@ export const SpotGraphic: React.FC = () => {
                     fontFamily: "monospace",
                     padding: "2px 7px",
                     borderRadius: 6,
-                    background: "rgba(255,255,255,0.85)",
-                    color: BRAND.text,
+                    background: BRAND.surface,
+                    border: `1px solid ${BRAND.border}`,
+                    color: BRAND.muted,
                     opacity: hi,
                   }}
                 >
                   HIGH
                 </span>
               )}
-              <PlayIcon color={isMatch ? "#fff" : BRAND.muted} />
+              <PlayIcon color={BRAND.muted} />
             </div>
           );
         })}
