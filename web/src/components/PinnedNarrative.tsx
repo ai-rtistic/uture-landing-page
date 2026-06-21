@@ -56,9 +56,9 @@ export function PinnedNarrative() {
       // stream the whole tall background canvas down→up across the pinned scroll
       gsap.fromTo(
         '.narrative-field',
-        { yPercent: 6 },
+        { yPercent: 14 },
         {
-          yPercent: -48,
+          yPercent: -66,
           ease: 'none',
           scrollTrigger: { trigger: pin, start: 'top top', end, scrub: 0.5 },
         },
