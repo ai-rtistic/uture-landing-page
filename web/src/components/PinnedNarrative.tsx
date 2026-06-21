@@ -5,15 +5,19 @@ import { Placeholder } from './graphics/Placeholder'
 import { BeadChain } from './graphics/BeadChain'
 import { gsap, prefersReduced } from '../lib/gsap'
 
-// Flowing background: gradient bead-chains + clip slots (parallax).
+// A TALL background canvas (taller than the viewport) of flowing bead-chains
+// + clip slots, spread top→bottom. The whole layer streams on scroll.
 // `kind: clip` slots take a real image/video later — see design-system 자산 스펙.
 const FIELD = [
-  { top: '6%', left: '-4%', speed: 1.1, rot: -14, kind: 'chain', count: 12, curve: 26 },
-  { top: '30%', left: '60%', speed: 1.5, rot: -22, kind: 'chain', count: 14, curve: 34 },
-  { top: '78%', left: '-6%', speed: 1.8, rot: -16, kind: 'chain', count: 13, curve: 30 },
-  { top: '88%', left: '52%', speed: 0.9, rot: -20, kind: 'chain', count: 10, curve: 22 },
-  { top: '62%', left: '6%', speed: 1.7, rot: 0, kind: 'clip', w: 200, h: 124, time: '0:28–0:42' },
-  { top: '66%', left: '80%', speed: 1.4, rot: 0, kind: 'clip', w: 220, h: 138, time: '0:00–0:12' },
+  { top: '2%', left: '56%', rot: -20, kind: 'chain', count: 13, curve: 30 },
+  { top: '12%', left: '-6%', rot: -14, kind: 'chain', count: 12, curve: 26 },
+  { top: '26%', left: '70%', rot: -22, kind: 'chain', count: 11, curve: 30 },
+  { top: '30%', left: '3%', rot: 0, kind: 'clip', w: 200, h: 124, time: '0:28–0:42' },
+  { top: '46%', left: '-4%', rot: -16, kind: 'chain', count: 13, curve: 30 },
+  { top: '50%', left: '74%', rot: 0, kind: 'clip', w: 220, h: 138, time: '0:00–0:12' },
+  { top: '66%', left: '48%', rot: -20, kind: 'chain', count: 12, curve: 28 },
+  { top: '80%', left: '2%', rot: -16, kind: 'chain', count: 12, curve: 26 },
+  { top: '90%', left: '64%', rot: -22, kind: 'chain', count: 11, curve: 28 },
 ] as const
 
 export function PinnedNarrative() {
@@ -49,20 +53,16 @@ export function PinnedNarrative() {
       })
       tl.to({}, { duration: 0.6 })
 
-      // parallax the floating field across the pinned scroll
-      gsap.utils.toArray<HTMLElement>('.float-item').forEach((el) => {
-        const sp = parseFloat(el.dataset.speed || '1')
-        gsap.fromTo(
-          el,
-          { yPercent: 10 * sp },
-          {
-            yPercent: -22 * sp,
-            xPercent: 5 * sp,
-            ease: 'none',
-            scrollTrigger: { trigger: pin, start: 'top top', end, scrub: 0.8 },
-          },
-        )
-      })
+      // stream the whole tall background canvas down→up across the pinned scroll
+      gsap.fromTo(
+        '.narrative-field',
+        { yPercent: 6 },
+        {
+          yPercent: -48,
+          ease: 'none',
+          scrollTrigger: { trigger: pin, start: 'top top', end, scrub: 0.5 },
+        },
+      )
     }, pin)
 
     return () => ctx.revert()
@@ -91,7 +91,6 @@ export function PinnedNarrative() {
             <div
               className="float-item"
               key={i}
-              data-speed={f.speed}
               style={{ top: f.top, left: f.left, rotate: `${f.rot}deg` }}
             >
               {f.kind === 'chain' ? (
