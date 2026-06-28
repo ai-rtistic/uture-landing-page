@@ -55,11 +55,12 @@ export const narrative = {
 export const testimonial = {
   badgeLogos: '함께하는 고객사',
   badgeQuote: '유쳐의 철학',
-  quote:
-    'AI 툴을 배우는 교육은 많습니다. 지금은 "툴"이 아닌 "틀"을 바꿔야 할 때입니다.',
-  author: '이재준',
-  role: 'Head of AX · AI Solution Engineer, uture',
-  avatar: '/assets/founder-avatar.png',
+  quote: '내가 만들 수 없다면, 이해한 것이 아니다.',
+  quoteAuthor: 'Andrej Karpathy',
+  quoteRole: 'OpenAI 창립 멤버 · 前 Tesla AI 총괄',
+  quoteAvatar: '/assets/andrej-karpathy.webp',
+  philosophy:
+    'AI 툴 사용법을 알려주는 교육은 많습니다. 하지만 진짜 변화는 직접 만들어볼 때 시작됩니다. 유쳐는 실제 업무에서 문제를 함께 정의하고, AI로 풀어나가는 과정을 끝까지 함께합니다.',
 }
 
 export const logoCount = 14
@@ -114,6 +115,69 @@ export const fde = {
     '사내 문서 검색 어시스턴트',
     '정산 데이터 검증 자동화',
   ],
+}
+
+// 06.5 — AX transform map (pinned, scroll-scrubbed 3b1b-style)
+// 흩어진 수작업 → 검색·생성·자동화 파이프라인. 어느 분야든 전환된다.
+export const axMap = {
+  title: ['어느 분야든,', 'AX로 전환됩니다'],
+  intro:
+    '흩어진 수작업이 검색 · 생성 · 자동화 파이프라인으로 재편됩니다. 유쳐가 현장에서 함께 만든, 분야별 실제 전환들.',
+  // 각 산업: kind 는 검색/생성/자동화 중 하나, stages 는 파이프라인 3단계 라벨
+  industries: [
+    {
+      id: 'cs',
+      field: 'CS',
+      kind: '자동화',
+      before: '문의가 메일 · 채팅 · 전화로 흩어져 매번 수기 분류',
+      after: 'VOC 자동 분류 · 태깅 파이프라인',
+      stages: ['문의 인입', '의도 분류', '담당 전달'],
+    },
+    {
+      id: 'docs',
+      field: '전사',
+      kind: '검색',
+      before: '필요한 자료를 부서 · 폴더마다 일일이 뒤짐',
+      after: '사내 문서 검색 어시스턴트',
+      stages: ['자연어 질문', '문서 검색', '근거와 함께 답'],
+    },
+    {
+      id: 'sales',
+      field: '영업',
+      kind: '생성',
+      before: '제안서 · 견적서를 매번 백지에서 새로 작성',
+      after: '사내 템플릿 기반 견적 초안 생성기',
+      stages: ['요건 입력', '템플릿 결합', '초안 생성'],
+    },
+    {
+      id: 'fin',
+      field: '재무',
+      kind: '자동화',
+      before: '정산 내역을 사람이 일일이 대사 · 검증',
+      after: '정산 데이터 검증 자동화',
+      stages: ['데이터 수집', '규칙 검증', '이상 보고'],
+    },
+    {
+      id: 'mkt',
+      field: '마케팅',
+      kind: '생성',
+      before: '캠페인 성과를 매주 수기로 취합 · 정리',
+      after: '캠페인 성과 리포트 자동 생성',
+      stages: ['지표 수집', '요약 · 해석', '리포트 생성'],
+    },
+    {
+      id: 'hr',
+      field: '인사',
+      kind: '검색',
+      before: '지원서 · 이력을 한 장씩 읽어 정리',
+      after: '채용 문서 검색 · 지원자 요약',
+      stages: ['지원서 인입', '핵심 검색', '요약 카드'],
+    },
+  ],
+  finale: {
+    lead: '검색 · 생성 · 자동화 — 한 가지 패턴이',
+    headline: '모든 분야로 번집니다',
+  },
 }
 
 // 07 — industry cards

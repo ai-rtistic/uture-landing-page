@@ -108,6 +108,22 @@
   gap: 12px;
   flex-wrap: wrap;
 }
+.hero-motion {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 82% 42%;
+  opacity: 0.6;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 32%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 32%, #000 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-motion { display: none; }
+}
 .hero-aura {
   position: absolute;
   z-index: 1;
@@ -293,6 +309,13 @@
   line-height: 1.35;
   letter-spacing: -0.02em;
   font-weight: 600;
+}
+.testimonial-philosophy {
+  margin: 40px auto 0;
+  max-width: 52ch;
+  font-size: clamp(16px, 1.6vw, 20px);
+  line-height: 1.7;
+  color: var(--text-2);
 }
 .testimonial-author {
   margin-top: 48px;
@@ -808,4 +831,160 @@
 }
 @media (max-width: 1040px) {
   .hero-visual { display: none; }
+}
+
+/* ---------- AX transform map (pinned, scroll-scrubbed) ---------- */
+.axmap-head {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+.axmap-title {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  font-weight: 600;
+}
+.axmap-title span { display: block; }
+.axmap-intro {
+  margin-top: 18px;
+  font-size: clamp(15px, 1.3vw, 18px);
+  line-height: 1.65;
+  color: var(--text-2);
+}
+.axmap-pin {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.axmap-stage {
+  position: relative;
+  width: min(960px, 92vw);
+}
+.axmap-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+.axmap-io {
+  font-size: 2px;
+  fill: var(--muted);
+  font-weight: 500;
+}
+.axmap-stage-label {
+  font-size: 2.3px;
+  fill: var(--text);
+  font-weight: 600;
+}
+.axmap-stage-step {
+  font-size: 1.7px;
+  fill: var(--brand);
+  font-family: var(--font-mono, monospace);
+}
+.axmap-caption {
+  position: absolute;
+  left: 50%;
+  bottom: -2%;
+  transform: translateX(-50%);
+  width: min(560px, 90%);
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+}
+.axmap-cap-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.axmap-cap-field {
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 600;
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+}
+.axmap-cap-kind {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  color: var(--brand);
+  background: var(--brand-glow);
+  border: 1px solid color-mix(in srgb, var(--brand) 30%, transparent);
+}
+.axmap-cap-before {
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--muted) 45%, transparent);
+}
+.axmap-cap-after {
+  margin-top: 6px;
+  font-size: clamp(16px, 1.5vw, 19px);
+  font-weight: 500;
+  color: var(--text);
+}
+.axmap-finale {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+}
+.axmap-finale-lead {
+  font-size: clamp(14px, 1.4vw, 17px);
+  color: var(--text-2);
+}
+.axmap-finale-head {
+  margin-top: 8px;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  font-weight: 600;
+  color: var(--text);
+}
+.axmap-finale-chips {
+  margin-top: 26px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  max-width: 720px;
+}
+.axmap-chip {
+  font-size: 13px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  box-shadow: 0 8px 22px -16px rgba(29, 28, 27, 0.4);
+}
+.axmap-static { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .axmap-pin { height: auto; display: block; }
+  .axmap-stage { display: none; }
+  .axmap-static {
+    display: grid;
+    gap: 12px;
+    width: min(720px, 92vw);
+    margin: 0 auto;
+  }
+  .axmap-static-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+    background: var(--surface);
+  }
+  .axmap-static-after { font-weight: 500; }
 }

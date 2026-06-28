@@ -7,6 +7,7 @@ import { LogoMarquee } from './components/LogoMarquee'
 import { Testimonial } from './components/Testimonial'
 import { FeatureCards } from './components/FeatureCards'
 import { FdePipeline } from './components/FdePipeline'
+import { AxTransformMap } from './components/AxTransformMap'
 import { IndustryCards } from './components/IndustryCards'
 import { ServiceTabs } from './components/ServiceTabs'
 import { CaseQuote } from './components/CaseQuote'
@@ -31,6 +32,7 @@ export default function App() {
         <Testimonial />
         <FeatureCards />
         <FdePipeline />
+        <AxTransformMap />
         <IndustryCards />
         <ServiceTabs />
         <CaseQuote />

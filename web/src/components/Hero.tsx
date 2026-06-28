@@ -5,6 +5,16 @@ import { HeroVisual } from './HeroVisual'
 export function Hero() {
   return (
     <section className="hero" id="top">
+      <video
+        className="hero-motion"
+        src="/assets/motion/hero-flow.webm"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        aria-hidden
+      />
       <div className="container hero-inner">
         <div className="hero-badge reveal">
           <Pill>{hero.badge}</Pill>

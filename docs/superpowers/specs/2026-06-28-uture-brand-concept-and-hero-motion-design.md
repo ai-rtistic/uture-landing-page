@@ -80,6 +80,24 @@
 3. (5~8s) 점등 노드들이 연결선으로 묶이며 정돈된 그리드로 재배열, 작은 도구/에이전트 타일이 가동.
 4. 심리스 루프백.
 
+## 4.5 산업별 AX 전환 맵 (핀드 인터랙티브 섹션)
+
+3blue1brown 식으로 "구조가 눈으로 읽히는" 모션. 어느 분야든 AX로 전환된다는 걸,
+흩어진 수작업이 파이프라인으로 재조립되는 과정으로 보여준다.
+
+- **자리:** `FdePipeline` 다음, `IndustryCards`(실제 사례 통계) 앞에 새 섹션. Hero 배경은 유지.
+- **방식:** in-page SVG + GSAP ScrollTrigger 핀드 스크롤(scrub). 영상 아님 — 진짜
+  인터랙티브(스크롤이 산업을 훑음), 라이트 테마 토큰, 벡터 라벨로 선명. progress(0..1)에서
+  imperative 계산 → ref 직접 갱신(리렌더 없는 부드러운 scrub). `prefers-reduced-motion`이면
+  정적 리스트 폴백.
+- **모션:** 흩어진 회색 수작업 노드 클라우드 → 검색·생성·자동화 3단계 파이프라인으로 변형.
+  스크롤로 6개 분야를 하나씩 재생(각 분야마다 scatter→assemble→hold→release) → 마지막에
+  전 분야 동시 점등 "모든 분야로 번집니다".
+- **데이터:** `content.ts > axMap` (분야 / kind(검색·생성·자동화) / before(수작업) / after(AX 결과)
+  / stages 3단계). 실제 기업 니즈 기반 6개: CS(VOC 분류·자동화), 전사(문서 검색), 영업(견적
+  생성), 재무(정산 검증·자동화), 마케팅(리포트 생성), 인사(채용 검색).
+- **구현:** `web/src/components/AxTransformMap.tsx`, 스타일 `.axmap-*` in `components.css`.
+
 ## 5. 다음 단계
 1. 이 문서 커밋.
 2. Hero 영상 — `uture-spot-graphics` + `remotion-best-practices` 스킬 따라 motion/에서 제작.
