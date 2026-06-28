@@ -50,12 +50,10 @@ export function AxTransformMap() {
   const dotRefs = useRef<(SVGCircleElement | null)[]>([])
   const connRefs = useRef<(SVGLineElement | null)[]>([])
   const stageRefs = useRef<(SVGGElement | null)[]>([])
-  const stageLabelRefs = useRef<(SVGTextElement | null)[]>([])
   const pulseRef = useRef<SVGCircleElement>(null)
   const diagramRef = useRef<SVGSVGElement>(null)
   const capRef = useRef<HTMLDivElement>(null)
   const capFieldRef = useRef<HTMLSpanElement>(null)
-  const capKindRef = useRef<HTMLSpanElement>(null)
   const capBeforeRef = useRef<HTMLParagraphElement>(null)
   const capAfterRef = useRef<HTMLParagraphElement>(null)
   const finaleRef = useRef<HTMLDivElement>(null)
@@ -122,12 +120,8 @@ export function AxTransformMap() {
         lastIdx = idx
         const it = INDUS[idx]
         if (capFieldRef.current) capFieldRef.current.textContent = it.field
-        if (capKindRef.current) capKindRef.current.textContent = it.kind
         if (capBeforeRef.current) capBeforeRef.current.textContent = it.before
         if (capAfterRef.current) capAfterRef.current.textContent = it.after
-        stageLabelRefs.current.forEach((t, k) => {
-          if (t) t.textContent = it.stages[k]
-        })
       }
       if (capRef.current) capRef.current.style.opacity = `${capVis}`
     }
@@ -199,16 +193,15 @@ export function AxTransformMap() {
             {STAGE_X.map((x, k) => (
               <g key={k} ref={(el) => (stageRefs.current[k] = el)} opacity="0">
                 <text
-                  ref={(el) => (stageLabelRefs.current[k] = el)}
                   x={x}
                   y={ROW_Y - 6}
                   textAnchor="middle"
                   className="axmap-stage-label"
                 >
-                  {INDUS[0].stages[k]}
+                  {axMap.method[k].label}
                 </text>
                 <text x={x} y={ROW_Y - 6 + 3.4} textAnchor="middle" className="axmap-stage-step">
-                  0{k + 1}
+                  {axMap.method[k].step}
                 </text>
               </g>
             ))}
@@ -230,9 +223,6 @@ export function AxTransformMap() {
             <div className="axmap-cap-top">
               <span className="axmap-cap-field" ref={capFieldRef}>
                 {INDUS[0].field}
-              </span>
-              <span className="axmap-cap-kind" ref={capKindRef}>
-                {INDUS[0].kind}
               </span>
             </div>
             <p className="axmap-cap-before" ref={capBeforeRef}>
@@ -261,7 +251,6 @@ export function AxTransformMap() {
           {INDUS.map((it) => (
             <div className="axmap-static-row" key={it.id}>
               <span className="axmap-cap-field">{it.field}</span>
-              <span className="axmap-cap-kind">{it.kind}</span>
               <span className="axmap-static-after">{it.after}</span>
             </div>
           ))}

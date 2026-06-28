@@ -3,7 +3,6 @@ import { serviceTabs } from '../data/content'
 import { Container } from '../ui/primitives'
 import { Icon } from '../ui/Icon'
 import { serviceGraphics } from './graphics/composed'
-import { MotionGraphic } from './graphics/MotionGraphic'
 
 export function ServiceTabs() {
   const [active, setActive] = useState(0)
@@ -29,11 +28,7 @@ export function ServiceTabs() {
 
           <div className="services-body">
             <div className="services-demo" key={tab.id}>
-              {active === 0 ? (
-                <MotionGraphic src="/assets/motion/spot-search.webm" />
-              ) : (
-                <Graphic />
-              )}
+              <Graphic />
             </div>
             <div className="services-text">
               <h2 className="services-title">

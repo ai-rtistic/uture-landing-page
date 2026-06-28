@@ -67,9 +67,43 @@ export function WorkflowGraphic() {
   )
 }
 
-// service tabs now show concrete AX assets (검색 / 생성 / 자동화);
-// tab 0 (검색) uses the rendered Remotion video, others use these SVG assets.
-export const serviceGraphics = [AssetSearchGraphic, AssetReportGraphic, AssetPipelineGraphic]
+/** 구성원 교육: 직무·숙련도 진단 → 직무별 맞춤 트랙(각기 다른 진척). */
+export function EducateGraphic() {
+  return (
+    <GFrame tint="peach">
+      <GStack>
+        <GNode icon="target">직무 · 숙련도 진단</GNode>
+        <GConn />
+        <div className="g-scene-grid">
+          <GStrip cells={[3, 4, 2]} fill={[0, 1]} />
+          <GStrip cells={[2, 3, 3]} fill={[0]} />
+          <GStrip cells={[4, 2, 3]} fill={[0, 1]} />
+        </div>
+      </GStack>
+    </GFrame>
+  )
+}
+
+/** 프로젝트형 교육: 내 실제 업무 안건 → 1:1 코칭·함께 구축 → 내 결과물. */
+export function ProjectGraphic() {
+  return (
+    <GFrame tint="rose">
+      <GStack>
+        <GNode icon="text">내 실제 업무 안건</GNode>
+        <GConn />
+        <GNode tone="dark" icon="sparkle">
+          1:1 코칭 · 함께 구축
+        </GNode>
+        <GConn />
+        <GTile active tag="DONE" icon="gear" />
+      </GStack>
+    </GFrame>
+  )
+}
+
+// service tabs = 유쳐 3축: 구성원 교육 / 프로젝트형 교육 / 기업 맞춤 AX 엔지니어링.
+// 엔지니어링은 기존 BuildGraphic(현장 요구 → uture agent → on-prem 배포) 재사용.
+export const serviceGraphics = [EducateGraphic, ProjectGraphic, BuildGraphic]
 
 /* ---- Feature-card scene illustrations (tinted mini panels) ---- */
 
