@@ -277,19 +277,22 @@
 .marquee-track {
   display: flex;
   width: max-content;
-  gap: 64px;
+  gap: 30px;
   animation: marquee 46s linear infinite;
 }
 .marquee-item {
   display: flex;
   align-items: center;
+  justify-content: center;
   height: 46px;
+  width: 132px; /* fixed cell → even visual rhythm regardless of logo aspect */
   flex: 0 0 auto;
 }
 .marquee-item img {
-  height: 34px;
+  height: auto;
+  max-height: 30px;
   width: auto;
-  max-width: 150px;
+  max-width: 112px;
   object-fit: contain;
   display: block;
   filter: grayscale(1) opacity(0.6);
