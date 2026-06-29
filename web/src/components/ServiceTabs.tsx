@@ -2,12 +2,14 @@ import { useState } from 'react'
 import { serviceTabs } from '../data/content'
 import { Container } from '../ui/primitives'
 import { Icon } from '../ui/Icon'
-import { serviceGraphics } from './graphics/composed'
 
+/**
+ * "이렇게 일합니다" — AI 활용 데모(탭). 탭마다 해당 장면 영상이 왼쪽에 재생된다.
+ * 영상: motion/ WorkDemo 장면별 클립(work-demo-*.webm).
+ */
 export function ServiceTabs() {
   const [active, setActive] = useState(0)
   const tab = serviceTabs.tabs[active]
-  const Graphic = serviceGraphics[active] ?? serviceGraphics[0]
 
   return (
     <section className="section services" id="services">
@@ -27,8 +29,18 @@ export function ServiceTabs() {
           </div>
 
           <div className="services-body">
-            <div className="services-demo" key={tab.id}>
-              <Graphic />
+            <div className="services-demo">
+              <video
+                key={tab.id}
+                className="services-video"
+                src={tab.video}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                aria-hidden
+              />
             </div>
             <div className="services-text">
               <h2 className="services-title">

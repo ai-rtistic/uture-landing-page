@@ -208,29 +208,34 @@ export const industries = {
 }
 
 // 08 — service tabs
-// 08 — service tabs = 유쳐 3축 (교육 / 프로젝트형 / AX 엔지니어링)
+// 08 — service tabs = "이렇게 일합니다" AI 활용 데모 (장면별 영상)
 export const serviceTabs = {
+  badge: '이렇게 일합니다',
+  intro: '구성원이 자연어로 요청하면 — 찾고, 종합하고, 산출물까지 만듭니다.',
   tabs: [
     {
-      id: 'educate',
-      label: '구성원 교육',
+      id: 'search',
+      label: '사내 문서 검색',
+      icon: 'search',
+      video: '/assets/motion/work-demo-search.webm',
+      title: ['묻기만 하면', '사내 문서에서 바로 답'],
+      desc: '자연어로 물으면 흩어진 사내 문서 · 규정에서 근거와 함께 답을 찾아줍니다.',
+    },
+    {
+      id: 'assistant',
+      label: '종합 업무 어시스턴트',
       icon: 'people',
-      title: ['직무 · 숙련도별', '맞춤 AI 교육'],
-      desc: '모두에게 같은 강의가 아니라, 직무와 숙련도에 맞춘 트랙으로 구성원의 AI 기준선을 끌어올립니다.',
+      video: '/assets/motion/work-demo-assistant.webm',
+      title: ['메일 · 메신저 · 일정을', 'AI 비서가 종합'],
+      desc: '여기저기 흩어진 정보를 모아 오늘 챙길 일과 우선순위를 정리해 알려줍니다.',
     },
     {
-      id: 'project',
-      label: '프로젝트형 교육',
-      icon: 'target',
-      title: ['본인 업무로', '직접 만드는 3~4주'],
-      desc: '각자 실제 업무에 AI를 적용해 결과물을 만들고, 그 과정에 1:1 디테일 코칭이 붙습니다.',
-    },
-    {
-      id: 'engineer',
-      label: '기업 맞춤 AX 엔지니어링',
+      id: 'report',
+      label: '사내 템플릿 생성',
       icon: 'build',
-      title: ['사내 환경에 맞춘', 'AI 도구 구축 · 배포'],
-      desc: '기존 툴로 안 되는 지점은 MCP · 템플릿 · skills · 플러그인을 만들어 사내에 배포 · 정착시킵니다.',
+      video: '/assets/motion/work-demo-report.webm',
+      title: ['사내 양식에 맞춰', '산출물까지 자동 생성'],
+      desc: '보고서 · PPT를 회사 표준 템플릿 · 로고 · 폰트에 맞춰 초안까지 만들어줍니다.',
     },
   ],
 }

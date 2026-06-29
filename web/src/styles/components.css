@@ -116,7 +116,7 @@
   height: 100%;
   object-fit: cover;
   object-position: 82% 42%;
-  opacity: 0.6;
+  opacity: 0.5;
   pointer-events: none;
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 32%, #000 100%);
   mask-image: linear-gradient(90deg, transparent 0%, #000 32%, #000 100%);
@@ -540,13 +540,20 @@
 .services-demo {
   min-height: 320px;
   border-radius: 22px;
-  background: var(--surface);
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(255, 158, 107, 0.1), transparent 60%),
+    linear-gradient(180deg, #fbf9f7, #f4f2f0);
   border: 1px solid var(--border);
   display: grid;
   place-items: center;
-  padding: 30px;
+  padding: 18px;
   position: relative;
   overflow: hidden;
+}
+.services-video {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 .services-title { font-size: clamp(26px, 3vw, 42px); line-height: 1.12; }
 .services-title span { display: block; }

@@ -62,13 +62,6 @@ const NODES: Node[] = Array.from({ length: COLS * ROWS }, (_, i) => {
   return { i, col, row, gx, gy, sx, sy, threshold };
 });
 
-// 3 short "tool/agent" chips that surface on the organized grid
-const CHIPS = [
-  { node: 6, label: "사내 문서 검색" },
-  { node: 10, label: "리포트 자동화" },
-  { node: 14, label: "VOC 분류" },
-];
-
 const ease = Easing.bezier(0.16, 1, 0.3, 1);
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
 
@@ -138,9 +131,9 @@ export const HeroFlow: React.FC = () => {
                 y1={b}
                 x2={c}
                 y2={d}
-                stroke={lit > 0.05 ? BRAND.accent : BRAND.borderSoft}
-                strokeWidth={1.2}
-                opacity={0.12 + 0.5 * m * (0.3 + 0.7 * lit)}
+                stroke={lit > 0.2 ? BRAND.accent : BRAND.borderSoft}
+                strokeWidth={0.8}
+                opacity={(0.08 + 0.32 * m * (0.3 + 0.7 * lit)) * 0.8}
               />
             );
           });
@@ -152,7 +145,7 @@ export const HeroFlow: React.FC = () => {
         const x = lerp(n.sx, n.gx, easeM(m));
         const y = lerp(n.sy, n.gy, easeM(m));
         const ignite = clamp01((m - n.threshold) / 0.18);
-        const size = 16 + 6 * ignite;
+        const size = 9 + 3 * ignite;
         const pulse = 0.6 + 0.4 * Math.sin(t * Math.PI * 2 + n.i);
         return (
           <div
@@ -164,58 +157,22 @@ export const HeroFlow: React.FC = () => {
               width: size,
               height: size,
               borderRadius: "50%",
-              background: ignite > 0.04 ? BRAND.accent : BRAND.surface,
-              border: `1.4px solid ${ignite > 0.04 ? BRAND.accent : BRAND.border}`,
+              // monochrome-first: soft peach fill + thin warm ring when active,
+              // neutral dot at rest — ambient, never a saturated grid
+              background:
+                ignite > 0.04
+                  ? `rgba(255,158,107,${0.18 + 0.32 * ignite})`
+                  : BRAND.surface,
+              border: `1px solid ${ignite > 0.04 ? `rgba(255,122,51,${0.55 * ignite})` : BRAND.borderSoft}`,
               boxShadow:
                 ignite > 0.04
-                  ? `0 0 ${10 + 14 * ignite * pulse}px rgba(255,122,51,${0.35 * ignite})`
-                  : "0 2px 6px -3px rgba(29,28,27,0.25)",
+                  ? `0 0 ${5 + 7 * ignite * pulse}px rgba(255,122,51,${0.16 * ignite})`
+                  : "none",
             }}
           />
         );
       })}
 
-      {/* tool/agent chips on the settled grid */}
-      {CHIPS.map((chip) => {
-        const n = NODES[chip.node];
-        const x = lerp(n.sx, n.gx, easeM(m));
-        const y = lerp(n.sy, n.gy, easeM(m));
-        const appear = clamp01((m - 0.72) / 0.18);
-        return (
-          <div
-            key={chip.node}
-            style={{
-              position: "absolute",
-              left: x + 18,
-              top: y - 16,
-              opacity: appear,
-              transform: `translateX(${(1 - appear) * -8}px)`,
-              display: "flex",
-              alignItems: "center",
-              gap: 7,
-              padding: "5px 11px",
-              borderRadius: 9,
-              background: BRAND.surface,
-              border: `1px solid ${BRAND.border}`,
-              boxShadow: "0 8px 22px -14px rgba(29,28,27,0.5)",
-              fontSize: 15,
-              fontWeight: 500,
-              color: BRAND.text,
-              whiteSpace: "nowrap",
-            }}
-          >
-            <span
-              style={{
-                width: 6,
-                height: 6,
-                borderRadius: "50%",
-                background: BRAND.accent,
-              }}
-            />
-            {chip.label}
-          </div>
-        );
-      })}
     </AbsoluteFill>
   );
 };
@@ -251,18 +208,18 @@ const Streams: React.FC<{
             background: `linear-gradient(90deg, transparent, rgba(255,122,51,${0.16 * vis}) 60%, rgba(255,122,51,${0.55 * vis}))`,
           }}
         >
-          {/* bright comet head */}
+          {/* soft comet head */}
           <div
             style={{
               position: "absolute",
-              right: -3,
-              top: -3,
-              width: 8,
-              height: 8,
+              right: -2,
+              top: -2,
+              width: 5,
+              height: 5,
               borderRadius: "50%",
               background: BRAND.accent,
-              opacity: vis,
-              boxShadow: `0 0 14px rgba(255,122,51,${0.7 * vis})`,
+              opacity: 0.7 * vis,
+              boxShadow: `0 0 9px rgba(255,122,51,${0.4 * vis})`,
             }}
           />
         </div>
