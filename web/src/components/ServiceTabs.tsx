@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { serviceTabs } from '../data/content'
-import { Container } from '../ui/primitives'
+import { Container, Pill } from '../ui/primitives'
 import { Icon } from '../ui/Icon'
 
 /**
@@ -14,6 +14,19 @@ export function ServiceTabs() {
   return (
     <section className="section services" id="services">
       <Container>
+        <div className="services-head">
+          <div className="reveal">
+            <Pill>{serviceTabs.badge}</Pill>
+          </div>
+          <h2 className="services-head-title reveal" data-delay="80">
+            {serviceTabs.title.map((l, i) => (
+              <span key={i}>{l}</span>
+            ))}
+          </h2>
+          <p className="services-head-intro reveal" data-delay="160">
+            {serviceTabs.intro}
+          </p>
+        </div>
         <div className="services-shell reveal">
           <div className="services-tabs">
             {serviceTabs.tabs.map((t, i) => (

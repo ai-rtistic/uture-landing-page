@@ -508,6 +508,25 @@
 @media (max-width: 880px) { .industry-grid { grid-template-columns: 1fr; } }
 
 /* ---------- Service tabs ---------- */
+.services-head {
+  max-width: 680px;
+  margin: 0 auto 44px;
+  text-align: center;
+}
+.services-head-title {
+  margin-top: 18px;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  font-weight: 600;
+}
+.services-head-title span { display: block; }
+.services-head-intro {
+  margin-top: 16px;
+  font-size: clamp(15px, 1.3vw, 18px);
+  line-height: 1.65;
+  color: var(--text-2);
+}
 .services-shell {
   border: 1px solid var(--border);
   border-radius: 32px;

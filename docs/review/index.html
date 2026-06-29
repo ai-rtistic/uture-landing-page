@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>유쳐 랜딩 — 종합 비주얼 리뷰 (2026-06-29)</title>
+<style>
+  :root{
+    --bg:#f5f4f2; --surface:#fff; --text:#1d1c1b; --text2:#56544f; --muted:#8e8d8d;
+    --border:#e4e1de; --brand:#ff7a33; --ok:#2a9d6f; --warn:#e2a008; --info:#82b4f0;
+    --r:16px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:'Pretendard Variable',Pretendard,'Apple SD Gothic Neo',-apple-system,system-ui,sans-serif;
+    line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--brand)}
+  .wrap{max-width:1080px;margin:0 auto;padding:48px 24px 96px}
+  header.top{margin-bottom:40px}
+  .kicker{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--brand);
+    background:rgba(255,122,51,.1);border:1px solid rgba(255,122,51,.3);padding:5px 11px;border-radius:999px}
+  h1{font-size:clamp(28px,4vw,42px);font-weight:700;letter-spacing:-.02em;margin:16px 0 8px}
+  .sub{color:var(--text2);font-size:16px;max-width:60ch}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;font-size:13px;color:var(--text2)}
+  .chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;border:1px solid var(--border);background:var(--surface);font-weight:600;font-size:12px}
+  .chip.ok{color:var(--ok);border-color:rgba(42,157,111,.4)}
+  .chip.warn{color:var(--warn);border-color:rgba(226,160,8,.4)}
+  .chip.p1{color:#c0392b;border-color:rgba(192,57,43,.35)}
+  .chip.p2{color:#b9770a;border-color:rgba(185,119,10,.35)}
+  .chip.p3{color:var(--muted)}
+  .summary{margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px 24px}
+  .summary h2{font-size:15px;margin:0 0 12px;color:var(--muted);font-weight:700;letter-spacing:.02em}
+  .summary ul{margin:0;padding-left:18px}
+  .summary li{margin:5px 0;font-size:14.5px}
+  .summary .done{color:var(--ok);font-weight:700}
+
+  section.card{background:var(--surface);border:1px solid var(--border);border-radius:20px;
+    padding:24px;margin-top:28px;box-shadow:0 18px 50px -40px rgba(29,28,27,.3)}
+  .head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+  .num{width:34px;height:34px;flex:0 0 auto;border-radius:10px;background:var(--text);color:#fff;
+    display:grid;place-items:center;font-weight:700;font-size:14px}
+  .head h3{font-size:20px;margin:0;font-weight:700;letter-spacing:-.01em}
+  .head .tag{font-size:12px;color:var(--muted)}
+  .shot{display:block;width:100%;height:auto;border:1px solid var(--border);border-radius:12px;margin:6px 0 18px;background:var(--bg)}
+  .rows{display:grid;gap:10px}
+  .row{display:grid;grid-template-columns:88px 1fr;gap:14px;align-items:start;
+    padding:12px 14px;border-radius:12px;background:var(--bg)}
+  .row .lab{font-size:12.5px;font-weight:700;padding-top:1px}
+  .row.now .lab{color:var(--text2)}
+  .row.issue{background:rgba(226,160,8,.07)}
+  .row.issue .lab{color:var(--warn)}
+  .row.fix{background:rgba(255,122,51,.06)}
+  .row.fix .lab{color:var(--brand)}
+  .row p{margin:0;font-size:14.5px;color:var(--text)}
+  .row .done{color:var(--ok);font-weight:700}
+  footer{margin-top:48px;color:var(--muted);font-size:13px;text-align:center}
+  @media(max-width:640px){ .row{grid-template-columns:1fr;gap:4px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="kicker">VISUAL REVIEW</span>
+    <h1>유쳐 랜딩 — 종합 비주얼 리뷰</h1>
+    <p class="sub">2026-06-29 · 데스크톱 1440px 기준 섹션별 캡처. 각 섹션의 <b>현재 상태 · 발견된 문제 · 수정 방안</b>을 정리했습니다.
+      세부 To-Do 체크리스트는 <a href="2026-06-29-improvements-todo.md">improvements-todo.md</a> 참고.</p>
+    <div class="legend">
+      <span class="chip ok">🟢 양호 / 수정 완료</span>
+      <span class="chip warn">🟡 개선 제안</span>
+      <span class="chip p1">P1 높음</span>
+      <span class="chip p2">P2 중간</span>
+      <span class="chip p3">P3 낮음</span>
+    </div>
+    <div class="summary">
+      <h2>이번 세션에서 이미 처리됨</h2>
+      <ul>
+        <li><span class="done">✅ 로고 마퀴 복구</span> — 고객사 로고가 안 보이던 CSS 버그 수정(신뢰도 직결)</li>
+        <li><span class="done">✅ "10주" → "4주"</span> — 프로젝트형 교육(3~4주)과 일관화</li>
+        <li><span class="done">✅ Hero 카드 헤더 정렬</span> · <span class="done">✅ CTA 퍼널 차별화</span> · <span class="done">✅ 반복 카피 정리</span> · <span class="done">✅ ServiceTabs 헤딩 추가</span></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- 01 -->
+  <section class="card">
+    <div class="head"><span class="num">01</span><h3>Hero — 첫 화면</h3><span class="chip ok">🟢 강점</span><span class="chip p3">P3</span></div>
+    <img class="shot" src="shots/01-hero.png" alt="Hero" loading="lazy">
+    <div class="rows">
+      <div class="row now"><span class="lab">현재</span><p>"AI를 아는 조직 → AI로 일하는 조직" 카피 + 앰비언트 그리드 + "사내 도구 운영현황" 카드. 무엇을 하는 회사인지 첫 화면에서 명확.</p></div>
+      <div class="row issue"><span class="lab">문제</span><p>① 1040px 미만에서 카드가 숨겨져 태블릿 구간 우측이 빔 &nbsp; ② 배경 글로우(aura)와 모션 그리드가 겹쳐 약간 탁함.</p></div>
+      <div class="row fix"><span class="lab">수정</span><p><span class="done">카드 헤더 줄바꿈 정렬 완료 ✅.</span> 태블릿 구간 우측 비주얼 보강(축소 카드/그리드), 배경 글로우 하나로 정리.</p></div>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section class="card">
+    <div class="head"><span class="num">02</span><h3>고객사 로고</h3><span class="chip ok">🟢 복구됨</span><span class="chip p3">P3</span></div>
+    <img class="shot" src="shots/02-logos.png" alt="Logos" loading="lazy">
+    <div class="rows">
+      <div class="row now"><span class="lab">현재</span><p>실제 고객사 로고(한화·kakao·NC·SK·이마트 등) grayscale 마퀴.</p></div>
+      <div class="row issue"><span class="lab">문제</span><p>직전까지 CSS 버그로 로고가 전혀 안 보였음. 로고별 원본 여백 차이로 체감 크기가 들쭉날쭉.</p></div>
+      <div class="row fix"><span class="lab">수정</span><p><span class="done">높이 고정으로 노출 복구 완료 ✅.</span> 로고별 여백/스케일 정규화로 시각 크기 균일화.</p></div>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section class="card">
+    <div class="head"><span class="num">03</span><h3>철학 인용 (Karpathy)</h3><span class="chip warn">🟡 개선 제안</span><span class="chip p2">P2</span></div>
+    <img class="shot" src="shots/03-testimonial.png" alt="Testimonial" loading="lazy">
+    <div class="rows">
+      <div class="row now"><span class="lab">현재</span><p>"내가 만들 수 없다면, 이해한 것이 아니다"(카파시) + 유쳐 철학 설명.</p></div>
+      <div class="row issue"><span class="lab">문제</span><p>외부 권위 인용이 상단에 크게 — 기업 담당자에겐 "유쳐의 실제 성과"가 더 설득적. 하단 고객 인용(#10)과 형식이 거의 동일해 중복 인상.</p></div>
+      <div class="row fix"><span class="lab">수정</span><p>카파시 인용은 보조로 축소하거나, 고객 직접 성과를 더 부각. 두 인용 블록의 스타일·스케일 차별화.</p></div>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section class="card">
+    <div class="head"><span class="num">04</span><h3>서비스 4단계 카드</h3><span class="chip warn">🟡 개선 제안</span><span class="chip p3">P3</span></div>
+    <img class="shot" src="shots/04-features.png" alt="Features" loading="lazy">
+    <div class="rows">
+      <div class="row now"><span class="lab">현재</span><p>맞춤 진단 / 현장 밀착 실행 / 도구 공동 구축 / 사내 정착 4카드 + 스팟그래픽.</p></div>
+      <div class="row issue"><span class="lab">문제</span><p>스팟그래픽이 추상적(핑크·피치 바)이라 각 단계의 의미 전달이 약하고 카드 간 차별성이 낮음.</p></div>
+      <div class="row fix"><span class="lab">수정</span><p>단계 의미에 맞는 아이콘/그래픽으로 구체화(진단=체크리스트, 실행=워킹미팅, 구축=도구, 정착=반복 운영).</p></div>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section class="card">
+    <div class="head"><span class="num">05</span><h3>FDE 섹션 헤더</h3><span class="chip ok">🟢 양호</span></div>
+    <img class="shot" src="shots/05-fde-header.png" alt="FDE header" loading="lazy">
+    <div class="rows">
+      <div class="row now"><span class="lab">현재</span><p>"교육에서 시작해, 현장에서 완성하는 AX." 선언 + 보조 설명.</p></div>
+      <div class="row issue"><span class="lab">문제</span><p>특이사항 적음. 전반적으로 양호.</p></div>
+      <div class="row fix"><span class="lab">수정</span><p>—</p></div>
+    </div>
+  </section>
+
+  <!-- 06 -->
+  <section class="card">
+    <div class="head"><span class="num">06</span><h3>FDE 파이프라인</h3><span class="chip warn">🟡 개선 제안</span><span class="chip p1">P1</span></div>
+    <img class="shot" src="shots/06-fde-pipeline.png" alt="FDE pipeline" loading="lazy">
+    <div class="rows">
+      <div class="row now"><span class="lab">현재</span><p>Raw Workflow → EDUCATE·EXECUTE·BUILD·ADOPT → Adopted in production → 함께 만든 도구 칩.</p></div>
+      <div class="row issue"><span class="lab">문제</span><p>영문 라벨(EDUCATE 등)·"Raw Workflow"·"Adopted in production"이 한국어 사이트에 혼용 — 기업 담당자 대상 톤 일관성↓.</p></div>
+      <div class="row fix"><span class="lab">수정</span><p>한글화(예: "수작업 흐름 → 교육 → 실행 → 구축 → 현장 정착") 또는 한글+영문 보조 표기.</p></div>
+    </div>
+  </section>
+
+  <!-- 07 -->
+  <section class="card">
+    <div class="head"><span class="num">07</span><h3>산업별 AX 전환맵 (스크롤 모션)</h3><span class="chip ok">🟢 강점</span><span class="chip p2">P2</span></div>
+    <img class="shot" src="shots/07-axmap.png" alt="AX transform map" loading="lazy">
+    <div class="rows">
+      <div class="row now"><span class="lab">현재</span><p>3blue1brown식 스크롤 모션 — 흩어진 수작업이 "교육 → 실전 적용 → AX 자산화"로 재편. 6개 분야 순환(전사·CS·영업·재무·마케팅·인사).</p></div>
+      <div class="row issue"><span class="lab">문제</span><p>단계번호(01/02/03)가 노드 클러스터 상단과 겹쳐 어수선. 핀드 스크롤 길이가 5,689px(6분야)로 길어 스크롤 피로.</p></div>
+      <div class="row fix"><span class="lab">수정</span><p>단계번호 위치 정리(라벨 위/아래 정렬), 4분야로 축소하거나 핀 길이 단축.</p></div>
+    </div>
+  </section>
+
+  <!-- 08 -->
+  <section class="card">
+    <div class="head"><span class="num">08</span><h3>산업별 사례</h3><span class="chip warn">🟡 개선 제안</span><span class="chip p2">P2</span></div>
+    <img class="shot" src="shots/08-cases.png" alt="Cases" loading="lazy">
+    <div class="rows">
+      <div class="row now"><span class="lab">현재</span><p>핀테크 4주 도전(94% 재수강)·제조 전사(3기+)·금융 신입(32% 단축) 3 사례 카드.</p></div>
+      <div class="row issue"><span class="lab">문제</span><p>"더 알아보기" 링크가 모두 #contact(개별 사례 페이지 없음) → 기대 불일치. 통계 수치의 기간·대상 맥락 부족.</p></div>
+      <div class="row fix"><span class="lab">수정</span><p><span class="done">"10주"→"4주" 일관화 완료 ✅.</span> 링크를 "진단 신청"으로 명확화 또는 사례 상세 연결, 수치에 맥락 한 줄 추가.</p></div>
+    </div>
+  </section>
+
+  <!-- 09 -->
+  <section class="card">
+    <div class="head"><span class="num">09</span><h3>AI 활용 데모 (탭)</h3><span class="chip ok">🟢 강점</span><span class="chip p1">P1</span></div>
+    <img class="shot" src="shots/09-services.png" alt="Service tabs demo" loading="lazy">
+    <div class="rows">
+      <div class="row now"><span class="lab">현재</span><p>탭 3개(사내 문서 검색 / 종합 업무 어시스턴트 / 사내 템플릿 생성). 탭마다 "요청 → 결과" 데모 영상 재생.</p></div>
+      <div class="row issue"><span class="lab">문제</span><p>모바일(375)에서 영상이 축소돼 카드 텍스트가 작음. 탭 라벨이 3줄로 줄바꿈.</p></div>
+      <div class="row fix"><span class="lab">수정</span><p><span class="done">섹션 헤딩 추가 완료 ✅.</span> 모바일 전용 크롭/확대 또는 정적 캡처 대체, poster 이미지로 초기 프레임 표시.</p></div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="card">
+    <div class="head"><span class="num">10</span><h3>고객 인용</h3><span class="chip warn">🟡 개선 제안</span><span class="chip p2">P2</span></div>
+    <img class="shot" src="shots/10-casequote.png" alt="Case quote" loading="lazy">
+    <div class="rows">
+      <div class="row now"><span class="lab">현재</span><p>"강의만 듣고 끝나는 교육이 아니라… 4주 뒤, 팀 전체가 AI로 일하고 있었습니다."(핀테크 담당자)</p></div>
+      <div class="row issue"><span class="lab">문제</span><p>#03 카파시 인용과 형식(대형 멀티컬러 인용)이 거의 동일 → 중복 인상.</p></div>
+      <div class="row fix"><span class="lab">수정</span><p><span class="done">"10주"→"4주" 완료 ✅.</span> 둘 중 하나의 레이아웃/스케일 차별화(예: 이건 고객사 로고·이름 카드형).</p></div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="card">
+    <div class="head"><span class="num">11</span><h3>전환 메시지 (GlowCTA)</h3><span class="chip ok">🟢 일부 완료</span><span class="chip p2">P2</span></div>
+    <img class="shot" src="shots/11-glowcta.png" alt="Glow CTA" loading="lazy">
+    <div class="rows">
+      <div class="row now"><span class="lab">현재</span><p>"강의가 아니라, 일하는 방식을 바꿉니다." + "고객 사례 보기".</p></div>
+      <div class="row issue"><span class="lab">문제</span><p>하단 Philosophy(#14)·FinalCTA(#15)와 매니페스토 톤이 유사해 역할이 겹침.</p></div>
+      <div class="row fix"><span class="lab">수정</span><p><span class="done">문구·CTA 차별화 완료 ✅.</span> 세 블록 역할 분리: GlowCTA=전환, Philosophy=신뢰/약속, FinalCTA=행동.</p></div>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section class="card">
+    <div class="head"><span class="num">12</span><h3>5단계 프로세스</h3><span class="chip ok">🟢 양호</span><span class="chip p3">P3</span></div>
+    <img class="shot" src="shots/12-process.png" alt="Process" loading="lazy">
+    <div class="rows">
+      <div class="row now"><span class="lab">현재</span><p>진단 → 교육 → 현장 실행 → 도구 구축 → 정착, 단계별 기간(~5일/4~6주/8~12주/2~6주/장기).</p></div>
+      <div class="row issue"><span class="lab">문제</span><p>특이사항 적음.</p></div>
+      <div class="row fix"><span class="lab">수정</span><p><span class="done">제목 "진단에서 정착까지" 차별화 완료 ✅.</span> 단계 번호 스타일 통일 정도(P3).</p></div>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="card">
+    <div class="head"><span class="num">13</span><h3>핵심 지표</h3><span class="chip ok">🟢 강점</span><span class="chip p2">P2</span></div>
+    <img class="shot" src="shots/13-stats.png" alt="Stats" loading="lazy">
+    <div class="rows">
+      <div class="row now"><span class="lab">현재</span><p>6,000+ 교육생 · 4.8/5 만족도 · 50+ 도입 기업 · 300+ 완료 프로젝트.</p></div>
+      <div class="row issue"><span class="lab">문제</span><p>강력한 수치이나 기준/출처가 없어 신뢰의 근거가 약함.</p></div>
+      <div class="row fix"><span class="lab">수정</span><p>각 수치에 작은 기준 라벨(기간·집계 기준) 추가. 스크롤 시 카운트업 모션 유지/강화.</p></div>
+    </div>
+  </section>
+
+  <!-- 14 -->
+  <section class="card">
+    <div class="head"><span class="num">14</span><h3>약속 (Philosophy)</h3><span class="chip ok">🟢 일부 완료</span><span class="chip p2">P2</span></div>
+    <img class="shot" src="shots/14-philosophy.png" alt="Philosophy" loading="lazy">
+    <div class="rows">
+      <div class="row now"><span class="lab">현재</span><p>"강의실을 떠나지 않는 AX 파트너." + "무료 진단 신청".</p></div>
+      <div class="row issue"><span class="lab">문제</span><p>GlowCTA(#11)와 기능·톤이 유사.</p></div>
+      <div class="row fix"><span class="lab">수정</span><p><span class="done">제목·CTA 차별화 완료 ✅.</span> 신뢰/약속 각도로 역할 고정(예: 보장·운영 책임 메시지).</p></div>
+    </div>
+  </section>
+
+  <!-- 15 -->
+  <section class="card">
+    <div class="head"><span class="num">15</span><h3>최종 CTA + 풋터</h3><span class="chip warn">🟡 개선 제안</span><span class="chip p2">P2</span></div>
+    <img class="shot" src="shots/15-finalcta.png" alt="Final CTA + footer" loading="lazy">
+    <div class="rows">
+      <div class="row now"><span class="lab">현재</span><p>"우리 조직에 맞는 AX 실행 설계안을 받아보세요." + 무료 진단/사례집 + 4컬럼 풋터.</p></div>
+      <div class="row issue"><span class="lab">문제</span><p>풋터 "이용약관·개인정보처리방침" 링크가 빈 값(#). "디자인 시스템" 내부 링크 노출.</p></div>
+      <div class="row fix"><span class="lab">수정</span><p>빈 링크 실제 연결 또는 임시 처리, 내부용 링크 정리.</p></div>
+    </div>
+  </section>
+
+  <footer>유쳐 랜딩 비주얼 리뷰 · 캡처 1440px / Retina · 2026-06-29</footer>
+</div>
+</body>
+</html>
