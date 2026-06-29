@@ -816,6 +816,7 @@
   margin-bottom: 2px;
 }
 .hv-head .hv-col-status { grid-column: 4; }
+.hv-head span:first-child { grid-column: 2; white-space: nowrap; }
 .hv-thumb { width: 40px; }
 .hv-thumb .ph { border-radius: 6px; }
 .hv-name {

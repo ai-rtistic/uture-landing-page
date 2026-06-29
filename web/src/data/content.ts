@@ -253,7 +253,7 @@ export const caseQuote = {
 export const glowCTA = {
   title: '교육에서 도구까지, 현장을 바꿉니다.',
   sub: '유쳐는 사람들이 일하는 방식 자체를 현장에서 바꾸고 있습니다.',
-  cta: { label: '유쳐의 방식 보기', href: '#fde' },
+  cta: { label: '고객 사례 보기', href: '#cases' },
 }
 
 // 11 — process (pricing slot)
@@ -313,7 +313,7 @@ export const philosophy = {
   badge: '유쳐의 약속',
   title: ['교육 그 다음까지', '책임지는 AX 파트너.'],
   sub: '유쳐는 강의실을 떠나지 않습니다. 구성원 곁에서 함께 실행하고, 필요한 도구는 만들어서라도 정착시킵니다.',
-  cta: { label: '유쳐의 방식 보기', href: '#fde' },
+  cta: { label: '무료 진단 신청', href: 'mailto:official.uture@gmail.com?subject=[유쳐]%20AX%20무료%20진단%20신청' },
 }
 
 // 14 — final CTA
