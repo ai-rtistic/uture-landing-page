@@ -19,7 +19,7 @@ export function FdePipeline() {
         </div>
 
         <div className="pipeline reveal" data-delay="120">
-          <span className="pipe-cap mono">Raw Workflow</span>
+          <span className="pipe-cap mono">수작업 흐름</span>
           <span className="pipe-line" aria-hidden />
 
           {fde.nodes.map((n, i) => (
@@ -35,7 +35,7 @@ export function FdePipeline() {
           ))}
 
           <span className="pipe-line" aria-hidden />
-          <span className="pipe-cap pipe-cap-strong mono">Adopted in production</span>
+          <span className="pipe-cap pipe-cap-strong mono">현장 정착 완료</span>
         </div>
 
         <div className="pipe-tools">

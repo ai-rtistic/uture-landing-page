@@ -200,7 +200,7 @@ export function AxTransformMap() {
                 >
                   {axMap.method[k].label}
                 </text>
-                <text x={x} y={ROW_Y - 6 + 3.4} textAnchor="middle" className="axmap-stage-step">
+                <text x={x} y={ROW_Y - 10} textAnchor="middle" className="axmap-stage-step">
                   {axMap.method[k].step}
                 </text>
               </g>
