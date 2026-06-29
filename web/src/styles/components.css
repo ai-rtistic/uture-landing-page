@@ -281,15 +281,18 @@
   animation: marquee 46s linear infinite;
 }
 .marquee-item {
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
   height: 46px;
+  flex: 0 0 auto;
 }
 .marquee-item img {
-  height: 100%;
+  height: 34px;
   width: auto;
+  max-width: 150px;
   object-fit: contain;
-  filter: grayscale(1) opacity(0.55);
+  display: block;
+  filter: grayscale(1) opacity(0.6);
   transition: filter 0.3s;
 }
 .marquee-item img:hover {
