@@ -3,6 +3,8 @@ import { serviceTabs } from '../data/content'
 import { Container, Pill } from '../ui/primitives'
 import { Icon } from '../ui/Icon'
 import { DemoSearch } from './demos/DemoSearch'
+import { DemoAssistant } from './demos/DemoAssistant'
+import { DemoReport } from './demos/DemoReport'
 
 /**
  * "이렇게 일합니다" — AI 활용 데모(탭). 탭마다 해당 장면의 인페이지 GSAP
@@ -10,6 +12,8 @@ import { DemoSearch } from './demos/DemoSearch'
  */
 const DEMOS: Record<string, () => JSX.Element> = {
   search: DemoSearch,
+  assistant: DemoAssistant,
+  report: DemoReport,
 }
 
 export function ServiceTabs() {
