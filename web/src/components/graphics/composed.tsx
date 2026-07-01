@@ -124,12 +124,15 @@ const SCENES: Record<string, Scene> = {
   people: {
     tint: 'rose',
     body: (
-      <div className="g-scene-grid">
-        <GStrip cells={[2, 3, 1]} fill={[1]} />
-        <GStrip cells={[3, 2, 2]} fill={[0]} />
-        <GStrip cells={[1, 4, 2]} fill={[2]} />
-        <GStrip cells={[4, 1, 2]} fill={[1]} />
-      </div>
+      <GStack>
+        <GNode icon="flow">현장 워킹 미팅</GNode>
+        <GConn length={20} />
+        <div className="g-grid-tiles">
+          <GTile active tag="ON" icon="gear" />
+          <GTile icon="text" />
+          <GTile icon="flow" />
+        </div>
+      </GStack>
     ),
   },
   build: {
@@ -145,11 +148,15 @@ const SCENES: Record<string, Scene> = {
   cloud: {
     tint: 'amber',
     body: (
-      <div className="g-scene-grid g-scene-dashed">
-        <GStrip cells={[2, 2, 3]} fill={[2]} dashed />
-        <GStrip cells={[3, 2, 2]} fill={[0]} dashed />
-        <GStrip cells={[2, 3, 2]} fill={[1]} dashed />
-      </div>
+      <GStack>
+        <GNode icon="gear">사내 정착 · 운영</GNode>
+        <GConn length={20} />
+        <div className="g-doc">
+          <GStrip cells={[5, 3]} fill={[0]} />
+          <GStrip cells={[4, 4, 2]} />
+          <GNode tone="dark" icon="sparkle">분기 리뷰</GNode>
+        </div>
+      </GStack>
     ),
   },
 }

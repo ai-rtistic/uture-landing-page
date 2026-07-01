@@ -3,13 +3,14 @@
  * a row of small soft gradient capsules strung along a gentle curve.
  * Place several at different angles/positions and parallax them on scroll.
  */
+// Warm, orange-led family only — one tonal system, not a rainbow.
 const GRADS = [
-  'linear-gradient(90deg, var(--c-mint), var(--c-amber))',
-  'linear-gradient(90deg, var(--c-peach), var(--c-rose))',
-  'linear-gradient(90deg, var(--c-amber), var(--c-mint))',
-  'linear-gradient(90deg, var(--c-rose), var(--c-lilac))',
-  'linear-gradient(90deg, var(--c-lilac), var(--c-sky))',
-  'linear-gradient(90deg, var(--c-sky), var(--c-mint))',
+  'linear-gradient(90deg, var(--c-orange), var(--c-peach))',
+  'linear-gradient(90deg, var(--c-peach), var(--c-amber))',
+  'linear-gradient(90deg, var(--c-amber), var(--c-orange))',
+  'linear-gradient(90deg, var(--c-rose), var(--c-peach))',
+  'linear-gradient(90deg, var(--c-peach), var(--c-orange))',
+  'linear-gradient(90deg, var(--c-orange), var(--c-rose))',
   'linear-gradient(90deg, var(--c-amber), var(--c-peach))',
 ]
 

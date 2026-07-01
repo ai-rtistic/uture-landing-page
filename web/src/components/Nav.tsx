@@ -4,6 +4,7 @@ import { Arrow } from '../ui/primitives'
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -12,10 +13,22 @@ export function Nav() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // lock body scroll + close on Escape while the mobile sheet is open
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false)
+    document.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
+    }
+  }, [open])
+
   return (
-    <header className={`nav ${scrolled ? 'is-scrolled' : ''}`}>
+    <header className={`nav ${scrolled || open ? 'is-scrolled' : ''}`}>
       <div className="nav-inner container">
-        <a href="#top" className="nav-brand" aria-label="유쳐 홈">
+        <a href="#top" className="nav-brand" aria-label="유쳐 홈" onClick={() => setOpen(false)}>
           <img src={brand.logo} alt="유쳐" />
         </a>
 
@@ -28,18 +41,42 @@ export function Nav() {
         </nav>
 
         <div className="nav-actions">
-          <button className="nav-lang" aria-label="언어">
-            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.3">
-              <circle cx="10" cy="10" r="7.5" />
-              <path d="M2.5 10h15M10 2.5c2.5 2.4 2.5 12.6 0 15M10 2.5c-2.5 2.4-2.5 12.6 0 15" />
-            </svg>
-            <span>KO</span>
-          </button>
           <a href={nav.cta.href} className="btn btn-dark nav-cta">
             {nav.cta.label}
             <Arrow />
           </a>
+          <button
+            className={`nav-burger ${open ? 'is-open' : ''}`}
+            aria-label={open ? '메뉴 닫기' : '메뉴 열기'}
+            aria-expanded={open}
+            aria-controls="nav-sheet"
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span />
+            <span />
+          </button>
         </div>
+      </div>
+
+      <button
+        className={`nav-scrim ${open ? 'is-open' : ''}`}
+        aria-hidden={!open}
+        tabIndex={-1}
+        onClick={() => setOpen(false)}
+      />
+      <div id="nav-sheet" className={`nav-sheet ${open ? 'is-open' : ''}`}>
+        <nav className="nav-sheet-links">
+          {nav.links.map((l) => (
+            <a key={l.href} href={l.href} onClick={() => setOpen(false)}>
+              {l.label}
+              <Arrow />
+            </a>
+          ))}
+        </nav>
+        <a href={nav.cta.href} className="btn btn-dark nav-sheet-cta" onClick={() => setOpen(false)}>
+          {nav.cta.label}
+          <Arrow />
+        </a>
       </div>
     </header>
   )

@@ -1,5 +1,5 @@
 import { philosophy } from '../data/content'
-import { Button, Pill } from '../ui/primitives'
+import { Pill } from '../ui/primitives'
 
 export function Philosophy() {
   return (
@@ -13,12 +13,9 @@ export function Philosophy() {
             <span key={i}>{l}</span>
           ))}
         </h2>
-        <p className="philosophy-sub reveal" data-delay="160">
+        <p className="philosophy-sub philosophy-sub--last reveal" data-delay="160">
           {philosophy.sub}
         </p>
-        <div className="reveal" data-delay="240">
-          <Button href={philosophy.cta.href}>{philosophy.cta.label}</Button>
-        </div>
       </div>
     </section>
   )

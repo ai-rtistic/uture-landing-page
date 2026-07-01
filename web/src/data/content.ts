@@ -16,14 +16,14 @@ export const nav = {
     { label: '고객 사례', href: '#cases' },
     { label: '프로세스', href: '#process' },
   ],
-  cta: { label: 'AX 도입 문의', href: '#contact' },
+  cta: { label: '무료 진단 신청', href: '#contact' },
 }
 
 export const hero = {
   badge: '교육 그 다음까지 책임지는 AX 파트너',
   titleLines: ['AI를 아는 조직에서', 'AI로 일하는 조직으로.'],
   sub: '교육 · 현장 밀착 실행 · 도구 구축 — 기업을 위한 풀사이클 AX 파트너. 구성원이 실제 업무에서 AI로 일하는 방식을 바꿀 때까지, 유쳐가 현장에 함께 있습니다.',
-  cta: { label: 'AX 도입 문의하기', href: '#contact' },
+  cta: { label: '무료 진단 신청', href: '#contact' },
   ctaGhost: { label: '유쳐의 방식 보기', href: '#fde' },
 }
 
@@ -218,7 +218,6 @@ export const serviceTabs = {
       id: 'search',
       label: '사내 문서 검색',
       icon: 'search',
-      video: '/assets/motion/work-demo-search.webm',
       title: ['묻기만 하면', '사내 문서에서 바로 답'],
       desc: '자연어로 물으면 흩어진 사내 문서 · 규정에서 근거와 함께 답을 찾아줍니다.',
     },
@@ -226,7 +225,6 @@ export const serviceTabs = {
       id: 'assistant',
       label: '종합 업무 어시스턴트',
       icon: 'people',
-      video: '/assets/motion/work-demo-assistant.webm',
       title: ['메일 · 메신저 · 일정을', 'AI 비서가 종합'],
       desc: '여기저기 흩어진 정보를 모아 오늘 챙길 일과 우선순위를 정리해 알려줍니다.',
     },
@@ -234,7 +232,6 @@ export const serviceTabs = {
       id: 'report',
       label: '사내 템플릿 생성',
       icon: 'build',
-      video: '/assets/motion/work-demo-report.webm',
       title: ['사내 양식에 맞춰', '산출물까지 자동 생성'],
       desc: '보고서 · PPT를 회사 표준 템플릿 · 로고 · 폰트에 맞춰 초안까지 만들어줍니다.',
     },

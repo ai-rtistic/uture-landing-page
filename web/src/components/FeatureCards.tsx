@@ -4,7 +4,7 @@ import { SceneGraphic } from './graphics/composed'
 
 export function FeatureCards() {
   return (
-    <section className="section features">
+    <section className="section features" id="fde">
       <Container>
         <div className="features-grid">
           {features.items.map((f, i) => (

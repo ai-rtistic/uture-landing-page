@@ -10,8 +10,8 @@
   --surface: #ffffff;
   --surface-2: #ececec;
   --text: #1d1c1b;
-  --text-2: #3e3e3c;
-  --muted: #8e8d8d;
+  --text-2: #3a3937;
+  --muted: #6b6967; /* AA on --bg (~5:1) — was #8e8d8d (~3:1, failed AA) */
   --border: #e0e0e0; /* hairline divider */
   --border-strong: #d3d1cf;
   --border-2: #dbdad8;
@@ -63,6 +63,7 @@
   --font-mono: 'Geist Mono', 'JetBrains Mono', ui-monospace, monospace;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* premium expo-out for reveals */
 }
 
 * {
@@ -134,16 +135,33 @@ button {
   border-top: 1px solid var(--border);
 }
 
-/* ---------- reveal (scroll fade-up) ---------- */
+/* ---------- reveal (scroll entrance: graceful rise + focus-in) ---------- */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
-  will-change: opacity, transform;
+  transform: translate3d(0, 22px, 0);
+  filter: blur(6px);
+  transition: opacity 0.7s var(--ease-out), transform 0.9s var(--ease-out),
+    filter 0.7s var(--ease-out);
+  will-change: opacity, transform, filter;
 }
 .reveal.is-in {
   opacity: 1;
   transform: none;
+  filter: blur(0);
+}
+/* headline-weight entrance: a touch more travel + a longer settle */
+.reveal-title,
+.hero-line.reveal,
+.narrative-title.reveal,
+.split-title.reveal,
+.axmap-title.reveal,
+.services-head-title.reveal,
+.philosophy-title.reveal,
+.final-cta-title.reveal {
+  transform: translate3d(0, 30px, 0);
+  filter: blur(10px);
+  transition: opacity 0.8s var(--ease-out), transform 1.05s var(--ease-out),
+    filter 0.8s var(--ease-out);
 }
 
 /* ---------- pill / badge ---------- */
@@ -227,6 +245,7 @@ button {
   .reveal {
     opacity: 1;
     transform: none;
+    filter: none;
     transition: none;
   }
   * {
