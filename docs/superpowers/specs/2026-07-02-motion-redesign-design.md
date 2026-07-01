@@ -21,8 +21,13 @@
   "트웰브랩스처럼 다양하게, 메인색은 주로 가되"). 장면/카드/탭마다
   `--c-orange --c-peach --c-amber --c-rose --c-lilac --c-sky --c-mint` 토큰을
   돌려 쓰되 같은 파스텔 톤 대역 유지. Remotion에는 동일 hex 하드코딩.
-- 영상은 `motion/` Remotion → 투명 WebM(vp8/vp9 alpha) → `web/public/assets/motion/`.
-  용량 목표: Hero ≤ 1MB, 탭 데모 ≤ 500KB/개.
+- **구현 기술 전환 (스킬 대비 개선, 사용자 승인):** UI 시퀀스 모션(Hero 3막, 탭 데모)은
+  알파 WebM 영상이 아니라 **인페이지 GSAP 타임라인 React 컴포넌트**로 만든다. 근거:
+  (a) 알파 WebM(VP8/VP9)은 iOS Safari에서 재생 불가 — 아이폰에서 빈 화면,
+  (b) 영상 압축이 작은 한글 텍스트를 뭉개 스토리 가독성 훼손,
+  (c) 인페이지는 레티나에서 텍스트가 선명하고 용량이 수 KB이며 테마/반응형 대응 가능.
+  Remotion(`motion/`)은 시네마틱·내보내기용 클립에만 사용. 작업 완료 후
+  `uture-spot-graphics` 스킬 문서를 이 학습으로 갱신한다.
 - 인페이지 모션은 기존 프리미티브(`web/src/components/graphics/`) 재사용,
   `prefers-reduced-motion` 시 정적 폴백.
 - `legacy/`는 읽기 전용. 기존 webm은 새 파일로 대체 후 미사용 파일 삭제.
@@ -30,14 +35,14 @@
 ## 1. Hero — "업무 자동화 장면" 메인 비주얼 (①+⑤ 통합)
 
 - 풀블리드 배경 `<video>`(hero-flow.webm) 제거. 배경은 기존 CSS 빛무리(hero-aura)만.
-- `HeroVisual`(정적 테이블 카드)을 **새 Remotion 영상**으로 교체. 히어로 우측 메인 비주얼.
-- 새 컴포지션 `HeroAutomation` — 3막 루프(~14s, 30fps):
+- `HeroVisual`(정적 테이블 카드)을 **새 인페이지 GSAP 시퀀스 컴포넌트**로 교체.
+  히어로 우측 메인 비주얼. 3막 루프(~14s):
   1. **요청 도착**: 채팅/메일 풍으로 "경비정산 마감 보고서 부탁해요" 류 요청이 들어옴 (sky 톤)
   2. **AI 처리**: 문서 검색 → 표 채움 → 초안 완성이 압축적으로 진행 (lilac/amber 톤 처리 상태)
   3. **조직에 쌓임**: 완료와 함께 "사내 AX 도입 현황" 보드에 새 행이 `운영중`으로 추가 (mint 완료 배지, 오렌지 포인트)
 - 메시지: "일이 저절로 처리되고, 그 도구가 조직의 자산으로 쌓인다."
-- 산출물: `web/public/assets/motion/hero-automation.webm`, `Hero.tsx`/`HeroVisual` 교체,
-  hero-flow.webm 및 HeroFlow 컴포지션 삭제.
+- 산출물: `HeroAutomation` 인페이지 컴포넌트, `Hero.tsx`/`HeroVisual` 교체,
+  hero-flow.webm 및 HeroFlow Remotion 컴포지션 삭제.
 
 ## 2. 내러티브 — 텍스트 호응 장면 카드 (②)
 
@@ -65,11 +70,19 @@
 ## 4. ServiceTabs 탭 데모 영상 3종 — 읽히는 3박자 (④)
 
 - 시나리오 유지: 사내 문서 검색 / 종합 업무 어시스턴트 / 사내 템플릿 생성.
-- 영상 전면 재제작. 공통 문법 (각 12–15s 루프):
+- **영상 대신 인페이지 GSAP 시퀀스 컴포넌트 3종**으로 전면 재제작. 공통 문법 (각 12–15s 루프):
   **입력(타이핑, 크게) → 처리(AI 상태 시각화, 탭별 파스텔) → 결과(답/문서/슬라이드 등장, 강조 홀드)**
 - 탭별 톤: 검색 sky · 어시스턴트 lilac · 템플릿 생성 amber (오렌지는 공통 포인트).
 - 요소 수 축소, 타이포 확대, 박자 완화 — 각 장면이 멀리서도 읽히게.
-- 산출물: `work-demo-{search,assistant,report}.webm` 교체 (WorkDemo 컴포지션 재작성).
+- 산출물: 데모 컴포넌트 3종, `ServiceTabs.tsx`의 `<video>` 교체,
+  `work-demo-*.webm` 및 WorkDemo Remotion 컴포지션 삭제.
+
+## 5. 스킬 갱신 (마무리 단계)
+
+- `.claude/skills/uture-spot-graphics/SKILL.md`를 이번 학습으로 갱신:
+  UI 시퀀스 모션의 기본 경로를 인페이지 GSAP 타임라인으로, Remotion은
+  시네마틱/내보내기 전용으로 강등, 알파 WebM의 iOS 제약 명시,
+  컬러 절을 "오렌지 리드 + 7색 파스텔 로테이션"으로 수정.
 
 ## 비범위
 
@@ -78,6 +91,6 @@
 
 ## 검증
 
-- 프리뷰 서버에서 섹션별 스크린샷 + 재생 확인 (자동재생/루프/탭 전환).
+- 프리뷰 서버에서 섹션별 스크린샷 + 시퀀스 재생 확인 (루프/탭 전환/뷰포트 진입 재생).
 - `prefers-reduced-motion` 에뮬레이션으로 정적 폴백 확인.
-- 렌더 용량 확인 (Hero ≤ 1MB, 탭 ≤ 500KB).
+- 모바일 뷰포트(375px) 확인.
