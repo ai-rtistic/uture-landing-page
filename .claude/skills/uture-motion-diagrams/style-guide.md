@@ -51,19 +51,19 @@ Structure and grammar extracted from `예시디자인/` (TwelveLabs product visu
 ```css
 /* 한글 콘텐츠 필수: Inter/JetBrains Mono에는 한글 글리프가 없다 —
    Pretendard 폴백 없이는 한글이 시스템 폰트로 떨어져 깨져 보인다. */
-font-family: 'Inter', 'Pretendard Variable', Pretendard, -apple-system, sans-serif;   /* labels: 12–14px, weight 500 */
+font-family: 'Geist', 'Pretendard Variable', Pretendard, -apple-system, sans-serif;   /* labels: 12–14px, weight 500 — 사이트 본체와 동일 스택 */
 .tag  { text-transform: uppercase; letter-spacing: .04em; font-size: 11px; }
-.mono { font-family: 'JetBrains Mono', 'SF Mono', 'Pretendard Variable', Pretendard, ui-monospace, monospace; font-size: 11px; } /* all data slots, incl. words in numeric slots */
+.mono { font-family: 'Geist Mono', 'JetBrains Mono', 'Pretendard Variable', Pretendard, ui-monospace, monospace; font-size: 11px; } /* all data slots, incl. words in numeric slots */
 ```
 
 ```html
-<!-- 허용된 외부 리소스: Google Fonts(Inter, JetBrains Mono) + Pretendard CDN -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- 허용된 외부 리소스: Google Fonts(Geist, Geist Mono) + Pretendard CDN — 유쳐 사이트 본체와 동일 -->
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
 ```
 
 - Mini-pill wrapping applies to **small/inline data only**; display-size numbers (hero prices, big stats) are bare mono.
-- 라틴/숫자는 Inter·JetBrains Mono가 그대로 담당하고, 한글만 Pretendard로 떨어진다 —
+- 라틴/숫자는 Geist·Geist Mono가 담당하고, 한글만 Pretendard로 떨어진다 —
   두 서체 모두 그로테스크 계열이라 혼용이 자연스럽다. Bare `monospace` fallback can
   render serif-like in headless browsers.
 
@@ -106,7 +106,7 @@ last  whole scene fades out (400ms) → seamless restart
 ## 3. Canvas & Delivery (normative)
 
 - Canvas: 1200×900 default, 1600×900 wide; content centered, ~60% occupancy.
-- Single self-contained HTML, inline `<style>` + inline SVG, no JS libraries. External resources: Google Fonts `Inter` (+ `JetBrains Mono` when mono is display-size), nothing else.
+- Single self-contained HTML, inline `<style>` + inline SVG, no JS libraries. External resources: Google Fonts `Geist`/`Geist Mono` + Pretendard CDN (§1 Typography), nothing else.
 - Save to `diagrams/<topic>-<theme>.html` (or the artifact's natural home in the project).
 
 ## 4. Reference Components (NON-normative — derive your own instead)
