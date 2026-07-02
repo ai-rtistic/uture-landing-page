@@ -38,7 +38,7 @@
   --container: 1600px;
   --pad-x: 40px;
   --text-col: 640px; /* narrow text column inside wide container */
-  --section-y: 100px;
+  --section-y: 88px;
 
   /* ---- type scale (measured px / line-height / letter-spacing) ---- */
   --fs-display: clamp(36px, 5vw, 56px);
@@ -133,6 +133,18 @@ button {
 
 .hairline {
   border-top: 1px solid var(--border);
+}
+
+/* ---------- global grain — 빈 배경이 '벌판'이 아니라 '지면'으로 읽히게 ---------- */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px;
+  opacity: 0.038;
 }
 
 /* ---------- reveal (scroll entrance: graceful rise + focus-in) ---------- */

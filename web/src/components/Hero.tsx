@@ -1,6 +1,11 @@
-import { hero } from '../data/content'
+import { hero, stats } from '../data/content'
 import { Button, Pill } from '../ui/primitives'
 import { HeroAutomation } from './demos/HeroAutomation'
+
+// 히어로 하단 신뢰 스트립 — 스탯 섹션의 핵심 3개만 미리 보여준다
+const PROOF = stats.slice(0, 3)
+const fmt = (v: number, decimals?: number) =>
+  v.toLocaleString('ko-KR', { minimumFractionDigits: decimals ?? 0, maximumFractionDigits: decimals ?? 0 })
 
 export function Hero() {
   return (
@@ -28,6 +33,17 @@ export function Hero() {
           <Button href={hero.ctaGhost.href} variant="ghost">
             {hero.ctaGhost.label}
           </Button>
+        </div>
+        <div className="hero-proof reveal" data-delay="420">
+          {PROOF.map((s) => (
+            <div className="hero-proof-item" key={s.label}>
+              <strong>
+                {fmt(s.value, 'decimals' in s ? s.decimals : 0)}
+                <em>{s.suffix}</em>
+              </strong>
+              <span>{s.label}</span>
+            </div>
+          ))}
         </div>
       </div>
       <HeroAutomation />
