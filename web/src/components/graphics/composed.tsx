@@ -105,23 +105,23 @@ export function ProjectGraphic() {
 // 엔지니어링은 기존 BuildGraphic(현장 요구 → uture agent → on-prem 배포) 재사용.
 export const serviceGraphics = [EducateGraphic, ProjectGraphic, BuildGraphic]
 
-/* ---- Feature-card scene illustrations — micro story loops (fs-*) ----
-   카드마다 6초짜리 "한 줄 스토리" CSS 루프. 섹션 단일 틴트(sky) — 로테이션은 섹션 단위. */
-
-type Scene = { tint: Parameters<typeof GFrame>[0]['tint']; body: JSX.Element }
+/* ---- Feature-card scene illustrations — uture-motion-diagrams 패널 ----
+   구조: 번호+태그 헤더 → 다이어그램 스테이지. 강조(펄스 오렌지)는 카드당 하나.
+   6초 CSS 마이크로 루프 (fs-*), base 상태 = 최종 프레임. */
 
 const cssVars = (v: Record<string, string | number>) => v as React.CSSProperties
 
 const DIAG_TILES = ['메일', '보고서', 'VOC', '일정', '정산', '회의록']
 
+type Scene = { n: string; tag: string; body: JSX.Element }
+
 const SCENES: Record<string, Scene> = {
   /* 진단: 스캔 라인이 업무 타일을 훑고, 우선순위(P1)가 점등된다 */
   target: {
-    tint: 'sky',
+    n: '01',
+    tag: '진단',
     body: (
-      <GStack>
-        <GNode icon="target">업무 진단</GNode>
-        <GConn length={18} />
+      <div className="fsd-col">
         <div className="fs-scanwrap">
           <div className="fs-tiles">
             {DIAG_TILES.map((t, i) => (
@@ -133,18 +133,17 @@ const SCENES: Record<string, Scene> = {
           </div>
           <span className="fs-scan" aria-hidden />
         </div>
-      </GStack>
+      </div>
     ),
   },
   /* 현장 실행: 워킹 미팅에서 실무 타일로 체크가 하나씩 퍼진다 */
   people: {
-    tint: 'sky',
+    n: '02',
+    tag: '실행',
     body: (
-      <GStack>
-        <GNode tone="dark" icon="flow">
-          현장 워킹 미팅
-        </GNode>
-        <GConn length={18} />
+      <div className="fsd-col">
+        <span className="fsd-pill">현장 워킹 미팅</span>
+        <span className="fsd-wire" aria-hidden />
         <div className="fs-tiles">
           {['메일 정리', '견적 초안', 'VOC 분류'].map((t, i) => (
             <span className="fs-tile" style={cssVars({ '--i': i })} key={t}>
@@ -155,44 +154,38 @@ const SCENES: Record<string, Scene> = {
             </span>
           ))}
         </div>
-      </GStack>
+      </div>
     ),
   },
   /* 공동 구축: 블록이 순서대로 조립되고 사내 도구가 배포된다 */
   build: {
-    tint: 'sky',
+    n: '03',
+    tag: '구축',
     body: (
-      <GStack>
-        <GNode icon="build">co-build</GNode>
-        <GConn length={18} />
+      <div className="fsd-col">
         <div className="fs-blocks">
           {[0, 1, 2].map((i) => (
             <span className="fs-block" style={cssVars({ '--i': i })} key={i} />
           ))}
         </div>
-        <GConn length={18} />
-        <span className="fs-toolnode">
-          <GNode tone="dark" icon="gear">
-            사내 도구 v1 배포
-          </GNode>
-        </span>
-      </GStack>
+        <span className="fsd-wire" aria-hidden />
+        <span className="fsd-pill is-fill fs-toolnode">사내 도구 배포</span>
+      </div>
     ),
   },
   /* 정착: 분기 리뷰 사이클이 돌고 활용 지표가 차오른다 */
   cloud: {
-    tint: 'sky',
+    n: '04',
+    tag: '정착',
     body: (
-      <GStack>
-        <GNode icon="gear">사내 정착 · 운영</GNode>
-        <GConn length={18} />
+      <div className="fsd-col">
         <div className="fs-ring">
           분기
           <br />
           리뷰
           <span className="fs-ringdot" aria-hidden />
         </div>
-        <GConn length={18} />
+        <span className="fsd-wire" aria-hidden />
         <div className="fs-meters">
           <span className="fs-meter">
             <span style={cssVars({ '--i': 0, '--w': '84%' })} />
@@ -201,7 +194,7 @@ const SCENES: Record<string, Scene> = {
             <span style={cssVars({ '--i': 1, '--w': '62%' })} />
           </span>
         </div>
-      </GStack>
+      </div>
     ),
   },
 }
@@ -209,9 +202,13 @@ const SCENES: Record<string, Scene> = {
 export function SceneGraphic({ name }: { name: string }) {
   const scene = SCENES[name] ?? SCENES.target
   return (
-    <GFrame tint={scene.tint} compact>
-      {scene.body}
-    </GFrame>
+    <div className="fsd-panel">
+      <div className="fsd-head">
+        <span className="fsd-num">{scene.n}</span>
+        <span className="fsd-tag">{scene.tag}</span>
+      </div>
+      <div className="fsd-stage">{scene.body}</div>
+    </div>
   )
 }
 

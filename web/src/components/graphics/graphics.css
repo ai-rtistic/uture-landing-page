@@ -218,16 +218,82 @@
 .g-scene-grid { display: flex; flex-direction: column; gap: 9px; width: 100%; align-items: center; }
 
 /* ============================================================
-   Feature-card micro story loops (fs-*) — 6s CSS 루프.
-   base 상태 = 최종 프레임 (reduced-motion에서 animation:none이면
-   완성된 정적 장면이 보인다).
+   fsd — uture-motion-diagrams 패널 (라이트 문법).
+   구조: 번호+태그 헤더 → 다이어그램 스테이지 → 강조는 펄스 오렌지 하나.
+   base 상태 = 최종 프레임 (reduced-motion 폴백).
    ============================================================ */
+.fsd-panel {
+  --fsd-pulse: #ff8a3c;
+  --fsd-wire: #c9c6c1;
+  border: 1px solid var(--border-strong);
+  border-radius: 22px;
+  background: var(--surface);
+  padding: 18px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 240px;
+  box-shadow: 0 2px 10px -6px rgba(29, 28, 27, 0.08);
+}
+.fsd-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.fsd-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+.fsd-tag {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+.fsd-stage {
+  flex: 1;
+  display: grid;
+  place-items: center;
+}
+.fsd-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.fsd-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  padding: 6px 13px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-2);
+  background: var(--surface);
+  white-space: nowrap;
+}
+.fsd-pill.is-fill {
+  background: var(--fsd-pulse);
+  border-color: var(--fsd-pulse);
+  color: #fff;
+  font-weight: 600;
+}
+.fsd-wire {
+  width: 1.25px;
+  height: 16px;
+  border-radius: 1px;
+  background: var(--fsd-wire);
+}
 
-/* -- 진단(sky): 스캔 라인이 업무 타일을 훑고 P1 점등 -- */
+/* -- 진단: 스캔 라인이 업무 타일을 훑고 P1 점등 -- */
 .fs-scanwrap {
   position: relative;
   width: 100%;
-  max-width: 250px;
+  max-width: 236px;
   overflow: hidden;
   border-radius: 10px;
 }
@@ -241,8 +307,8 @@
   font-size: 10.5px;
   padding: 10px 4px;
   text-align: center;
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: 9px;
   background: var(--surface);
   color: var(--muted);
   animation: fs-lit 6s ease-in-out infinite;
@@ -250,12 +316,12 @@
   white-space: nowrap;
 }
 @keyframes fs-lit {
-  0%, 6% { border-color: var(--border); color: var(--muted); }
+  0%, 6% { border-color: var(--border-strong); color: var(--muted); }
   10%, 16% {
-    border-color: color-mix(in srgb, var(--g-accent) 55%, var(--border));
+    border-color: color-mix(in srgb, var(--fsd-pulse) 60%, var(--border-strong));
     color: var(--text-2);
   }
-  24%, 100% { border-color: var(--border); color: var(--muted); }
+  24%, 100% { border-color: var(--border-strong); color: var(--muted); }
 }
 .fs-scan {
   position: absolute;
@@ -264,7 +330,7 @@
   top: 0;
   height: 2px;
   border-radius: 2px;
-  background: linear-gradient(90deg, transparent, var(--g-accent), transparent);
+  background: linear-gradient(90deg, transparent, var(--fsd-pulse), transparent);
   opacity: 0;
   animation: fs-scan 6s ease-in-out infinite;
   pointer-events: none;
@@ -282,11 +348,10 @@
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.05em;
-  padding: 2px 6px;
-  border-radius: var(--r-pill);
-  background: var(--surface);
-  border: 1px solid var(--c-orange);
-  color: var(--c-orange);
+  padding: 2.5px 6px;
+  border-radius: 999px;
+  background: var(--fsd-pulse);
+  color: #fff;
   animation: fs-pop 6s ease-in-out infinite;
 }
 @keyframes fs-pop {
@@ -294,7 +359,7 @@
   52%, 100% { opacity: 1; transform: scale(1); }
 }
 
-/* -- 실행(peach): 미팅에서 체크가 실무 타일로 확산 -- */
+/* -- 실행: 미팅에서 체크가 실무 타일로 확산 -- */
 .fs-checkdot {
   position: absolute;
   top: -7px;
@@ -305,15 +370,15 @@
   place-items: center;
   border-radius: 50%;
   background: var(--surface);
-  border: 1px solid color-mix(in srgb, var(--g-accent) 60%, var(--border));
-  color: #2a9d6f;
+  border: 1px solid color-mix(in srgb, var(--fsd-pulse) 60%, var(--border-strong));
+  color: var(--fsd-pulse);
   font-size: 9px;
   font-weight: 700;
   animation: fs-pop 6s ease-in-out infinite;
   animation-delay: calc(var(--i, 0) * 0.55s);
 }
 
-/* -- 구축(lilac): 블록이 조립되어 사내 도구 완성 -- */
+/* -- 구축: 블록이 조립되어 사내 도구 완성 -- */
 .fs-blocks {
   display: flex;
   gap: 7px;
@@ -323,7 +388,7 @@
   height: 26px;
   border-radius: 7px;
   border: 1px solid var(--border-strong);
-  background: color-mix(in srgb, var(--g-accent) 16%, var(--surface));
+  background: color-mix(in srgb, var(--fsd-pulse) 12%, var(--surface));
   animation: fs-block-in 6s ease-in-out infinite;
   animation-delay: calc(var(--i, 0) * 0.5s);
 }
@@ -335,13 +400,13 @@
   animation: fs-pop 6s ease-in-out infinite;
 }
 
-/* -- 정착(mint): 리뷰 사이클이 돌고 지표가 차오름 -- */
+/* -- 정착: 리뷰 사이클이 돌고 지표가 차오름 -- */
 .fs-ring {
   position: relative;
-  width: 64px;
-  height: 64px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  border: 1.5px solid var(--border);
+  border: 1.25px solid var(--border-strong);
   display: grid;
   place-items: center;
   font-size: 9.5px;
@@ -363,8 +428,7 @@
   height: 8px;
   margin-left: -4px;
   border-radius: 50%;
-  background: color-mix(in srgb, var(--g-accent) 70%, #fff);
-  border: 1px solid color-mix(in srgb, var(--g-accent) 80%, var(--border));
+  background: var(--fsd-pulse);
 }
 @keyframes fs-orbit {
   to { transform: rotate(360deg); }
@@ -373,12 +437,13 @@
   display: grid;
   gap: 7px;
   width: 100%;
-  max-width: 180px;
+  max-width: 170px;
 }
 .fs-meter {
   height: 8px;
   border-radius: 4px;
-  background: #eceae7;
+  background: #f1efec;
+  border: 1px solid var(--border);
   overflow: hidden;
 }
 .fs-meter > span {
@@ -386,7 +451,7 @@
   height: 100%;
   border-radius: 4px;
   width: var(--w, 70%);
-  background: color-mix(in srgb, var(--g-accent) 40%, #d6d4d1);
+  background: var(--fsd-pulse);
   transform-origin: left center;
   animation: fs-fill 6s ease-in-out infinite;
   animation-delay: calc(var(--i, 0) * 0.5s);
