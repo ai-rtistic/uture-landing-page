@@ -315,6 +315,13 @@ export const philosophy = {
   badge: '유쳐의 약속',
   title: ['강의실을 떠나지 않는', 'AX 파트너.'],
   sub: '유쳐는 강의실을 떠나지 않습니다. 구성원 곁에서 함께 실행하고, 필요한 도구는 만들어서라도 정착시킵니다.',
+  // legacy sections-v2.jsx Philosophy 블록에서 이식
+  founder: {
+    quote: '"AI 툴을 배우는 교육은 많습니다. 지금은 \'툴\'이 아닌 \'틀\'을 바꿔야 할 때입니다."',
+    name: '이재준',
+    role: 'Head of AX · uture',
+    avatar: '/assets/founder-avatar.png',
+  },
   cta: { label: '무료 진단 신청', href: 'mailto:official.uture@gmail.com?subject=[유쳐]%20AX%20무료%20진단%20신청' },
 }
 

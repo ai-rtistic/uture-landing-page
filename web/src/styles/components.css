@@ -987,6 +987,40 @@
 .philosophy-title span { display: block; }
 .philosophy-sub { margin: 24px auto 36px; max-width: 50ch; color: var(--text-2); font-size: 17px; line-height: 1.7; }
 .philosophy-sub--last { margin-bottom: 0; }
+/* 대표 서명 — 약속에 얼굴을 붙인다 (legacy Philosophy 블록 이식) */
+.philosophy-founder {
+  margin-top: 46px;
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+}
+.philosophy-founder-quote {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--text-2);
+  max-width: 34ch;
+  text-wrap: balance;
+}
+.philosophy-founder-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.philosophy-founder-meta img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border-strong);
+}
+.philosophy-founder-id {
+  display: grid;
+  text-align: left;
+  gap: 2px;
+}
+.philosophy-founder-name { font-weight: 600; font-size: 14.5px; }
+.philosophy-founder-role { font-size: 12.5px; color: var(--muted); }
 
 /* ---------- Final CTA ---------- */
 .final-cta { position: relative; overflow: hidden; padding-block: 150px; }
