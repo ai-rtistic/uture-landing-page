@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <title>uture · 방식 4단계 — dark feature cards</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
 <style>
   /* 유쳐의 방식 4단계: 진단 → 실행 → 구축 → 정착.
      강조(채움)는 항상 하나 — 내러티브를 따라 카드 1→4를 순회한다.
@@ -20,7 +21,7 @@
   html, body { height: 100%; }
   body {
     background: var(--bg);
-    font-family: 'Inter', -apple-system, sans-serif;
+    font-family: 'Inter', 'Pretendard Variable', Pretendard, -apple-system, sans-serif;
     color: var(--accent);
     display: grid; place-items: center;
   }
@@ -34,7 +35,7 @@
     padding: 24px; display: flex; flex-direction: column; gap: 18px;
   }
   .fcard header { display: flex; align-items: center; gap: 9px; }
-  .mono { font-family: 'SF Mono', ui-monospace, monospace; font-size: 11px; opacity: .85; }
+  .mono { font-family: 'JetBrains Mono', 'SF Mono', 'Pretendard Variable', Pretendard, ui-monospace, monospace; font-size: 11px; opacity: .85; }
   .tag  { text-transform: uppercase; letter-spacing: .04em; font-size: 11px; font-weight: 500; }
   .stage { flex: 1; display: grid; place-items: center; }
   .label { font-size: 13px; font-weight: 500; }

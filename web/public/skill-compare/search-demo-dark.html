@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <title>uture · 사내 문서 검색 — dark diagram</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
 <style>
   /* 사내 문서 검색: 질문 → 문서 3건 탐색 → 근거 문서(강조) → 답변
      Master loop 8s, lavender accent, 다크 아웃라인. */
@@ -19,7 +20,7 @@
   html, body { height: 100%; }
   body {
     background: var(--bg);
-    font-family: 'Inter', -apple-system, sans-serif;
+    font-family: 'Inter', 'Pretendard Variable', Pretendard, -apple-system, sans-serif;
     color: var(--accent);
     display: grid; place-items: center;
   }
@@ -48,7 +49,7 @@
   .card.filled .title { color: var(--ink-on-accent); }
   .card.filled .line { background: var(--ink-on-accent); opacity: .55; }
   .card.filled .mono { color: var(--ink-on-accent); }
-  .mono { font-family: 'SF Mono', ui-monospace, monospace; font-size: 11px; opacity: .85; }
+  .mono { font-family: 'JetBrains Mono', 'SF Mono', 'Pretendard Variable', Pretendard, ui-monospace, monospace; font-size: 11px; opacity: .85; }
   .minipill {
     display: inline-flex; align-self: flex-start;
     border: var(--stroke-w) solid var(--ink-on-accent); border-radius: 999px;
