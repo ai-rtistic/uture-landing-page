@@ -201,51 +201,110 @@
   .hero-proof-item { padding-inline: 18px; }
   .hero-proof-item strong { font-size: 18px; }
 }
-/* ---------- Hero flow chain — 프로스트 글라스 비드 체인 (CSS 전용) ---------- */
+/* ---------- Hero flow chain — 연속 프로스트 글라스 체인 (CSS 전용) ---------- */
 .flow-chain {
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
+}
+.fc-rig {
+  position: absolute;
+  inset: 0;
   will-change: transform;
 }
 .fc-bead {
   position: absolute;
   transform: translate(-50%, -50%);
-  border-radius: 34% / 50%;
-  /* 유리 음영 — 한 방향 광원(좌상)으로 통일 */
-  background: linear-gradient(
-    115deg,
-    #ffffff 0%,
-    #eceae7 38%,
-    #d9d6d2 62%,
-    #f7f6f4 100%
-  );
+  border-radius: 42% / 52%;
+  /* 볼륨 음영: 좌상 하이라이트(radial) + 바디 중간톤(linear) + 하단 반사광(inset) */
+  background:
+    radial-gradient(105% 85% at 30% 20%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 56%),
+    linear-gradient(118deg, #fafaf9 0%, #eae7e4 32%, #d2cfca 58%, #dedbd7 76%, #f4f2f0 100%);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    0 30px 60px -30px rgba(29, 28, 27, 0.18);
-  opacity: 0.85;
+    inset 0 2px 5px rgba(255, 255, 255, 0.9),
+    inset 0 -12px 26px rgba(29, 28, 27, 0.1),
+    0 18px 40px -26px rgba(29, 28, 27, 0.22);
+}
+/* 심도 3단: 원경(작고 옅게) · 중경(쨍하게 — 체인의 주인공) · 근경(크고 흐리게) */
+.fc-bead.is-far {
+  filter: blur(2px);
+  opacity: 0.72;
+}
+.fc-bead.is-mid {
+  opacity: 0.96;
+}
+.fc-bead.is-near {
+  filter: blur(9px);
+  opacity: 0.92;
 }
 .fc-bead.is-accent {
-  background: linear-gradient(115deg, #ffc59e 0%, var(--c-peach) 40%, var(--c-orange) 72%, #ffb27e 100%);
-  opacity: 0.95;
+  background:
+    radial-gradient(105% 85% at 30% 20%, rgba(255, 236, 220, 0.95), rgba(255, 236, 220, 0) 56%),
+    linear-gradient(118deg, #ffd2ae 0%, var(--c-peach) 36%, var(--c-orange) 66%, #ff9754 84%, #ffc49b 100%);
+  box-shadow:
+    inset 0 2px 5px rgba(255, 244, 235, 0.95),
+    inset 0 -12px 26px rgba(190, 78, 10, 0.22),
+    0 18px 40px -24px rgba(255, 122, 51, 0.4);
 }
+/* 초대형 전경 보케 — 모서리에 크게 걸쳐 잘린다 */
+.fc-giant {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 42% / 52%;
+  opacity: 0.85;
+}
+.fc-giant.is-glass {
+  background:
+    radial-gradient(105% 85% at 30% 20%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 60%),
+    linear-gradient(118deg, #f6f5f3 0%, #e2dfdb 40%, #cfccc7 66%, #eeecea 100%);
+}
+.fc-giant.is-peach {
+  background:
+    radial-gradient(105% 85% at 30% 20%, rgba(255, 240, 228, 0.9), rgba(255, 240, 228, 0) 60%),
+    linear-gradient(118deg, #ffd8b8 0%, var(--c-peach) 45%, #ff9457 75%, #ffc9a2 100%);
+  opacity: 0.7;
+}
+/* 체인에 매달린 산출물 미니 썸네일 + 태그 */
 .fc-tag {
   position: absolute;
   transform: translate(-50%, 0);
   display: grid;
   justify-items: center;
-  gap: 0;
+  z-index: 40;
 }
-.fc-tag i {
+.fc-thumb {
+  width: 84px;
+  height: 58px;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  box-shadow: var(--shadow-card);
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  padding: 0 14px;
+}
+.fc-thumb i {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border-strong);
+}
+.fc-thumb i:nth-child(2) { width: 72%; }
+.fc-thumb i.is-accent {
+  width: 46%;
+  background: color-mix(in srgb, var(--c-orange) 55%, #d6d4d1);
+}
+.fc-tag em {
   width: 1px;
-  height: 26px;
+  height: 22px;
   background: var(--border-strong);
 }
 .fc-tag .tag {
   background: var(--surface);
   font-size: 11px;
   white-space: nowrap;
+  box-shadow: 0 4px 12px -6px rgba(29, 28, 27, 0.2);
 }
 @media (max-width: 1040px) {
   .flow-chain { display: none; }
