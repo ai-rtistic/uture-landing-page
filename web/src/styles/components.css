@@ -201,66 +201,6 @@
   .hero-proof-item { padding-inline: 18px; }
   .hero-proof-item strong { font-size: 18px; }
 }
-/* ---------- Hero chain — Remotion 렌더 루프 영상 배경 ---------- */
-.hero-chain {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-.hero-chain video,
-.hero-chain img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 40%;
-  display: block;
-}
-/* 체인에 매달린 산출물 미니 썸네일 + 태그 */
-.fc-tag {
-  position: absolute;
-  transform: translate(-50%, 0);
-  display: grid;
-  justify-items: center;
-  z-index: 40;
-}
-.fc-thumb {
-  width: 84px;
-  height: 58px;
-  border-radius: 10px;
-  background: var(--surface);
-  border: 1px solid var(--border-2);
-  box-shadow: var(--shadow-card);
-  display: grid;
-  align-content: center;
-  gap: 6px;
-  padding: 0 14px;
-}
-.fc-thumb i {
-  height: 4px;
-  border-radius: 2px;
-  background: var(--border-strong);
-}
-.fc-thumb i:nth-child(2) { width: 72%; }
-.fc-thumb i.is-accent {
-  width: 46%;
-  background: color-mix(in srgb, var(--c-orange) 55%, #d6d4d1);
-}
-.fc-tag em {
-  width: 1px;
-  height: 22px;
-  background: var(--border-strong);
-}
-.fc-tag .tag {
-  background: var(--surface);
-  font-size: 11px;
-  white-space: nowrap;
-  box-shadow: 0 4px 12px -6px rgba(29, 28, 27, 0.2);
-}
-@media (max-width: 1040px) {
-  .hero-chain { display: none; }
-}
-
 .hero-aura {
   position: absolute;
   z-index: 1;
