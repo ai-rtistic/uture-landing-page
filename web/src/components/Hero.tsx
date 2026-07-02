@@ -1,7 +1,7 @@
 import { hero, stats } from '../data/content'
 import { Button, Pill } from '../ui/primitives'
 import { HeroAutomation } from './demos/HeroAutomation'
-import { FlowChain } from './graphics/FlowChain'
+import { HeroChainVideo } from './graphics/HeroChainVideo'
 
 // 히어로 하단 신뢰 스트립 — 스탯 섹션의 핵심 3개만 미리 보여준다
 const PROOF = stats.slice(0, 3)
@@ -11,7 +11,7 @@ const fmt = (v: number, decimals?: number) =>
 export function Hero() {
   return (
     <section className="hero" id="top">
-      <FlowChain />
+      <HeroChainVideo />
       <div className="container hero-inner">
         <div className="hero-badge reveal">
           <Pill>{hero.badge}</Pill>

@@ -201,105 +201,20 @@
   .hero-proof-item { padding-inline: 18px; }
   .hero-proof-item strong { font-size: 18px; }
 }
-/* ---------- Hero flow chain — 뉴럴 메시 + 연속 프로스트 글라스 체인 ---------- */
-.flow-chain {
+/* ---------- Hero chain — Remotion 렌더 루프 영상 배경 ---------- */
+.hero-chain {
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  opacity: 0; /* 첫 프레임 배치 후 JS가 페이드 인 — 좌상단 뭉침 플래시 방지 */
 }
-/* 뉴럴 메시 — 얇은 엣지로 연결된 노드망 (하단 여백, 아주 옅게) */
-.nm-edges {
-  position: absolute;
-  inset: 0;
+.hero-chain video,
+.hero-chain img {
   width: 100%;
   height: 100%;
-}
-.nm-edges line {
-  stroke: var(--border-strong);
-  stroke-width: 1px;
-  opacity: 0.5;
-}
-.nm-node {
-  position: absolute;
-  width: 7px;
-  height: 7px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: var(--surface);
-  border: 1.5px solid var(--border-strong);
-}
-.nm-pulse {
-  position: absolute;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--c-orange);
-  box-shadow: 0 0 10px 2px rgba(255, 122, 51, 0.45);
-  opacity: 0;
-}
-.fc-rig {
-  position: absolute;
-  inset: 0;
-  will-change: transform;
-}
-.fc-bead {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  border-radius: 42% / 52%;
-  /* 볼륨 음영: 좌상 하이라이트(radial) + 바디 중간톤(linear) + 하단 반사광(inset) */
-  background:
-    radial-gradient(105% 85% at 30% 20%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 56%),
-    linear-gradient(118deg, #fafaf9 0%, #eae7e4 32%, #d2cfca 58%, #dedbd7 76%, #f4f2f0 100%);
-  box-shadow:
-    inset 0 2px 5px rgba(255, 255, 255, 0.9),
-    inset 0 -12px 26px rgba(29, 28, 27, 0.1),
-    0 18px 40px -26px rgba(29, 28, 27, 0.22);
-}
-/* 심도 3단: 원경(작고 옅게) · 중경(쨍하게 — 체인의 주인공) · 근경(크고 흐리게)
-   컨베이어 이동 중 버킷이 바뀌므로 필터는 부드럽게 전환 */
-.fc-bead {
-  transition: filter 1.2s var(--ease), opacity 1.2s var(--ease);
-}
-.fc-bead.is-far {
-  filter: blur(2px);
-  opacity: 0.72;
-}
-.fc-bead.is-mid {
-  filter: blur(0px);
-  opacity: 0.96;
-}
-.fc-bead.is-near {
-  filter: blur(9px);
-  opacity: 0.92;
-}
-.fc-bead.is-accent {
-  background:
-    radial-gradient(105% 85% at 30% 20%, rgba(255, 236, 220, 0.95), rgba(255, 236, 220, 0) 56%),
-    linear-gradient(118deg, #ffd2ae 0%, var(--c-peach) 36%, var(--c-orange) 66%, #ff9754 84%, #ffc49b 100%);
-  box-shadow:
-    inset 0 2px 5px rgba(255, 244, 235, 0.95),
-    inset 0 -12px 26px rgba(190, 78, 10, 0.22),
-    0 18px 40px -24px rgba(255, 122, 51, 0.4);
-}
-/* 초대형 전경 보케 — 모서리에 크게 걸쳐 잘린다 */
-.fc-giant {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  border-radius: 42% / 52%;
-  opacity: 0.85;
-}
-.fc-giant.is-glass {
-  background:
-    radial-gradient(105% 85% at 30% 20%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 60%),
-    linear-gradient(118deg, #f6f5f3 0%, #e2dfdb 40%, #cfccc7 66%, #eeecea 100%);
-}
-.fc-giant.is-peach {
-  background:
-    radial-gradient(105% 85% at 30% 20%, rgba(255, 240, 228, 0.9), rgba(255, 240, 228, 0) 60%),
-    linear-gradient(118deg, #ffd8b8 0%, var(--c-peach) 45%, #ff9457 75%, #ffc9a2 100%);
-  opacity: 0.7;
+  object-fit: cover;
+  object-position: center 40%;
+  display: block;
 }
 /* 체인에 매달린 산출물 미니 썸네일 + 태그 */
 .fc-tag {
@@ -343,10 +258,7 @@
   box-shadow: 0 4px 12px -6px rgba(29, 28, 27, 0.2);
 }
 @media (max-width: 1040px) {
-  .flow-chain { display: none; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .flow-chain { display: none; }
+  .hero-chain { display: none; }
 }
 
 .hero-aura {
