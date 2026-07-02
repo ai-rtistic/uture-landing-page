@@ -163,6 +163,19 @@ button {
   transition: opacity 0.8s var(--ease-out), transform 1.05s var(--ease-out),
     filter 0.8s var(--ease-out);
 }
+/* 이 블록이 `.reveal.is-in`보다 뒤에 오므로(동일 특이도) 도착 상태를
+   명시적으로 다시 이겨줘야 한다 — 없으면 제목이 영구 블러로 남는다. */
+.reveal-title.is-in,
+.hero-line.reveal.is-in,
+.narrative-title.reveal.is-in,
+.split-title.reveal.is-in,
+.axmap-title.reveal.is-in,
+.services-head-title.reveal.is-in,
+.philosophy-title.reveal.is-in,
+.final-cta-title.reveal.is-in {
+  transform: none;
+  filter: blur(0);
+}
 
 /* ---------- pill / badge ---------- */
 .pill {
