@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>uture · 에이전트 오케스트레이션 — light aurora</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* 요청 → 에이전트 팀 병렬 작업 → 메일·대시보드 딜리버리.
+     라이트 오로라 테마: 요청 캡슐만 오로라(유일한 그라디언트),
+     진행/성공은 vivid orange. Master loop 9s. */
+  :root {
+    --bg: #EDECEA;
+    --card: #FFFFFF;
+    --ink: #1A1A1A;
+    --ink-2: #6B6864;
+    --hair: #DCDAD6;
+    --wire: #C9C6C1;
+    --pulse: #FF8A3C;
+    --shadow: 0 8px 28px rgba(0,0,0,.10);
+    --loop: 9s;
+  }
+  * { margin: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--ink);
+    display: grid; place-items: center;
+  }
+  .canvas { position: relative; width: 1600px; height: 900px; }
+
+  .aurora {
+    background: linear-gradient(105deg, #B79CF7 0%, #D9C2FC 25%, #F7BFD3 50%, #FFC89B 75%, #FF9857 100%);
+    background-size: 200% 200%;
+    animation: aurora-drift 8s ease-in-out infinite alternate;
+  }
+  @keyframes aurora-drift { from {background-position: 0% 40%;} to {background-position: 100% 60%;} }
+
+  .capsule {
+    display: inline-flex; align-items: center; gap: 10px;
+    border-radius: 999px; padding: 13px 24px;
+    font-size: 15px; font-weight: 600; color: var(--ink);
+  }
+  .card {
+    background: var(--card); border-radius: 22px; box-shadow: var(--shadow);
+    padding: 16px 20px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .row { display: flex; align-items: center; gap: 10px; }
+  .mono { font-family: 'SF Mono', ui-monospace, monospace; font-size: 11px; color: var(--ink-2); }
+  .tag  { text-transform: uppercase; letter-spacing: .04em; font-size: 11px; color: var(--ink-2); }
+  .name { font-size: 13.5px; font-weight: 600; }
+
+  /* 진행 캡슐: 흰 캡슐 + 오렌지 채움 + 체크 */
+  .progress { position: relative; width: 150px; height: 10px; border-radius: 999px;
+              background: #F1EFEC; border: 1px solid var(--hair); overflow: hidden; }
+  .progress b { position: absolute; inset: 0; width: 0; border-radius: 999px; background: var(--pulse); }
+  .tick { width: 20px; height: 20px; border-radius: 7px; display: grid; place-items: center; flex: none; }
+  .tick svg { width: 12px; height: 12px; stroke: var(--pulse); fill: none; stroke-width: 2.2;
+              stroke-linecap: round; stroke-linejoin: round; }
+
+  .abs { position: absolute; }
+  #request { top: 120px; left: 0; right: 0; display: flex; justify-content: center; }
+  #agents  { top: 330px; left: 0; right: 0; display: flex; gap: 30px; justify-content: center; }
+  #agents .card { width: 300px; }
+  #deliver { top: 620px; left: 0; right: 0; display: flex; justify-content: center; }
+  #deliver .card { width: 480px; }
+  #wires { top: 0; left: 0; width: 1600px; height: 900px; pointer-events: none; }
+
+  /* ---------- 마스터 루프 ---------- */
+  .anim { animation-duration: var(--loop); animation-iteration-count: infinite;
+          animation-timing-function: cubic-bezier(.22,1,.36,1); animation-fill-mode: both; }
+  @keyframes in-0  { 0%,2%  {opacity:0; transform:translateY(10px) scale(.96);} 8%  {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes in-1a { 0%,20% {opacity:0; transform:translateY(10px) scale(.96);} 26% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes in-1b { 0%,23% {opacity:0; transform:translateY(10px) scale(.96);} 29% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes in-1c { 0%,26% {opacity:0; transform:translateY(10px) scale(.96);} 32% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes in-2  { 0%,62% {opacity:0; transform:translateY(10px) scale(.96);} 68% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  #request { animation-name: in-0; }
+  #ag-a { animation-name: in-1a; } #ag-b { animation-name: in-1b; } #ag-c { animation-name: in-1c; }
+  #deliver .card { animation-name: in-2; }
+
+  @keyframes draw-1 { 0%,9%  {stroke-dashoffset:1; opacity:1;} 20% {stroke-dashoffset:0;} 92% {stroke-dashoffset:0; opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes draw-2 { 0%,52% {stroke-dashoffset:1; opacity:1;} 62% {stroke-dashoffset:0;} 92% {stroke-dashoffset:0; opacity:1;} 97%,100% {opacity:0;} }
+  #wires path.w1 { stroke-dasharray: 1; animation: draw-1 var(--loop) cubic-bezier(.22,1,.36,1) infinite both; }
+  #wires path.w2 { stroke-dasharray: 1; animation: draw-2 var(--loop) cubic-bezier(.22,1,.36,1) infinite both; }
+
+  /* 진행 채움: 에이전트별로 스태거, 완료 체크 팝 */
+  @keyframes fill-a { 0%,30% {width:0;} 50%,92% {width:100%;} 97%,100% {width:0;} }
+  @keyframes fill-b { 0%,34% {width:0;} 56%,92% {width:100%;} 97%,100% {width:0;} }
+  @keyframes fill-c { 0%,38% {width:0;} 60%,92% {width:100%;} 97%,100% {width:0;} }
+  #ag-a .progress b { animation: fill-a var(--loop) linear infinite both; }
+  #ag-b .progress b { animation: fill-b var(--loop) linear infinite both; }
+  #ag-c .progress b { animation: fill-c var(--loop) linear infinite both; }
+  @keyframes tick-a { 0%,50% {opacity:0; transform:scale(.7);} 54% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes tick-b { 0%,56% {opacity:0; transform:scale(.7);} 60% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes tick-c { 0%,60% {opacity:0; transform:scale(.7);} 64% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes tick-d { 0%,72% {opacity:0; transform:scale(.7);} 76% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  #ag-a .tick { animation: tick-a var(--loop) cubic-bezier(.22,1,.36,1) infinite both; }
+  #ag-b .tick { animation: tick-b var(--loop) cubic-bezier(.22,1,.36,1) infinite both; }
+  #ag-c .tick { animation: tick-c var(--loop) cubic-bezier(.22,1,.36,1) infinite both; }
+  #deliver .tick { animation: tick-d var(--loop) cubic-bezier(.22,1,.36,1) infinite both; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .anim, #wires path, .progress b, .tick { animation: none !important; opacity: 1; stroke-dashoffset: 0; }
+    .progress b { width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <!-- 1. 요청 — 오로라 캡슐 (유일한 그라디언트) -->
+  <div id="request" class="abs anim">
+    <span class="capsule aurora">"이번 달 경비정산 마감 보고서 부탁해요"</span>
+  </div>
+
+  <!-- 연결선: 요청 → 에이전트 3, 에이전트 → 딜리버리 -->
+  <svg id="wires" class="abs" viewBox="0 0 1600 900" fill="none">
+    <g stroke="var(--wire)" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+      <path class="w1" pathLength="1" d="M800 172 V240 M800 240 H482 Q470 240 470 252 V330 M800 240 V330 M800 240 H1118 Q1130 240 1130 252 V330"/>
+      <path class="w2" pathLength="1" d="M470 470 V540 Q470 552 482 552 H800 M800 470 V552 M1130 470 V540 Q1130 552 1118 552 H800 M800 552 V620"/>
+    </g>
+  </svg>
+
+  <!-- 2. 에이전트 팀 -->
+  <div id="agents" class="abs">
+    <div id="ag-a" class="card anim">
+      <div class="row"><span class="tag">Agent</span><span class="name">문서 검색</span></div>
+      <div class="row">
+        <span class="progress"><b></b></span>
+        <span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10"/></svg></span>
+      </div>
+      <span class="mono">규정 12건</span>
+    </div>
+    <div id="ag-b" class="card anim">
+      <div class="row"><span class="tag">Agent</span><span class="name">데이터 정리</span></div>
+      <div class="row">
+        <span class="progress"><b></b></span>
+        <span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10"/></svg></span>
+      </div>
+      <span class="mono">842행</span>
+    </div>
+    <div id="ag-c" class="card anim">
+      <div class="row"><span class="tag">Agent</span><span class="name">초안 작성</span></div>
+      <div class="row">
+        <span class="progress"><b></b></span>
+        <span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10"/></svg></span>
+      </div>
+      <span class="mono">6쪽</span>
+    </div>
+  </div>
+
+  <!-- 3. 딜리버리 -->
+  <div id="deliver" class="abs">
+    <div class="card anim">
+      <div class="row">
+        <span class="name">경비정산 마감 보고서 — 메일 발송</span>
+        <span class="tick"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10"/></svg></span>
+      </div>
+      <span class="mono">김대리에게 전달 · 대시보드 게시</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

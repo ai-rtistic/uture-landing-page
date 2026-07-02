@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>uture · 방식 4단계 — dark feature cards</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* 유쳐의 방식 4단계: 진단 → 실행 → 구축 → 정착.
+     강조(채움)는 항상 하나 — 내러티브를 따라 카드 1→4를 순회한다.
+     Master loop 9s, peach-orange accent. */
+  :root {
+    --bg: #262221;
+    --accent: #FFD2A8;
+    --ink-on-accent: #262221;
+    --stroke-w: 1.25px;
+    --loop: 9s;
+  }
+  * { margin: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--accent);
+    display: grid; place-items: center;
+  }
+  .canvas { position: relative; width: 1600px; height: 900px; }
+
+  #row { position: absolute; top: 0; bottom: 0; left: 0; right: 0;
+         display: flex; gap: 30px; align-items: center; justify-content: center; }
+  .fcard {
+    width: 300px; height: 340px;
+    border: var(--stroke-w) solid var(--accent); border-radius: 26px;
+    padding: 24px; display: flex; flex-direction: column; gap: 18px;
+  }
+  .fcard header { display: flex; align-items: center; gap: 9px; }
+  .mono { font-family: 'SF Mono', ui-monospace, monospace; font-size: 11px; opacity: .85; }
+  .tag  { text-transform: uppercase; letter-spacing: .04em; font-size: 11px; font-weight: 500; }
+  .stage { flex: 1; display: grid; place-items: center; }
+  .label { font-size: 13px; font-weight: 500; }
+
+  .pillmini {
+    display: inline-flex; align-items: center; gap: 7px;
+    border: var(--stroke-w) solid var(--accent); border-radius: 999px;
+    padding: 6px 13px; font-size: 12px; font-weight: 500;
+  }
+  .tile {
+    width: 56px; height: 40px;
+    border: var(--stroke-w) solid var(--accent); border-radius: 12px;
+    position: relative;
+  }
+  .grid6 { display: grid; grid-template-columns: repeat(3, 56px); gap: 12px; }
+  .col   { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  .chip {
+    width: 30px; height: 30px;
+    border: var(--stroke-w) solid var(--accent); border-radius: 10px;
+    display: grid; place-items: center; flex: none;
+  }
+  /* stroke는 currentColor — 칩이 채워질 때(color 반전) 체크도 함께 반전된다 */
+  .chip svg { width: 15px; height: 15px; stroke: currentColor; fill: none;
+              stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* 진행 게이지: 18% 트랙 + 채움 */
+  .gauge { width: 180px; height: 26px; border-radius: 999px;
+           border: var(--stroke-w) solid var(--accent); position: relative; overflow: hidden; }
+  .gauge i { position: absolute; inset: 3px; border-radius: 999px;
+             background: color-mix(in srgb, var(--accent) 16%, transparent); }
+  .gauge b { position: absolute; top: 3px; left: 3px; bottom: 3px; width: 0;
+             border-radius: 999px; background: var(--accent); }
+
+  /* ---------- 마스터 루프 ---------- */
+  .anim { animation-duration: var(--loop); animation-iteration-count: infinite;
+          animation-timing-function: cubic-bezier(.22,1,.36,1); animation-fill-mode: both; }
+  @keyframes in-1 { 0%,2%  {opacity:0; transform:translateY(10px) scale(.96);} 8%  {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes in-2 { 0%,4%  {opacity:0; transform:translateY(10px) scale(.96);} 10% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes in-3 { 0%,6%  {opacity:0; transform:translateY(10px) scale(.96);} 12% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes in-4 { 0%,8%  {opacity:0; transform:translateY(10px) scale(.96);} 14% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  #c1 { animation-name: in-1; } #c2 { animation-name: in-2; }
+  #c3 { animation-name: in-3; } #c4 { animation-name: in-4; }
+
+  /* 강조 순회: 각 카드의 핵심 요소가 자기 차례(약 1.6s)에만 채워진다 */
+  @keyframes hl-1 { 0%,14% {background-color:transparent; color:var(--accent);} 18%,32% {background-color:var(--accent); color:var(--ink-on-accent);} 36%,100% {background-color:transparent; color:var(--accent);} }
+  @keyframes hl-2 { 0%,32% {background-color:transparent; color:var(--accent);} 36%,50% {background-color:var(--accent); color:var(--ink-on-accent);} 54%,100% {background-color:transparent; color:var(--accent);} }
+  @keyframes hl-3 { 0%,50% {background-color:transparent; color:var(--accent);} 54%,68% {background-color:var(--accent); color:var(--ink-on-accent);} 72%,100% {background-color:transparent; color:var(--accent);} }
+  #hl1 { animation: hl-1 var(--loop) linear infinite both; }
+  #hl2 { animation: hl-2 var(--loop) linear infinite both; }
+  #hl3 { animation: hl-3 var(--loop) linear infinite both; }
+  #hl2 svg, #hl3 svg { transition: stroke .3s; }
+
+  /* 4번 카드: 게이지가 마지막 순서로 차오르고 그대로 홀드 (마지막 강조) */
+  @keyframes fill-4 { 0%,70% {width:0;} 84%,92% {width:138px;} 97%,100% {width:0;} }
+  #g4 b { animation: fill-4 var(--loop) linear infinite both; }
+
+  /* 진단 카드: 스캔 라인이 타일 그리드를 한 번 훑는다 (자기 차례에) */
+  .scanwrap { position: relative; border-radius: 14px; overflow: hidden; padding: 2px; }
+  .scan { position: absolute; left: 2px; right: 2px; top: 0; height: 2px; border-radius: 2px;
+          background: var(--accent); opacity: 0; }
+  @keyframes sweep { 0%,15% {transform:translateY(0); opacity:0;} 17% {opacity:.9;}
+                     30% {transform:translateY(142px); opacity:.9;} 33%,100% {transform:translateY(142px); opacity:0;} }
+  .scan { animation: sweep var(--loop) linear infinite both; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .anim, .scan, #g4 b, #hl1, #hl2, #hl3 { animation: none !important; opacity: 1; }
+    #g4 b { width: 138px; }
+    #hl1 { background: var(--accent); color: var(--ink-on-accent); }
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div id="row">
+
+    <!-- 01 진단: 스캔 → 우선순위 타일 점등 -->
+    <div id="c1" class="fcard anim">
+      <header><span class="mono">01</span><span class="tag">진단</span></header>
+      <div class="stage">
+        <div class="scanwrap">
+          <div class="grid6">
+            <span class="tile"></span><span class="tile"></span><span class="tile"></span>
+            <span class="tile"></span>
+            <span class="tile" style="border:none; padding:0; display:grid; place-items:center;">
+              <span id="hl1" class="pillmini" style="padding:4px 11px; font-size:11px;">P1</span>
+            </span>
+            <span class="tile"></span>
+          </div>
+          <i class="scan"></i>
+        </div>
+      </div>
+      <span class="label">업무 전수 진단, 우선순위 확정</span>
+    </div>
+
+    <!-- 02 실행: 워킹 미팅 체크 확산 -->
+    <div id="c2" class="fcard anim">
+      <header><span class="mono">02</span><span class="tag">실행</span></header>
+      <div class="stage">
+        <div class="col">
+          <span class="pillmini">현장 워킹 미팅</span>
+          <span id="hl2" class="chip"><svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10"/></svg></span>
+          <span class="pillmini" style="opacity:.75">실무 적용</span>
+        </div>
+      </div>
+      <span class="label">구성원 옆에서 함께 실행</span>
+    </div>
+
+    <!-- 03 구축: 블록 조립 → 배포 -->
+    <div id="c3" class="fcard anim">
+      <header><span class="mono">03</span><span class="tag">구축</span></header>
+      <div class="stage">
+        <div class="col">
+          <span class="tile" style="width:110px"></span>
+          <span class="tile" style="width:110px"></span>
+          <span id="hl3" class="pillmini">사내 도구 배포</span>
+        </div>
+      </div>
+      <span class="label">환경 · 보안에 맞는 도구</span>
+    </div>
+
+    <!-- 04 정착: 운영 게이지가 차오른다 -->
+    <div id="c4" class="fcard anim">
+      <header><span class="mono">04</span><span class="tag">정착</span></header>
+      <div class="stage">
+        <div class="col">
+          <span class="pillmini">분기 리뷰</span>
+          <span id="g4" class="gauge"><i></i><b></b></span>
+          <span class="mono">운영 지표</span>
+        </div>
+      </div>
+      <span class="label">시스템으로 자리잡을 때까지</span>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
