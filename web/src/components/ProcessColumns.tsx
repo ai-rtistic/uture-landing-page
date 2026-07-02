@@ -29,6 +29,10 @@ export function ProcessColumns() {
                   </span>
                 ))}
               </div>
+              <div className="process-deliv">
+                <span className="process-deliv-label mono">산출물</span>
+                {s.deliverable}
+              </div>
               <div className="process-duration mono">{s.duration}</div>
             </div>
           ))}
