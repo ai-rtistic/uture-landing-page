@@ -13,6 +13,9 @@ export function LogoMarquee() {
       <div className="container">
         <div className="logo-marquee-head reveal">
           <Pill>{testimonial.badgeLogos}</Pill>
+          <p className="logo-marquee-sub">
+            통신 · 제조 · 금융 · 공공 — <strong>50+ 기업</strong>이 유쳐와 함께합니다
+          </p>
         </div>
       </div>
       <div className="marquee" aria-hidden>
