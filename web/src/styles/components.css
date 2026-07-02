@@ -201,12 +201,43 @@
   .hero-proof-item { padding-inline: 18px; }
   .hero-proof-item strong { font-size: 18px; }
 }
-/* ---------- Hero flow chain — 연속 프로스트 글라스 체인 (CSS 전용) ---------- */
+/* ---------- Hero flow chain — 뉴럴 메시 + 연속 프로스트 글라스 체인 ---------- */
 .flow-chain {
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
+  opacity: 0; /* 첫 프레임 배치 후 JS가 페이드 인 — 좌상단 뭉침 플래시 방지 */
+}
+/* 뉴럴 메시 — 얇은 엣지로 연결된 노드망 (하단 여백, 아주 옅게) */
+.nm-edges {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.nm-edges line {
+  stroke: var(--border-strong);
+  stroke-width: 1px;
+  opacity: 0.5;
+}
+.nm-node {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1.5px solid var(--border-strong);
+}
+.nm-pulse {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c-orange);
+  box-shadow: 0 0 10px 2px rgba(255, 122, 51, 0.45);
+  opacity: 0;
 }
 .fc-rig {
   position: absolute;
@@ -226,12 +257,17 @@
     inset 0 -12px 26px rgba(29, 28, 27, 0.1),
     0 18px 40px -26px rgba(29, 28, 27, 0.22);
 }
-/* 심도 3단: 원경(작고 옅게) · 중경(쨍하게 — 체인의 주인공) · 근경(크고 흐리게) */
+/* 심도 3단: 원경(작고 옅게) · 중경(쨍하게 — 체인의 주인공) · 근경(크고 흐리게)
+   컨베이어 이동 중 버킷이 바뀌므로 필터는 부드럽게 전환 */
+.fc-bead {
+  transition: filter 1.2s var(--ease), opacity 1.2s var(--ease);
+}
 .fc-bead.is-far {
   filter: blur(2px);
   opacity: 0.72;
 }
 .fc-bead.is-mid {
+  filter: blur(0px);
   opacity: 0.96;
 }
 .fc-bead.is-near {
