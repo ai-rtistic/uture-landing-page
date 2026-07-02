@@ -222,6 +222,199 @@
 /* ---- feature scene grid ---- */
 .g-scene-grid { display: flex; flex-direction: column; gap: 9px; width: 100%; align-items: center; }
 
+/* ============================================================
+   Feature-card micro story loops (fs-*) — 6s CSS 루프.
+   base 상태 = 최종 프레임 (reduced-motion에서 animation:none이면
+   완성된 정적 장면이 보인다).
+   ============================================================ */
+
+/* -- 진단(sky): 스캔 라인이 업무 타일을 훑고 P1 점등 -- */
+.fs-scanwrap {
+  position: relative;
+  width: 100%;
+  max-width: 250px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.fs-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.fs-tile {
+  position: relative;
+  font-size: 10.5px;
+  padding: 10px 4px;
+  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--muted);
+  animation: fs-lit 6s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.4s);
+  white-space: nowrap;
+}
+@keyframes fs-lit {
+  0%, 6% { border-color: var(--border); color: var(--muted); }
+  10%, 16% {
+    border-color: color-mix(in srgb, var(--g-accent) 55%, var(--border));
+    color: var(--text-2);
+  }
+  24%, 100% { border-color: var(--border); color: var(--muted); }
+}
+.fs-scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--g-accent), transparent);
+  opacity: 0;
+  animation: fs-scan 6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes fs-scan {
+  0% { transform: translateY(0); opacity: 0; }
+  6% { opacity: 0.85; }
+  38% { transform: translateY(96px); opacity: 0.85; }
+  46%, 100% { transform: translateY(96px); opacity: 0; }
+}
+.fs-p1tag {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  border: 1px solid var(--c-orange);
+  color: var(--c-orange);
+  animation: fs-pop 6s ease-in-out infinite;
+}
+@keyframes fs-pop {
+  0%, 44% { opacity: 0; transform: scale(0.6); }
+  52%, 100% { opacity: 1; transform: scale(1); }
+}
+
+/* -- 실행(peach): 미팅에서 체크가 실무 타일로 확산 -- */
+.fs-checkdot {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  width: 16px;
+  height: 16px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--g-accent) 60%, var(--border));
+  color: #2a9d6f;
+  font-size: 9px;
+  font-weight: 700;
+  animation: fs-pop 6s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.55s);
+}
+
+/* -- 구축(lilac): 블록이 조립되어 사내 도구 완성 -- */
+.fs-blocks {
+  display: flex;
+  gap: 7px;
+}
+.fs-block {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  border: 1px solid var(--border-strong);
+  background: color-mix(in srgb, var(--g-accent) 16%, var(--surface));
+  animation: fs-block-in 6s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.5s);
+}
+@keyframes fs-block-in {
+  0%, 4% { opacity: 0; transform: translateY(10px); }
+  12%, 100% { opacity: 1; transform: translateY(0); }
+}
+.fs-toolnode {
+  animation: fs-pop 6s ease-in-out infinite;
+}
+
+/* -- 정착(mint): 리뷰 사이클이 돌고 지표가 차오름 -- */
+.fs-ring {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  display: grid;
+  place-items: center;
+  font-size: 9.5px;
+  color: var(--text-2);
+  text-align: center;
+  line-height: 1.25;
+}
+.fs-ringdot {
+  position: absolute;
+  inset: -5px;
+  animation: fs-orbit 6s linear infinite;
+}
+.fs-ringdot::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--g-accent) 70%, #fff);
+  border: 1px solid color-mix(in srgb, var(--g-accent) 80%, var(--border));
+}
+@keyframes fs-orbit {
+  to { transform: rotate(360deg); }
+}
+.fs-meters {
+  display: grid;
+  gap: 7px;
+  width: 100%;
+  max-width: 180px;
+}
+.fs-meter {
+  height: 8px;
+  border-radius: 4px;
+  background: #eceae7;
+  overflow: hidden;
+}
+.fs-meter > span {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  width: var(--w, 70%);
+  background: color-mix(in srgb, var(--g-accent) 40%, #d6d4d1);
+  transform-origin: left center;
+  animation: fs-fill 6s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.5s);
+}
+@keyframes fs-fill {
+  0%, 8% { transform: scaleX(0.1); }
+  40%, 100% { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fs-tile,
+  .fs-scan,
+  .fs-p1tag,
+  .fs-checkdot,
+  .fs-block,
+  .fs-toolnode,
+  .fs-ringdot,
+  .fs-meter > span {
+    animation: none;
+  }
+  .fs-scan { opacity: 0; }
+}
+
 @media (max-width: 540px) {
   .g-frame { min-height: 240px; padding: 22px; }
   .g-grid-tiles { width: 90%; }

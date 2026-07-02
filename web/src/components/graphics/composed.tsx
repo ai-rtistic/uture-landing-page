@@ -105,56 +105,101 @@ export function ProjectGraphic() {
 // 엔지니어링은 기존 BuildGraphic(현장 요구 → uture agent → on-prem 배포) 재사용.
 export const serviceGraphics = [EducateGraphic, ProjectGraphic, BuildGraphic]
 
-/* ---- Feature-card scene illustrations (tinted mini panels) ---- */
+/* ---- Feature-card scene illustrations — micro story loops (fs-*) ----
+   카드마다 6초짜리 "한 줄 스토리" CSS 루프. 틴트 로테이션: sky/peach/lilac/mint. */
 
 type Scene = { tint: Parameters<typeof GFrame>[0]['tint']; body: JSX.Element }
 
+const cssVars = (v: Record<string, string | number>) => v as React.CSSProperties
+
+const DIAG_TILES = ['메일', '보고서', 'VOC', '일정', '정산', '회의록']
+
 const SCENES: Record<string, Scene> = {
+  /* 진단: 스캔 라인이 업무 타일을 훑고, 우선순위(P1)가 점등된다 */
   target: {
-    tint: 'peach',
+    tint: 'sky',
     body: (
       <GStack>
-        <GNode icon="target">진단</GNode>
-        <GConn length={20} />
-        <GStrip cells={[2, 4, 3]} fill={[1]} />
-        <GStrip cells={[5, 2]} fill={[0]} />
-      </GStack>
-    ),
-  },
-  people: {
-    tint: 'rose',
-    body: (
-      <GStack>
-        <GNode icon="flow">현장 워킹 미팅</GNode>
-        <GConn length={20} />
-        <div className="g-grid-tiles">
-          <GTile active tag="ON" icon="gear" />
-          <GTile icon="text" />
-          <GTile icon="flow" />
+        <GNode icon="target">업무 진단</GNode>
+        <GConn length={18} />
+        <div className="fs-scanwrap">
+          <div className="fs-tiles">
+            {DIAG_TILES.map((t, i) => (
+              <span className="fs-tile" style={cssVars({ '--i': i })} key={t}>
+                {t}
+                {t === '정산' && <span className="fs-p1tag">P1</span>}
+              </span>
+            ))}
+          </div>
+          <span className="fs-scan" aria-hidden />
         </div>
       </GStack>
     ),
   },
+  /* 현장 실행: 워킹 미팅에서 실무 타일로 체크가 하나씩 퍼진다 */
+  people: {
+    tint: 'peach',
+    body: (
+      <GStack>
+        <GNode tone="dark" icon="flow">
+          현장 워킹 미팅
+        </GNode>
+        <GConn length={18} />
+        <div className="fs-tiles">
+          {['메일 정리', '견적 초안', 'VOC 분류'].map((t, i) => (
+            <span className="fs-tile" style={cssVars({ '--i': i })} key={t}>
+              {t}
+              <span className="fs-checkdot" style={cssVars({ '--i': i })}>
+                ✓
+              </span>
+            </span>
+          ))}
+        </div>
+      </GStack>
+    ),
+  },
+  /* 공동 구축: 블록이 순서대로 조립되고 사내 도구가 배포된다 */
   build: {
     tint: 'lilac',
     body: (
       <GStack>
         <GNode icon="build">co-build</GNode>
-        <GConn length={20} />
-        <GTile active icon="gear" />
+        <GConn length={18} />
+        <div className="fs-blocks">
+          {[0, 1, 2].map((i) => (
+            <span className="fs-block" style={cssVars({ '--i': i })} key={i} />
+          ))}
+        </div>
+        <GConn length={18} />
+        <span className="fs-toolnode">
+          <GNode tone="dark" icon="gear">
+            사내 도구 v1 배포
+          </GNode>
+        </span>
       </GStack>
     ),
   },
+  /* 정착: 분기 리뷰 사이클이 돌고 활용 지표가 차오른다 */
   cloud: {
-    tint: 'amber',
+    tint: 'mint',
     body: (
       <GStack>
         <GNode icon="gear">사내 정착 · 운영</GNode>
-        <GConn length={20} />
-        <div className="g-doc">
-          <GStrip cells={[5, 3]} fill={[0]} />
-          <GStrip cells={[4, 4, 2]} />
-          <GNode tone="dark" icon="sparkle">분기 리뷰</GNode>
+        <GConn length={18} />
+        <div className="fs-ring">
+          분기
+          <br />
+          리뷰
+          <span className="fs-ringdot" aria-hidden />
+        </div>
+        <GConn length={18} />
+        <div className="fs-meters">
+          <span className="fs-meter">
+            <span style={cssVars({ '--i': 0, '--w': '84%' })} />
+          </span>
+          <span className="fs-meter">
+            <span style={cssVars({ '--i': 1, '--w': '62%' })} />
+          </span>
         </div>
       </GStack>
     ),
