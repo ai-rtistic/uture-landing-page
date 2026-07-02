@@ -34,6 +34,7 @@ export function StatsStrip() {
             <Stat key={s.label} {...s} />
           ))}
         </div>
+        <p className="stats-note reveal">2026년 상반기 기준 · 교육 · 프로젝트 누적 집계</p>
       </Container>
     </section>
   )
