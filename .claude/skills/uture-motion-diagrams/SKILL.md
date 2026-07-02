@@ -28,10 +28,15 @@ The components in the examples (timestamp tags, vector grids, progress pills, tr
 
 ## Theme Decision
 
-| Artifact | Theme |
+**무조건 다크 금지 — 호스트 컨텍스트가 정한다 (사용자 확정 규칙).**
+
+| 놓이는 곳 | Theme |
 |----------|-------|
-| Technical/feature diagram, flow, UI-adjacent | **Dark outline** (default) |
-| Hero, marketing visual, data/segments showcase | **Light aurora** |
+| 라이트 페이지/섹션 안에 임베드되는 다이어그램·데모 | **Light aurora** (흰 카드 + 뉴트럴 와이어 + 오로라 글로우 1곳 + 펄스 오렌지) |
+| 다크 밴드(.band-dark) 안, 또는 독립 아티팩트(스크린 레코딩·발표) | **Dark outline** |
+| 히어로/마케팅 비주얼, 데이터 쇼케이스 | 호스트 배경 따름 (라이트 페이지면 Light aurora) |
+
+같은 다이어그램이라도 임베드 위치가 바뀌면 테마를 다시 정한다.
 
 ## Workflow
 
