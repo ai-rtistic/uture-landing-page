@@ -1,0 +1,31 @@
+/* ============================================================
+   uture-motion-diagrams — 번들 폰트 (오프라인/CDN 불가 환경용)
+   사용: 아티팩트 옆에 fonts/ 폴더를 복사하고
+   <link rel="stylesheet" href="./fonts/fonts.css"> 로 CDN 링크를 대체.
+   라이선스: 모두 SIL OFL — 재배포 가능.
+   - Pretendard v1.3.9 (한글) https://github.com/orioncactus/pretendard
+   - Geist / Geist Mono (라틴·숫자, latin subset) https://vercel.com/font
+   ============================================================ */
+@font-face {
+  font-family: 'Pretendard Variable';
+  src: url('./PretendardVariable.woff2') format('woff2-variations');
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('./Geist-Variable-latin.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('./GeistMono-Variable-latin.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}

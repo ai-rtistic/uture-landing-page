@@ -62,6 +62,11 @@ font-family: 'Geist', 'Pretendard Variable', Pretendard, -apple-system, sans-ser
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
 ```
 
+**오프라인/CDN 불가 환경**: 폰트가 스킬에 번들되어 있다 (`fonts/` — Pretendard Variable
+전체 + Geist/Geist Mono latin subset, 전부 SIL OFL). 아티팩트 옆에 `fonts/` 폴더를
+복사하고 위 CDN `<link>` 두 줄을 `<link rel="stylesheet" href="./fonts/fonts.css">`
+한 줄로 대체하면 된다.
+
 - Mini-pill wrapping applies to **small/inline data only**; display-size numbers (hero prices, big stats) are bare mono.
 - 라틴/숫자는 Geist·Geist Mono가 담당하고, 한글만 Pretendard로 떨어진다 —
   두 서체 모두 그로테스크 계열이라 혼용이 자연스럽다. Bare `monospace` fallback can
