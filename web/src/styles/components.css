@@ -481,6 +481,25 @@
   color: var(--muted);
   text-align: center;
 }
+/* ---- 장면 내부 루프 모션 (7s 마스터 루프, base = 최종 프레임) ----
+   요소가 내러티브 순서로 등장 → 홀드 → 페이드 → 재시작 */
+@keyframes nsd-in-1 { 0%,4%  {opacity:0; transform:translateY(8px);} 12% {opacity:1; transform:none;} 88% {opacity:1;} 95%,100% {opacity:0;} }
+@keyframes nsd-in-2 { 0%,10% {opacity:0; transform:translateY(8px);} 18% {opacity:1; transform:none;} 88% {opacity:1;} 95%,100% {opacity:0;} }
+@keyframes nsd-in-3 { 0%,32% {opacity:0; transform:translateY(8px);} 40% {opacity:1; transform:none;} 88% {opacity:1;} 95%,100% {opacity:0;} }
+.ns-s1 { animation: nsd-in-1 7s cubic-bezier(0.22, 1, 0.36, 1) infinite both; }
+.ns-s2 { animation: nsd-in-2 7s cubic-bezier(0.22, 1, 0.36, 1) infinite both; }
+.ns-s3 { animation: nsd-in-3 7s cubic-bezier(0.22, 1, 0.36, 1) infinite both; }
+/* 파선 와이어 드로우 */
+@keyframes nsd-draw-1 { 0%,14% {transform:scaleY(0);} 22% {transform:scaleY(1);} 88% {transform:scaleY(1); opacity:1;} 95%,100% {opacity:0;} }
+@keyframes nsd-draw-2 { 0%,24% {transform:scaleY(0);} 32% {transform:scaleY(1);} 88% {transform:scaleY(1); opacity:1;} 95%,100% {opacity:0;} }
+.ns-d1 { transform-origin: top center; animation: nsd-draw-1 7s cubic-bezier(0.22, 1, 0.36, 1) infinite both; }
+.ns-d2 { transform-origin: top center; animation: nsd-draw-2 7s cubic-bezier(0.22, 1, 0.36, 1) infinite both; }
+/* ✕ 팝 — 이야기의 핵심 순간 */
+@keyframes nsd-pop { 0%,22% {opacity:0; transform:scale(0.6);} 29% {opacity:1; transform:scale(1);} 88% {opacity:1;} 95%,100% {opacity:0;} }
+.nsd-x { animation: nsd-pop 7s cubic-bezier(0.22, 1, 0.36, 1) infinite both; }
+@media (prefers-reduced-motion: reduce) {
+  .ns-s1, .ns-s2, .ns-s3, .ns-d1, .ns-d2, .nsd-x { animation: none; }
+}
 /* 모바일: 장면 카드를 숨기지 않고 문장 아래 컴팩트로 — 스크럽 전환 유지 */
 @media (max-width: 900px) {
   .narrative-cols {
@@ -968,6 +987,38 @@
 }
 .glow-cta-title { font-size: clamp(28px, 3.6vw, 46px); line-height: 1.15; text-wrap: balance; }
 .glow-cta-sub { margin: 18px auto 32px; max-width: 46ch; color: var(--text-2); font-size: 16px; }
+
+/* ---------- Architecture (AX 다이어그램 뷰어) ---------- */
+.arch-shell {
+  display: grid;
+  gap: 18px;
+}
+.arch-tabs {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.arch-viewer {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  background: #262221; /* 다크 아티팩트 기본 — 라이트 아티팩트는 자체 배경으로 덮임 */
+  box-shadow:
+    0 0 0 5px color-mix(in srgb, #1d1c1b 3%, transparent),
+    var(--shadow-card);
+}
+.arch-viewer iframe {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  border: 0;
+  pointer-events: none; /* 순수 모션 뷰 — 스크롤 하이재킹 방지 */
+}
+@media (max-width: 820px) {
+  .arch-viewer { border-radius: 14px; }
+}
 
 /* ---------- Process (pricing slot) ---------- */
 .process-grid {

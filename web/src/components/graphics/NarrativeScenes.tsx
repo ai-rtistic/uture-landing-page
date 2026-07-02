@@ -22,7 +22,7 @@ function SceneLecture() {
     <Panel n="01" tag="같은 강의">
       <div className="fsd-col">
         {[1, 2, 3].map((k) => (
-          <span className="fsd-pill" key={k}>
+          <span className={`fsd-pill ns-s${k}`} key={k}>
             전사 공통 강의 <span className="nsd-mono">{k}회차</span>
           </span>
         ))}
@@ -36,13 +36,13 @@ function SceneGap() {
   return (
     <Panel n="02" tag="실무 단절">
       <div className="fsd-col" style={{ gap: 0 }}>
-        <span className="fsd-pill">강의 수료 노트</span>
-        <span className="nsd-dash" aria-hidden />
+        <span className="fsd-pill ns-s1">강의 수료 노트</span>
+        <span className="nsd-dash ns-d1" aria-hidden />
         <span className="nsd-x" aria-hidden>
           ✕
         </span>
-        <span className="nsd-dash" aria-hidden />
-        <span className="fsd-pill">월요일 아침, 내 실제 업무</span>
+        <span className="nsd-dash ns-d2" aria-hidden />
+        <span className="fsd-pill ns-s3">월요일 아침, 내 실제 업무</span>
       </div>
     </Panel>
   )
@@ -53,12 +53,12 @@ function SceneMisfit() {
   return (
     <Panel n="03" tag="안 맞는 툴">
       <div className="fsd-col">
-        <span className="fsd-pill">범용 AI 툴</span>
-        <div className="nsd-row">
+        <span className="fsd-pill ns-s1">범용 AI 툴</span>
+        <div className="nsd-row ns-s2">
           <span className="nsd-mono nsd-chip">보안 정책 ✕</span>
           <span className="nsd-mono nsd-chip">사내 데이터 ✕</span>
         </div>
-        <span className="nsd-slot">우리 업무에 맞는 도구 — 아직 없음</span>
+        <span className="nsd-slot ns-s3">우리 업무에 맞는 도구 — 아직 없음</span>
       </div>
     </Panel>
   )

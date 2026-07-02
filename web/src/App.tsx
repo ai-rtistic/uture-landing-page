@@ -8,6 +8,7 @@ import { Testimonial } from './components/Testimonial'
 import { FeatureCards } from './components/FeatureCards'
 import { IndustryCards } from './components/IndustryCards'
 import { ServiceTabs } from './components/ServiceTabs'
+import { ArchitectureTabs } from './components/ArchitectureTabs'
 import { CaseQuote } from './components/CaseQuote'
 import { GlowCTA } from './components/GlowCTA'
 import { ProcessColumns } from './components/ProcessColumns'
@@ -31,6 +32,7 @@ export default function App() {
         <FeatureCards />
         <IndustryCards />
         <ServiceTabs />
+        <ArchitectureTabs />
         <CaseQuote />
         <GlowCTA />
         <ProcessColumns />

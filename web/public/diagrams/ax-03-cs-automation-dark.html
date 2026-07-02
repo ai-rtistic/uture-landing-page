@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>고객센터 AI 상담 자동화 — uture motion diagram</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     uture-motion-diagrams / dark / ICE-BLUE accent
+     Scene: 고객센터 AI 상담 자동화
+       3 inbound channels (call / chat / email)
+         → AI intent classifier / router
+           → simple → AI auto-reply  (the ONE filled node)
+           → complex → agent handoff + summary briefing
+             → processing stats hint
+     Master loop: 9s. Every animation shares the 9s duration with
+     percentage-based windows → seamless loop for screen recording.
+     ============================================================ */
+  :root {
+    --bg: #262221;
+    --accent: #C9E6F6;            /* ice-blue */
+    --ink-on-accent: #262221;
+    --stroke-w: 1.25px;
+    --loop: 9s;
+  }
+  * { margin: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--accent);
+    display: grid; place-items: center;
+  }
+  .canvas { position: relative; width: 1200px; height: 900px; }
+
+  /* ---------- shape primitives ---------- */
+  .pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: var(--stroke-w) solid var(--accent); border-radius: 999px;
+    padding: 9px 18px; font-size: 14px; font-weight: 500; white-space: nowrap;
+  }
+  .pill.filled { background: var(--accent); color: var(--ink-on-accent); border-color: var(--accent); }
+  .chip {
+    width: 30px; height: 30px; flex: none;
+    border: var(--stroke-w) solid var(--accent); border-radius: 10px;
+    display: grid; place-items: center;
+  }
+  .chip svg { width: 16px; height: 16px; stroke: var(--accent); fill: none;
+              stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .chip.onink svg { stroke: var(--ink-on-accent); }
+  .card {
+    border: var(--stroke-w) solid var(--accent); border-radius: 22px;
+    padding: 18px 20px; display: flex; flex-direction: column; gap: 12px;
+    background: var(--bg);
+  }
+  .card .head { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 600; }
+  .card .line { height: 2px; border-radius: 2px; background: var(--accent); opacity: .55; }
+  .mono { font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace; }
+  .tag  { text-transform: uppercase; letter-spacing: .04em; font-size: 11px; font-weight: 500; }
+
+  /* mini outlined data pill (small/inline data slots) */
+  .mini {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid var(--accent); border-radius: 999px;
+    padding: 3px 10px; font-size: 11px;
+  }
+
+  /* ---------- layout (absolute, centered scene) ----------
+     Never center animated elements with translateX(-50%): the enter
+     keyframes animate transform and would override it → drift.
+     Use left:0;right:0;justify-content:center or explicit margins. */
+  .abs { position: absolute; }
+
+  /* section title */
+  #title { top: 70px; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+
+  /* 1. inbound channels — three outlined capsules, left column */
+  #inbound { top: 250px; left: 96px; display: flex; flex-direction: column; gap: 22px; }
+  #inbound .pill { width: 210px; }
+
+  /* 2. AI router node — center */
+  #router { top: 300px; left: 470px; width: 260px; }
+  #router .subs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  /* 3a. simple branch → AI auto reply (FILLED = single emphasis) */
+  #simple { top: 214px; left: 852px; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+
+  /* 3b. complex branch → agent handoff + summary briefing */
+  #complex { top: 456px; left: 852px; width: 268px; }
+  #complex .brief { display: flex; flex-direction: column; gap: 7px; }
+  #complex .brief .line { opacity:.5; }
+
+  /* 4. stats hint (bottom) */
+  #stats { top: 792px; left: 0; right: 0; display: flex; gap: 14px; justify-content: center; }
+
+  /* connectors */
+  #wires { top: 0; left: 0; width: 1200px; height: 900px; pointer-events: none; }
+
+  /* ---------- master-loop animation windows ----------
+     narrative order: title → channels stagger → router → wires draw →
+     branch cards → briefing lines → stats. shared exit 92%→97%. */
+  @keyframes enter    { 0%,3%   {opacity:0; transform:translateY(10px) scale(.96);} 10% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes enter-c0 { 0%,9%   {opacity:0; transform:translateY(10px) scale(.96);} 15% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes enter-c1 { 0%,11%  {opacity:0; transform:translateY(10px) scale(.96);} 17% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes enter-c2 { 0%,13%  {opacity:0; transform:translateY(10px) scale(.96);} 19% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes enter-rt { 0%,20%  {opacity:0; transform:translateY(10px) scale(.96);} 27% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes enter-sm { 0%,44%  {opacity:0; transform:translateY(10px) scale(.96);} 51% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes enter-cx { 0%,48%  {opacity:0; transform:translateY(10px) scale(.96);} 55% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes enter-st { 0%,64%  {opacity:0; transform:translateY(8px);}             71% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+
+  /* connector draw-in: channels→router at ~24%, router→branches at ~38% */
+  @keyframes draw-in  { 0%,24% {stroke-dashoffset:1; opacity:1;} 34% {stroke-dashoffset:0;} 92% {stroke-dashoffset:0; opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes draw-out { 0%,38% {stroke-dashoffset:1; opacity:1;} 48% {stroke-dashoffset:0;} 92% {stroke-dashoffset:0; opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes draw-stat{ 0%,60% {stroke-dashoffset:1; opacity:1;} 68% {stroke-dashoffset:0;} 92% {stroke-dashoffset:0; opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes fade-lead{ 0%,55% {opacity:0;} 62% {opacity:.85;} 92% {opacity:.85;} 97%,100% {opacity:0;} }
+
+  /* progress fill inside stats (linear) */
+  @keyframes fillbar  { 0%,72% {width:0;} 86% {width:var(--w);} 92% {width:var(--w);} 97%,100% {width:var(--w);} }
+
+  /* gentle idle float on the two branch outcome cards */
+  @keyframes floaty   { 0%,55% {transform:translateY(0);} 74% {transform:translateY(-4px);} 92% {transform:translateY(0);} }
+
+  .anim { animation-duration: var(--loop); animation-iteration-count: infinite;
+          animation-timing-function: cubic-bezier(.22,1,.36,1); animation-fill-mode: both; }
+  #title  { animation-name: enter; }
+  #ch-0   { animation-name: enter-c0; }
+  #ch-1   { animation-name: enter-c1; }
+  #ch-2   { animation-name: enter-c2; }
+  #router { animation-name: enter-rt; }
+  #simple { animation-name: enter-sm; }
+  #complex{ animation-name: enter-cx; }
+  #stats  { animation-name: enter-st; }
+
+  #wires path.in   { stroke-dasharray: 1; animation: draw-in  var(--loop) cubic-bezier(.22,1,.36,1) infinite both; }
+  #wires path.out  { stroke-dasharray: 1; animation: draw-out var(--loop) cubic-bezier(.22,1,.36,1) infinite both; }
+  #wires path.stat { stroke-dasharray: 1; animation: draw-stat var(--loop) cubic-bezier(.22,1,.36,1) infinite both; }
+  #wires path.leader { stroke-dasharray: 3 5; animation: fade-lead var(--loop) linear infinite both; }
+
+  .fill { animation: fillbar var(--loop) linear infinite both; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .anim, #wires path, .fill { animation: none !important; opacity: 1; stroke-dashoffset: 0; }
+    .fill { width: var(--w); }
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <!-- section title -->
+  <div id="title" class="abs anim">
+    <span class="tag" style="opacity:.7">Customer Support · AX</span>
+    <span style="font-size:22px; font-weight:600; letter-spacing:-.01em;">고객센터 AI 상담 자동화</span>
+  </div>
+
+  <!-- 1. inbound channels -->
+  <div id="inbound" class="abs">
+    <span id="ch-0" class="pill anim">
+      <span class="chip"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
+      전화 문의
+    </span>
+    <span id="ch-1" class="pill anim">
+      <span class="chip"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 3V5z"/></svg></span>
+      채팅 문의
+    </span>
+    <span id="ch-2" class="pill anim">
+      <span class="chip"><svg viewBox="0 0 24 24"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg></span>
+      이메일 문의
+    </span>
+  </div>
+
+  <!-- 2. AI router node -->
+  <div id="router" class="abs card anim">
+    <div class="head">
+      <span class="chip"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/></svg></span>
+      AI 의도 분류 · 라우팅
+    </div>
+    <div class="subs">
+      <span class="mini mono">intent</span>
+      <span class="mini mono">priority</span>
+      <span class="mini mono">라우팅</span>
+    </div>
+  </div>
+
+  <!-- 3a. simple branch → AI auto reply — THE single filled emphasis -->
+  <div id="simple" class="abs anim">
+    <span class="tag" style="opacity:.7">단순 문의</span>
+    <span class="pill filled">
+      <span class="chip onink" style="border-color:var(--ink-on-accent)"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/></svg></span>
+      AI 자동 응답
+    </span>
+    <span class="mini mono" style="opacity:.85">즉시 해결 · 무인 처리</span>
+  </div>
+
+  <!-- 3b. complex branch → agent handoff + summary briefing -->
+  <div id="complex" class="abs card anim">
+    <div class="head">
+      <span class="chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 20a7 7 0 0 1 14 0"/></svg></span>
+      복잡 문의 · 상담사 연결
+    </div>
+    <div class="brief">
+      <span class="tag" style="opacity:.7; display:flex; align-items:center; gap:8px;">
+        <svg viewBox="0 0 24 24" width="13" height="13" style="stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><path d="M7 4h10v16H7zM10 8h4M10 12h4M10 16h2"/></svg>
+        요약 브리핑 첨부
+      </span>
+      <div class="line" style="width:90%"></div>
+      <div class="line" style="width:72%"></div>
+      <div class="line" style="width:84%"></div>
+    </div>
+  </div>
+
+  <!-- 4. processing stats hint -->
+  <div id="stats" class="abs anim">
+    <span class="mini mono" style="padding:6px 14px; gap:8px;">
+      자동 처리율
+      <span style="display:inline-block; width:70px; height:6px; border-radius:999px; background:color-mix(in srgb, var(--accent) 16%, transparent); overflow:hidden;">
+        <span class="fill" style="--w:72%; display:block; height:100%; background:var(--accent); border-radius:999px;"></span>
+      </span>
+      72%
+    </span>
+    <span class="mini mono" style="padding:6px 14px;">평균 응답 ↓ 4.8x</span>
+    <span class="mini mono" style="padding:6px 14px;">상담사 이관 28%</span>
+  </div>
+
+  <!-- connectors -->
+  <svg id="wires" class="abs" viewBox="0 0 1200 900" fill="none">
+    <g stroke="var(--accent)" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+      <!-- channels → router: outer two elbow into the y=360 bus, middle joins with a soft corner.
+           All three end collinear on the same H segment so no lens/blob artifact at the merge. -->
+      <path class="in" pathLength="1" d="M306 285 H392 Q410 285 410 303 V342 Q410 360 428 360 H470"/>
+      <path class="in" pathLength="1" d="M306 353 H402 Q410 353 410 360 H470"/>
+      <path class="in" pathLength="1" d="M306 421 H392 Q410 421 410 403 V378 Q410 360 428 360 H470"/>
+
+      <!-- router → simple branch (up) and complex branch (down), from right edge x=730 -->
+      <path class="out" pathLength="1" d="M730 342 H792 Q812 342 812 322 V246 H852"/>
+      <path class="out" pathLength="1" d="M730 378 H792 Q812 378 812 398 V500 H852"/>
+
+      <!-- stats band stands alone as a footer — no connectors (restraint invariant);
+           earlier stat/leader wires crossed the complex card and dangled mid-air. -->
+    </g>
+  </svg>
+
+</div>
+</body>
+</html>

@@ -238,6 +238,22 @@ export const serviceTabs = {
   ],
 }
 
+// 08.5 — AX 아키텍처 (uture-motion-diagrams 아티팩트, /diagrams/*.html iframe 임베드)
+export const architecture = {
+  badge: '이렇게 구축합니다',
+  title: ['팀에 맞는', 'AX 아키텍처'],
+  intro:
+    '요구는 팀마다 다릅니다. 유쳐가 실제로 설계 · 구축하는 대표 아키텍처 — 사내 환경과 보안에 맞춰 조정됩니다.',
+  items: [
+    { id: 'rag', label: '사내 데이터 챗봇', file: '/diagrams/ax-01-rag-chatbot-dark.html' },
+    { id: 'doc', label: '문서 업무 자동화', file: '/diagrams/ax-02-doc-automation-dark.html' },
+    { id: 'cs', label: 'CS 상담 자동화', file: '/diagrams/ax-03-cs-automation-dark.html' },
+    { id: 'search', label: '지식 통합 검색', file: '/diagrams/ax-07-knowledge-search-dark.html' },
+    { id: 'sales', label: '영업 미팅 · 리드', file: '/diagrams/ax-08-sales-crm-dark.html' },
+    { id: 'forecast', label: '수요 예측', file: '/diagrams/ax-10-demand-forecast-light.html' },
+  ],
+}
+
 // 09 — case quote
 export const caseQuote = {
   badge: '고객 이야기',
