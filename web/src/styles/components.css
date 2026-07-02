@@ -200,6 +200,59 @@
   .hero-proof-item { padding-inline: 18px; }
   .hero-proof-item strong { font-size: 18px; }
 }
+/* ---------- Hero flow chain — 프로스트 글라스 비드 체인 (CSS 전용) ---------- */
+.flow-chain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform;
+}
+.fc-bead {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 34% / 50%;
+  /* 유리 음영 — 한 방향 광원(좌상)으로 통일 */
+  background: linear-gradient(
+    115deg,
+    #ffffff 0%,
+    #eceae7 38%,
+    #d9d6d2 62%,
+    #f7f6f4 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 30px 60px -30px rgba(29, 28, 27, 0.18);
+  opacity: 0.85;
+}
+.fc-bead.is-accent {
+  background: linear-gradient(115deg, #ffc59e 0%, var(--c-peach) 40%, var(--c-orange) 72%, #ffb27e 100%);
+  opacity: 0.95;
+}
+.fc-tag {
+  position: absolute;
+  transform: translate(-50%, 0);
+  display: grid;
+  justify-items: center;
+  gap: 0;
+}
+.fc-tag i {
+  width: 1px;
+  height: 26px;
+  background: var(--border-strong);
+}
+.fc-tag .tag {
+  background: var(--surface);
+  font-size: 11px;
+  white-space: nowrap;
+}
+@media (max-width: 1040px) {
+  .flow-chain { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flow-chain { display: none; }
+}
+
 .hero-aura {
   position: absolute;
   z-index: 1;
