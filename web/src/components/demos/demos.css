@@ -1,39 +1,32 @@
 /* ============================================================
-   Demo stages — in-page GSAP product-UI sequences.
-   Replaces the old alpha-WebM videos (iOS-safe, crisp text).
-   Tint per stage: pastel wash + accents; orange only as point.
+   Demo stages — uture-motion-diagrams 다크 문법.
+   웜 니어블랙 패널(#262221) 위에 단일 파스텔 아웃라인(1.25px),
+   채움(강조)은 데모당 하나(최종 딜리버리/적중). 그림자·그라디언트 금지(패널 내부).
+   모션(타이핑·연결선 드로우·스태거)은 GSAP 그대로.
    ============================================================ */
 
 .dm-stage {
+  --dm-ink: #262221;
   width: 100%;
-  border: 1px solid var(--border-strong);
-  border-radius: 20px;
-  background: linear-gradient(180deg, #fdfcfb, #f6f4f2);
+  border-radius: 22px;
+  background: var(--dm-ink);
+  color: var(--dm-accent);
   overflow: hidden;
   position: relative;
   font-size: 14px;
   text-align: left;
-  /* 더블 베젤: 트레이 링 + 확산 그림자 */
+  /* 패널 밖(라이트 페이지)의 오브젝트 처리만 허용: 트레이 링 + 확산 그림자 */
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    0 0 0 5px color-mix(in srgb, #1d1c1b 3%, transparent),
+    0 0 0 5px color-mix(in srgb, #1d1c1b 4%, transparent),
     var(--shadow-card);
 }
-.dm-stage::before {
-  /* pastel wash, kept quiet */
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(120% 80% at 72% 0%, var(--dm-tint, transparent), transparent 62%);
-  opacity: 0.14;
-}
-.dm-sky   { --dm-tint: var(--c-sky); }
-.dm-lilac { --dm-tint: var(--c-lilac); }
-.dm-amber { --dm-tint: var(--c-amber); }
-.dm-mint  { --dm-tint: var(--c-mint); }
-.dm-peach { --dm-tint: var(--c-peach); }
-.dm-rose  { --dm-tint: var(--c-rose); }
+/* 단일 파스텔 악센트 — 스킬 팔레트 (보라·오렌지 메인 + 상황색) */
+.dm-sky   { --dm-accent: #C9E6F6; } /* ice-blue */
+.dm-lilac { --dm-accent: #E9D5FC; } /* lavender (main) */
+.dm-amber { --dm-accent: #FFD2A8; } /* peach (main) */
+.dm-mint  { --dm-accent: #CBEED9; }
+.dm-peach { --dm-accent: #FFD2A8; }
+.dm-rose  { --dm-accent: #F9CFDA; }
 
 .dm-chrome {
   position: relative;
@@ -41,18 +34,18 @@
   align-items: center;
   gap: 6px;
   padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1.25px solid color-mix(in srgb, var(--dm-accent) 26%, transparent);
 }
 .dm-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--border-strong);
+  border: 1.25px solid color-mix(in srgb, var(--dm-accent) 55%, transparent);
 }
 .dm-chrome-label {
   margin-left: 8px;
   font-size: 11px;
-  color: var(--muted);
+  opacity: 0.75;
 }
 .dm-body {
   position: relative;
@@ -62,25 +55,25 @@
   align-content: start;
 }
 
-/* ---------------- atoms ---------------- */
+/* ---------------- atoms — 전부 아웃라인, 채움은 강조 하나 ---------------- */
 
-/* user request bubble */
+/* 요청 버블: 아웃라인 캡슐 (스킬의 query pill) */
 .dm-bubble {
   justify-self: end;
   max-width: 88%;
-  background: var(--text);
-  color: #fff;
-  border-radius: 16px 16px 4px 16px;
-  padding: 10px 14px;
-  font-size: 13.5px;
-  line-height: 1.55;
-  min-height: 41px;
+  border: 1.25px solid var(--dm-accent);
+  border-radius: 999px;
+  padding: 9px 16px;
+  font-size: 13px;
+  line-height: 1.5;
+  min-height: 39px;
+  color: var(--dm-accent);
 }
 .dm-caret {
   display: inline-block;
-  width: 2px;
+  width: 1.5px;
   height: 1em;
-  margin-left: 1px;
+  margin-left: 2px;
   background: currentColor;
   vertical-align: text-bottom;
   animation: dm-caret 0.9s steps(2) infinite;
@@ -89,43 +82,48 @@
   50% { opacity: 0; }
 }
 
-/* AI working status chip */
+/* 상태 칩 (예약 실행 등) */
 .dm-status {
   justify-self: start;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   font-size: 12.5px;
-  color: var(--text-2);
-  border: 1px solid var(--border-strong);
+  border: 1.25px solid var(--dm-accent);
   border-radius: 999px;
   padding: 6px 12px;
-  background: var(--surface);
 }
 .dm-spin {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  border: 2px solid color-mix(in srgb, var(--dm-tint) 65%, #d6d4d1);
-  border-top-color: transparent;
+  border: 1.5px solid color-mix(in srgb, var(--dm-accent) 45%, transparent);
+  border-top-color: var(--dm-accent);
   animation: dm-spin 0.8s linear infinite;
 }
 @keyframes dm-spin {
   to { rotate: 360deg; }
 }
 
-/* result / document card */
+/* 카드: 아웃라인. is-hit = 유일한 채움 강조 */
 .dm-card {
-  background: var(--surface);
-  border: 1px solid var(--border-2);
-  border-radius: 14px;
+  border: 1.25px solid var(--dm-accent);
+  border-radius: 16px;
   padding: 12px 15px;
   display: grid;
   gap: 6px;
 }
 .dm-card.is-hit {
-  border-color: color-mix(in srgb, var(--dm-tint) 55%, var(--border-strong));
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--dm-tint) 16%, transparent);
+  background: var(--dm-accent);
+  border-color: var(--dm-accent);
+}
+.dm-card.is-hit .dm-title,
+.dm-card.is-hit .dm-meta { color: var(--dm-ink); opacity: 1; }
+.dm-card.is-hit .dm-meta { opacity: 0.75; }
+.dm-card.is-hit .dm-tag {
+  border-color: var(--dm-ink);
+  color: var(--dm-ink);
+  background: transparent;
 }
 .dm-row {
   display: flex;
@@ -136,37 +134,38 @@
 .dm-title {
   font-weight: 600;
   font-size: 13.5px;
-  color: var(--text);
+  color: var(--dm-accent);
 }
 .dm-meta {
   font-size: 12px;
-  color: var(--muted);
+  color: var(--dm-accent);
+  opacity: 0.7;
 }
 .dm-tag {
   font-size: 11px;
   line-height: 1;
-  border: 1px solid var(--border-strong);
+  border: 1.25px solid var(--dm-accent);
   border-radius: 999px;
   padding: 4px 8px;
-  color: var(--text-2);
-  background: var(--surface);
+  color: var(--dm-accent);
+  background: transparent;
   white-space: nowrap;
 }
+/* is-accent = 채움 강조 태그 (딜리버리) — 데모당 하나만 사용 */
 .dm-tag.is-accent {
-  border-color: var(--c-orange);
-  color: var(--c-orange);
+  background: var(--dm-accent);
+  border-color: var(--dm-accent);
+  color: var(--dm-ink);
+  font-weight: 600;
 }
-.dm-tag.is-tint {
-  border-color: color-mix(in srgb, var(--dm-tint) 60%, var(--border-strong));
-  background: color-mix(in srgb, var(--dm-tint) 14%, var(--surface));
-}
+.dm-tag.is-tint { opacity: 0.85; }
 
-/* progress bar (report outline fill etc.) */
+/* 진행 바: 18% 트랙 + 악센트 채움 */
 .dm-bar {
   flex: 1;
   height: 8px;
   border-radius: 4px;
-  background: #eceae7;
+  background: color-mix(in srgb, var(--dm-accent) 16%, transparent);
   overflow: hidden;
 }
 .dm-bar > span {
@@ -174,22 +173,20 @@
   height: 100%;
   width: 100%;
   border-radius: 4px;
-  background: color-mix(in srgb, var(--dm-tint) 48%, #d6d4d1);
+  background: var(--dm-accent);
   transform-origin: left center;
 }
 
-/* 세로 연결선 — 요청→처리→결과가 '흘러가는' 다이어그램 문법 */
+/* 세로 연결선 — 작업이 흘러가는 와이어 */
 .dm-wire {
   justify-self: center;
-  width: 1.5px;
+  width: 1.25px;
   height: 18px;
-  border-radius: 1px;
-  background: var(--border-strong);
+  background: color-mix(in srgb, var(--dm-accent) 55%, transparent);
   transform-origin: top center;
 }
 
-/* sub-agent chips — 오케스트레이터가 병렬로 부리는 일꾼들.
-   base 상태 = 최종 프레임(체크 완료, 스피너 숨김) → reduced-motion 폴백. */
+/* 서브에이전트 칩 */
 .dm-agents {
   display: flex;
   gap: 8px;
@@ -200,11 +197,10 @@
   align-items: center;
   gap: 7px;
   font-size: 12px;
-  border: 1px solid var(--border-2);
+  border: 1.25px solid var(--dm-accent);
   border-radius: 999px;
   padding: 6px 11px;
-  background: var(--surface);
-  color: var(--text-2);
+  color: var(--dm-accent);
   white-space: nowrap;
 }
 .dm-agent-state {
@@ -222,14 +218,15 @@
   position: absolute;
   font-size: 10px;
   font-weight: 700;
-  color: #2a9d6f;
+  color: var(--dm-accent);
 }
 .dm-agent-count {
   font-size: 11px;
-  color: var(--muted);
+  opacity: 0.7;
+  font-family: var(--font-mono);
 }
 
-/* delivery chips — 결과가 채널로 나간다 (메일/대시보드) */
+/* 딜리버리 행 */
 .dm-deliver {
   display: flex;
   gap: 8px;
@@ -241,7 +238,7 @@
   font-size: 12px;
 }
 
-/* slide thumbnails (report demo) */
+/* 슬라이드 썸네일 */
 .dm-slides {
   display: flex;
   gap: 8px;
@@ -250,23 +247,22 @@
 .dm-slide {
   width: 52px;
   height: 38px;
-  border-radius: 6px;
-  border: 1px solid var(--border-2);
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--dm-tint) 10%, #fff), #fff);
+  border-radius: 8px;
+  border: 1.25px solid var(--dm-accent);
   position: relative;
 }
 .dm-slide::after {
-  /* tiny text lines */
   content: '';
   position: absolute;
   left: 7px;
   right: 12px;
   top: 9px;
-  height: 3px;
+  height: 2px;
   border-radius: 2px;
-  background: var(--border-strong);
-  box-shadow: 0 7px 0 -1px var(--border-2), 0 14px 0 -1px var(--border-2);
+  background: color-mix(in srgb, var(--dm-accent) 55%, transparent);
+  box-shadow:
+    0 7px 0 0 color-mix(in srgb, var(--dm-accent) 40%, transparent),
+    0 14px 0 0 color-mix(in srgb, var(--dm-accent) 40%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {

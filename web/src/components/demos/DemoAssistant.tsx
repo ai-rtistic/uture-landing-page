@@ -79,7 +79,7 @@ export function DemoAssistant() {
         </div>
         {TODOS.map((t) => (
           <div className="dm-row js-todo" key={t.p}>
-            <span className={`dm-tag ${t.accent ? 'is-accent js-p1' : ''}`}>{t.p}</span>
+            <span className={`dm-tag ${t.accent ? 'js-p1' : ''}`}>{t.p}</span>
             <span className="dm-meta">{t.text}</span>
           </div>
         ))}

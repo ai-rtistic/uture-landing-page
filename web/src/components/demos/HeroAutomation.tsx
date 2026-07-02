@@ -47,8 +47,8 @@ export function HeroAutomation() {
     tl.to('.js-newrow', { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '+=0.4')
     tl.fromTo(
       '.js-newrow',
-      { backgroundColor: 'rgba(255, 122, 51, 0.12)' },
-      { backgroundColor: 'rgba(255, 122, 51, 0)', duration: 1.2 },
+      { backgroundColor: 'rgba(255, 210, 168, 0.18)' },
+      { backgroundColor: 'rgba(255, 210, 168, 0)', duration: 1.2 },
       '<',
     )
     tl.to('.js-badge', { autoAlpha: 1, scale: 1, duration: 0.35, ease: 'back.out(2.2)' }, '-=0.9')
@@ -91,7 +91,7 @@ export function HeroAutomation() {
           <span className="dm-wire js-wire2" />
           <div className="dm-card is-hit js-mail">
             <div className="dm-row">
-              <span className="dm-tag is-accent">✉ 메일 발송</span>
+              <span className="dm-tag">✉ 메일 발송</span>
               <span className="dm-title">경비정산 마감 보고서 완성본</span>
             </div>
           </div>

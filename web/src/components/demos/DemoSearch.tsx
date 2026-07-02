@@ -51,9 +51,9 @@ export function DemoSearch() {
         </div>
       ))}
       <span className="dm-wire js-wire2" />
-      <div className="dm-card is-hit js-answer">
+      <div className="dm-card js-answer">
         <div className="dm-row">
-          <span className="dm-tag is-accent">답변</span>
+          <span className="dm-tag">답변</span>
           <span className="dm-title">숙박비 상한이 12만원 → 15만원으로 올랐어요.</span>
         </div>
         <span className="dm-meta">근거 · 경비정산 규정 v3.2 §4 (2026.03 개정)</span>

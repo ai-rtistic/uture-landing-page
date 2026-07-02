@@ -1183,16 +1183,20 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-seq { animation: none; }
 }
+/* 히어로 카드 — 스킬 다크 문법 (웜 니어블랙 + 피치 단일 악센트) */
 .ha-card {
-  background: var(--surface);
-  border: 1px solid var(--border-strong);
+  --dm-ink: #262221;
+  --dm-accent: #FFD2A8;
+  background: var(--dm-ink);
+  color: var(--dm-accent);
   border-radius: var(--r-card);
-  /* 더블 베젤: 안쪽 하이라이트 + 바깥 트레이 링 + 확산 그림자 */
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.85),
-    0 0 0 6px color-mix(in srgb, #1d1c1b 3.5%, transparent),
+    0 0 0 6px color-mix(in srgb, #1d1c1b 4%, transparent),
     var(--shadow-float);
   overflow: hidden;
+}
+.ha-card .dm-chrome {
+  border-bottom: 1.25px solid color-mix(in srgb, var(--dm-accent) 26%, transparent);
 }
 /* 한 화면 플로우: 요청 → (선) → 에이전트 → (선) → 결과가 아래로 흐른다 */
 .ha-flow {
@@ -1200,7 +1204,6 @@
   display: grid;
   gap: 10px;
   justify-items: stretch;
-  --dm-tint: var(--c-sky);
 }
 .ha-flow .dm-bubble { justify-self: end; }
 .ha-agents {
@@ -1213,24 +1216,24 @@
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
-  border: 1px solid var(--border-2);
+  border: 1.25px solid var(--dm-accent);
   border-radius: 12px;
-  background: var(--surface);
   font-size: 13px;
 }
 .ha-row-name {
   font-weight: 500;
-  color: var(--text);
+  color: var(--dm-accent);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.ha-row-team { font-size: 12px; color: var(--muted); }
+.ha-row-team { font-size: 12px; color: var(--dm-accent); opacity: 0.7; }
 .ha-live {
   font-size: 11px;
   padding: 2px 7px;
-  border-color: var(--c-mint);
-  color: #2a9d6f;
+  border: 1.25px solid var(--dm-accent);
+  color: var(--dm-accent);
+  background: transparent;
 }
 .ha-cap {
   position: absolute;
