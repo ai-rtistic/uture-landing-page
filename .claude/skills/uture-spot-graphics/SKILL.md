@@ -32,13 +32,18 @@ Branded twelvelabs-style "spot graphics" = abstract UI illustrations built from 
 UI 실루엣(캡슐/타일) + 채움은 소량(틴트 13% 수준)만 — `PinnedNarrative`의 `.n-shape` 참고.
 다크 차콜 밴드(`.band-dark`, 토큰 오버라이드)로 라이트↔다크 섹션 리듬을 만들 수 있다.
 
-**히어로 배경 장식은 넣지 않는다 (사용자 최종 결정, 2026-07-02).**
-트웰브랩스식 앰비언트 체인을 세 방식(CSS 블롭 → JS 컨베이어 → Remotion 렌더 영상)으로
-시도했지만 전부 "이상하다"는 판단 → 클린 히어로(타이포 + 에이전트 카드 + 신뢰 스트립 +
-옅은 aura)가 최종. **명시적 요청 없이 히어로에 장식 레이어를 다시 추가하지 말 것.**
-당시 축적된 기술 노하우(재사용 가능): ①심리스 루프 영상 = 배경색 구운 H.264
-(`motion/src/HeroChain.tsx` 소스 보존, 알파 불필요 → iOS OK) ②포스터 스틸 동시 렌더
-③한글 라벨은 DOM 오버레이 ④JS 컨베이어는 transform-only + 경로 양끝 화면 밖.
+**히어로 배경 = 프로스트 타일 행렬 영상 (사용자 확정, 2026-07-02).**
+사용자가 `examples/TWL_Web_Generate_2508px.mp4`(트웰브랩스 원본, 참고용 — 그대로 쓰지 말 것)를
+레퍼런스로 지정 → `motion/src/TileFlow.tsx`로 재창작, `web/public/assets/motion/hero-tiles.mp4`
+임베드는 `graphics/HeroTilesVideo.tsx`. 이전 시도(구슬 체인 CSS/JS/영상)는 전부 기각됨.
+성립 조건:
+1. **타일 내부가 전부다** — 시드 랜덤 색 패치(radial-gradient 4~5겹, 코어 32%까지 진하게
+   유지) + 절반 확률 광택 밴드. 균일한 그라디언트는 납작해서 실패한다.
+2. 둥근 사각 타일(radius 36%), 대각선 두 줄 행진, 가장자리로 갈수록 큼(원근), 서로 안 겹침.
+3. 심리스 루프: 한 루프에 정확히 M칸 전진 + 외형 시드 = (slot mod M).
+4. 좌측 텍스트 존 보호는 **페이지 CSS mask**로 (영상에 굽지 말 것 — object-cover 크롭 때문에
+   뷰포트마다 어긋난다).
+5. 배경색(#f5f5f5) 구운 H.264 + CRF28 재인코딩(≈2MB) + 포스터 스틸. 웜 팔레트만(오렌지 리드).
 
 ## In-page 다이어그램 (primitives)
 
