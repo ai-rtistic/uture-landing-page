@@ -173,6 +173,59 @@
   transform-origin: left center;
 }
 
+/* sub-agent chips — 오케스트레이터가 병렬로 부리는 일꾼들.
+   base 상태 = 최종 프레임(체크 완료, 스피너 숨김) → reduced-motion 폴백. */
+.dm-agents {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.dm-agent {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  border: 1px solid var(--border-2);
+  border-radius: 999px;
+  padding: 6px 11px;
+  background: var(--surface);
+  color: var(--text-2);
+  white-space: nowrap;
+}
+.dm-agent-state {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  display: inline-grid;
+  place-items: center;
+}
+.dm-agent-state .dm-spin {
+  position: absolute;
+  opacity: 0; /* 최종 프레임: 스피너 없음 */
+}
+.dm-agent-check {
+  position: absolute;
+  font-size: 10px;
+  font-weight: 700;
+  color: #2a9d6f;
+}
+.dm-agent-count {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* delivery chips — 결과가 채널로 나간다 (메일/대시보드) */
+.dm-deliver {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.dm-deliver .dm-tag {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
 /* slide thumbnails (report demo) */
 .dm-slides {
   display: flex;
