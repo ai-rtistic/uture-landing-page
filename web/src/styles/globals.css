@@ -64,6 +64,16 @@
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* premium expo-out for reveals */
+
+  /* 확산 그림자 시스템 — 하드한 단일 그림자 금지, 다층 앰비언트로 */
+  --shadow-card:
+    0 1px 2px rgba(29, 28, 27, 0.03),
+    0 12px 32px -16px rgba(29, 28, 27, 0.1),
+    0 40px 80px -48px rgba(29, 28, 27, 0.14);
+  --shadow-float:
+    0 2px 4px rgba(29, 28, 27, 0.04),
+    0 24px 48px -24px rgba(29, 28, 27, 0.16),
+    0 72px 128px -64px rgba(29, 28, 27, 0.22);
 }
 
 * {
@@ -101,6 +111,13 @@ h3 {
   font-weight: 600;
   letter-spacing: -0.025em;
   line-height: 1.05;
+  text-wrap: balance; /* 고아 단어 방지 — 헤드라인 줄바꿈 균형 */
+}
+
+/* 키보드 포커스 — 마우스 클릭에는 안 뜨고, 탭 이동에만 선명하게 */
+:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--c-orange) 75%, var(--text));
+  outline-offset: 3px;
 }
 
 a {
@@ -257,18 +274,41 @@ body::after {
 .btn:hover {
   transform: translateY(-1px);
 }
+.btn:active {
+  /* 물리적 눌림 — 인터랙션에 질량감 */
+  transform: translateY(0) scale(0.98);
+  transition-duration: 0.1s;
+}
+/* 화살표는 맨몸으로 두지 않는다 — 버튼 속 원형 칩에 담아 (button-in-button) */
+.btn > svg {
+  width: 22px;
+  height: 22px;
+  padding: 5.5px;
+  border-radius: 50%;
+  flex: none;
+  transition: transform 0.35s var(--ease), background 0.35s var(--ease);
+}
+.btn:hover > svg {
+  transform: translate(1.5px, -1.5px);
+}
 .btn-dark {
   background: var(--text);
   color: #fff;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
 }
+.btn-dark > svg {
+  background: rgba(255, 255, 255, 0.16);
+}
 .btn-dark:hover {
-  opacity: 0.88;
+  opacity: 0.9;
 }
 .btn-ghost {
   background: var(--surface);
   color: var(--text);
   border-color: var(--border);
+}
+.btn-ghost > svg {
+  background: color-mix(in srgb, var(--text) 6%, transparent);
 }
 .btn-ghost:hover {
   background: var(--surface-2);
