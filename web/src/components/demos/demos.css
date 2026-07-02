@@ -178,6 +178,16 @@
   transform-origin: left center;
 }
 
+/* 세로 연결선 — 요청→처리→결과가 '흘러가는' 다이어그램 문법 */
+.dm-wire {
+  justify-self: center;
+  width: 1.5px;
+  height: 18px;
+  border-radius: 1px;
+  background: var(--border-strong);
+  transform-origin: top center;
+}
+
 /* sub-agent chips — 오케스트레이터가 병렬로 부리는 일꾼들.
    base 상태 = 최종 프레임(체크 완료, 스피너 숨김) → reduced-motion 폴백. */
 .dm-agents {

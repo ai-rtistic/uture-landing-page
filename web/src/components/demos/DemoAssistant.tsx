@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { DemoStage, useLoopTimeline } from './stage'
+import { DemoStage, drawWire, useLoopTimeline } from './stage'
 
 /**
  * 종합 업무 어시스턴트 데모 — 챗봇이 아니라 "예약된 자율 에이전트".
@@ -21,6 +21,7 @@ const TODOS = [
 
 export function DemoAssistant() {
   const build = useCallback((tl: gsap.core.Timeline) => {
+    tl.set('.js-wire1, .js-wire2', { scaleY: 0 })
     tl.set('.js-run, .js-agent, .js-brief, .js-deliver', { autoAlpha: 0, y: 10 })
     tl.set('.dm-agent-state .dm-spin', { autoAlpha: 0 })
     tl.set('.js-check', { autoAlpha: 0, scale: 0.5 })
@@ -31,7 +32,8 @@ export function DemoAssistant() {
     tl.to('.js-run', { autoAlpha: 1, y: 0, duration: 0.45 })
     tl.to({}, { duration: 0.6 })
 
-    // 2막 — 에이전트 3개가 병렬 수집
+    // 2막 — 연결선이 그려지며 에이전트 3개가 병렬 수집
+    drawWire(tl, '.js-wire1')
     tl.to('.js-agent', { autoAlpha: 1, y: 0, duration: 0.35, stagger: 0.12 })
     tl.to('.dm-agent-state .dm-spin', { autoAlpha: 1, duration: 0.2 }, '<')
     tl.to({}, { duration: 0.9 })
@@ -41,8 +43,9 @@ export function DemoAssistant() {
       tl.to(`.js-agent-${i} .js-count`, { autoAlpha: 1, duration: 0.25 }, '<')
     })
 
-    // 3막 — 브리핑 완성 → 메일 발송
-    tl.to('.js-brief', { autoAlpha: 1, y: 0, duration: 0.45 }, '+=0.4')
+    // 3막 — 브리핑으로 흘러간다 → 메일 발송
+    drawWire(tl, '.js-wire2', '+=0.4')
+    tl.to('.js-brief', { autoAlpha: 1, y: 0, duration: 0.45 })
     tl.to('.js-todo', { autoAlpha: 1, x: 0, duration: 0.35, stagger: 0.22 })
     tl.fromTo('.js-p1', { scale: 1 }, { scale: 1.12, duration: 0.25, yoyo: true, repeat: 1 }, '+=0.15')
     tl.to('.js-deliver', { autoAlpha: 1, y: 0, duration: 0.4 }, '+=0.2')
@@ -56,6 +59,7 @@ export function DemoAssistant() {
         <span className="dm-tag is-tint">오전 8:00</span>
         예약 실행 — 요청하지 않아도 스스로 시작
       </div>
+      <span className="dm-wire js-wire1" />
       <div className="dm-agents">
         {AGENTS.map((a, i) => (
           <span className={`dm-agent js-agent js-agent-${i}`} key={a.label}>
@@ -68,6 +72,7 @@ export function DemoAssistant() {
           </span>
         ))}
       </div>
+      <span className="dm-wire js-wire2" />
       <div className="dm-card js-brief">
         <div className="dm-row">
           <span className="dm-title">오늘의 우선순위 브리핑</span>

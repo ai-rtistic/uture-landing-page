@@ -34,6 +34,17 @@ export function useLoopTimeline(
   return rootRef
 }
 
+/** 세로 연결선 드로우 비트 — 작업이 다음 단계로 '흘러가는' 것을 보여준다.
+ *  마크업: <span className="dm-wire js-..." /> (기본 상태 = 그려진 상태) */
+export function drawWire(tl: gsap.core.Timeline, sel: string, position?: gsap.Position) {
+  tl.fromTo(
+    sel,
+    { scaleY: 0 },
+    { scaleY: 1, duration: 0.35, ease: 'power2.out' },
+    position,
+  )
+}
+
 /** Char-by-char typing beat (no TextPlugin). Pass the target element. */
 export function typeText(
   tl: gsap.core.Timeline,

@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { DemoStage, typeText, useLoopTimeline } from './stage'
+import { DemoStage, drawWire, typeText, useLoopTimeline } from './stage'
 
 /**
  * 사내 템플릿 생성 데모 — 요청 한 번이면 서브에이전트들이 분담해서
@@ -19,6 +19,7 @@ const SECTIONS = ['표지', '핵심 요약', '실적 지표', '다음 주 계획
 
 export function DemoReport() {
   const build = useCallback((tl: gsap.core.Timeline, root: HTMLDivElement) => {
+    tl.set('.js-wire1, .js-wire2', { scaleY: 0 })
     tl.set('.js-agent, .js-slides, .js-deliver', { autoAlpha: 0, y: 10 })
     tl.set('.dm-agent-state .dm-spin', { autoAlpha: 0 })
     tl.set('.js-check', { autoAlpha: 0, scale: 0.5 })
@@ -27,8 +28,9 @@ export function DemoReport() {
     // 1막 — 요청은 한 번뿐
     typeText(tl, root.querySelector('.js-q'), QUERY)
 
-    // 2막 — 서브에이전트 분담 작업 (병렬)
-    tl.to('.js-agent', { autoAlpha: 1, y: 0, duration: 0.35, stagger: 0.12 }, '+=0.4')
+    // 2막 — 연결선이 그려지며 서브에이전트 분담 작업 (병렬)
+    drawWire(tl, '.js-wire1', '+=0.3')
+    tl.to('.js-agent', { autoAlpha: 1, y: 0, duration: 0.35, stagger: 0.12 })
     tl.to('.dm-agent-state .dm-spin', { autoAlpha: 1, duration: 0.2 }, '<')
     tl.to({}, { duration: 0.9 })
     AGENTS.forEach((_, i) => {
@@ -37,8 +39,9 @@ export function DemoReport() {
       tl.to(`.js-agent-${i} .js-count`, { autoAlpha: 1, duration: 0.25 }, '<')
     })
 
-    // 3막 — 슬라이드 완성 → 메일 + 대시보드로
-    tl.to('.js-slides', { autoAlpha: 1, y: 0, duration: 0.4 }, '+=0.3')
+    // 3막 — 산출물로 흘러간다: 슬라이드 → 메일 + 대시보드
+    drawWire(tl, '.js-wire2', '+=0.3')
+    tl.to('.js-slides', { autoAlpha: 1, y: 0, duration: 0.4 })
     tl.fromTo(
       '.js-slide',
       { autoAlpha: 0, scale: 0.8 },
@@ -56,6 +59,7 @@ export function DemoReport() {
         <span className="js-q">{QUERY}</span>
         <span className="dm-caret" />
       </div>
+      <span className="dm-wire js-wire1" />
       <div className="dm-agents">
         {AGENTS.map((a, i) => (
           <span className={`dm-agent js-agent js-agent-${i}`} key={a.label}>
@@ -68,6 +72,7 @@ export function DemoReport() {
           </span>
         ))}
       </div>
+      <span className="dm-wire js-wire2" />
       <div className="dm-slides js-slides">
         {SECTIONS.map((s) => (
           <span className="dm-slide js-slide" key={s} title={s} />
