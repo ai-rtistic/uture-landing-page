@@ -1,38 +1,10 @@
-import { useEffect, useRef } from 'react'
 import { hero } from '../data/content'
 import { Button, Pill } from '../ui/primitives'
-import { HeroVisual } from './HeroVisual'
+import { HeroAutomation } from './demos/HeroAutomation'
 
 export function Hero() {
-  const videoRef = useRef<HTMLVideoElement>(null)
-
-  // Muted autoplay can be deferred by the browser (backgrounded tab, power
-  // saving). Nudge playback on mount and whenever the tab regains focus so the
-  // ambient background motion is actually visible. Honors reduced-motion.
-  useEffect(() => {
-    const v = videoRef.current
-    if (!v) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const play = () => v.play().catch(() => {})
-    play()
-    const onVisible = () => document.visibilityState === 'visible' && play()
-    document.addEventListener('visibilitychange', onVisible)
-    return () => document.removeEventListener('visibilitychange', onVisible)
-  }, [])
-
   return (
     <section className="hero" id="top">
-      <video
-        ref={videoRef}
-        className="hero-motion"
-        src="/assets/motion/hero-flow.webm"
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        aria-hidden
-      />
       <div className="container hero-inner">
         <div className="hero-badge reveal">
           <Pill>{hero.badge}</Pill>
@@ -58,7 +30,7 @@ export function Hero() {
           </Button>
         </div>
       </div>
-      <HeroVisual />
+      <HeroAutomation />
       <div className="hero-aura" aria-hidden />
     </section>
   )

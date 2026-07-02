@@ -166,22 +166,6 @@
   gap: 12px;
   flex-wrap: wrap;
 }
-.hero-motion {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 82% 42%;
-  opacity: 0.5;
-  pointer-events: none;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 32%, #000 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, #000 32%, #000 100%);
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-motion { display: none; }
-}
 .hero-aura {
   position: absolute;
   z-index: 1;
@@ -888,63 +872,95 @@
   .float-clip { width: 150px; }
 }
 
-/* ---------- Hero visual (floating library card) ---------- */
-.hero-visual {
+/* ---------- Hero visual (업무 자동화 3막 시퀀스) ---------- */
+.hero-seq {
   position: absolute;
   z-index: 2;
   right: max(40px, calc((100vw - var(--container)) / 2 + 40px));
-  top: 200px;
+  top: 190px;
   width: 460px;
   max-width: 44vw;
-  animation: hv-float 9s ease-in-out infinite alternate;
+  animation: ha-float 9s ease-in-out infinite alternate;
 }
-@keyframes hv-float {
+@keyframes ha-float {
   from { transform: translateY(0); }
   to { transform: translateY(-14px); }
 }
-.hv-card {
+@media (prefers-reduced-motion: reduce) {
+  .hero-seq { animation: none; }
+}
+.ha-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r-card);
   box-shadow: 0 40px 80px -40px rgba(29, 28, 27, 0.3);
-  padding: 8px;
   overflow: hidden;
 }
-.hv-row {
+.ha-body {
+  position: relative;
+  height: 330px;
+}
+.ha-act {
+  position: absolute;
+  inset: 20px 22px;
   display: grid;
-  grid-template-columns: 40px 1fr auto auto;
+  gap: 10px;
+  align-content: center;
+  /* 기본은 숨김 — 타임라인이 순서대로 켠다. reduced-motion은 최종막만. */
+  opacity: 0;
+}
+.ha-act.ha-final { opacity: 1; }
+.ha-step {
+  display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 9px 12px;
-  border-radius: var(--r-node);
+  gap: 10px;
+  border: 1px solid var(--border-2);
+  border-radius: 12px;
+  padding: 11px 14px;
+  background: var(--surface);
+  font-size: 13.5px;
+  color: var(--text);
+}
+.ha-step-state {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  display: inline-grid;
+  place-items: center;
+}
+.ha-step-state .dm-spin { position: absolute; }
+.ha-check {
+  position: absolute;
+  font-size: 12px;
+  font-weight: 700;
+  color: #2a9d6f;
+}
+.ha-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-2);
+  border-radius: 12px;
+  background: var(--surface);
   font-size: 13px;
 }
-.hv-row:not(.hv-head):hover { background: var(--panel); }
-.hv-head {
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 0.25px;
-  padding-block: 8px;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 2px;
-}
-.hv-head .hv-col-status { grid-column: 4; }
-.hv-head span:first-child { grid-column: 2; white-space: nowrap; }
-.hv-thumb { width: 40px; }
-.hv-thumb .ph { border-radius: 6px; }
-.hv-name {
+.ha-row-name {
   font-weight: 500;
   color: var(--text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.hv-team { font-size: 12px; color: var(--muted); }
-.hv-status { font-size: 11px; padding: 2px 7px; }
-.hv-live { border-color: var(--c-mint); color: #2a9d6f; }
-.hv-beta { border-color: var(--c-amber); color: #a9760f; }
-.hv-wip { border-color: var(--border); color: var(--muted); }
-.hv-cap {
+.ha-row-team { font-size: 12px; color: var(--muted); }
+.ha-live {
+  font-size: 11px;
+  padding: 2px 7px;
+  border-color: var(--c-mint);
+  color: #2a9d6f;
+}
+.ha-cap {
   position: absolute;
   left: 50%;
   bottom: -14px;
@@ -954,7 +970,7 @@
   white-space: nowrap;
 }
 @media (max-width: 1040px) {
-  .hero-visual { display: none; }
+  .hero-seq { display: none; }
 }
 
 /* ---------- AX transform map (pinned, scroll-scrubbed) ---------- */
