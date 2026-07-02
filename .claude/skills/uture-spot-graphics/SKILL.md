@@ -70,7 +70,9 @@ UI 실루엣(캡슐/타일) + 채움은 소량(틴트 13% 수준)만 — `Pinned
 인프라: `web/src/components/demos/stage.tsx`
 - `useLoopTimeline(build)` — 루프 타임라인 드라이버. 뷰포트 진입 시 재생/이탈 시 정지(IntersectionObserver), `prefersReduced`면 타임라인을 아예 만들지 않음.
 - `typeText(tl, el, text)` — 플러그인 없는 타이핑 비트.
-- `DemoStage` — 파스텔 워시 + 크롬바 제품 UI 프레임. 아톰: `.dm-bubble .dm-status .dm-card .dm-tag .dm-bar .dm-slides .dm-agents/.dm-agent`(서브에이전트 칩, 스피너→체크) `.dm-deliver`(메일/대시보드 딜리버리 칩) — demos.css.
+- `DemoStage` — **다크 다이어그램 프레임** (uture-motion-diagrams 문법, 사용자 확정):
+  웜 니어블랙 #262221 패널 + 단일 파스텔 악센트 아웃라인(1.25px), 채움 강조는 데모당
+  하나, 패널 내부 그림자·그라디언트 금지. 크롬바 포함. 아톰: `.dm-bubble .dm-status .dm-card .dm-tag .dm-bar .dm-slides .dm-agents/.dm-agent`(서브에이전트 칩, 스피너→체크) `.dm-deliver`(메일/대시보드 딜리버리 칩) — demos.css.
 
 **챗봇처럼 보이게 만들지 말 것 (사용자 명시 피드백).** 데모는 단순 문답이 아니라 **에이전트 오케스트레이션**을 보여준다: 서브에이전트 칩들이 병렬로 돌다가 하나씩 완료되고(`.dm-agent` 스피너→체크+결과 카운트), 결과는 화면 속 답변이 아니라 **메일 발송 · 대시보드 게시**(`.dm-deliver`)로 끝난다. 예약 실행(요청 없이 스스로 시작) 프레이밍도 좋은 패턴 — `DemoAssistant.tsx` 참고.
 
