@@ -28,13 +28,8 @@
 .g-tint-neutral { --g-accent: var(--muted); --g-glow: rgba(0, 0, 0, 0.04); }
 
 .g-glow {
-  position: absolute;
-  width: 78%;
-  height: 78%;
-  background: radial-gradient(circle at 50% 45%, var(--g-glow), transparent 70%);
-  filter: blur(16px);
-  animation: g-glow-pulse 7s ease-in-out infinite alternate;
-  pointer-events: none;
+  /* 다이어그램 문법 전환: 글로우 워시 제거 — 흰 카드 + 헤어라인만 (상황별 테마 규칙) */
+  display: none;
 }
 @keyframes g-glow-pulse {
   from { opacity: 0.45; transform: scale(0.95); }

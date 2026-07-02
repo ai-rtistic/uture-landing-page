@@ -45,7 +45,7 @@ export function DemoSearch() {
         <div className={`dm-card js-doc ${d.hit ? 'is-hit js-hit' : ''}`} key={d.title}>
           <div className="dm-row">
             <span className="dm-title">{d.title}</span>
-            {d.hit && <span className="dm-tag is-tint js-hittag">근거</span>}
+            {d.hit && <span className="dm-tag is-accent js-hittag">근거</span>}
           </div>
           <span className="dm-meta">{d.meta}</span>
         </div>
