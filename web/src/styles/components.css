@@ -1102,8 +1102,21 @@
   font-size: 11px;
   white-space: nowrap;
 }
+/* 태블릿·모바일: 숨기는 대신 텍스트 아래로 흘려보낸다 — 시퀀스는 그대로 재생 */
 @media (max-width: 1040px) {
-  .hero-seq { display: none; }
+  .hero-seq {
+    position: relative;
+    right: auto;
+    top: auto;
+    width: min(460px, calc(100% - var(--pad-x) * 2));
+    max-width: none;
+    margin: 52px auto 0;
+    animation: none;
+  }
+  .hero { padding-bottom: 100px; }
+}
+@media (max-width: 560px) {
+  .hero-seq { width: calc(100% - 40px); }
 }
 
 /* ---------- AX transform map (pinned, scroll-scrubbed) ---------- */
