@@ -106,7 +106,7 @@ export function ProjectGraphic() {
 export const serviceGraphics = [EducateGraphic, ProjectGraphic, BuildGraphic]
 
 /* ---- Feature-card scene illustrations — micro story loops (fs-*) ----
-   카드마다 6초짜리 "한 줄 스토리" CSS 루프. 틴트 로테이션: sky/peach/lilac/mint. */
+   카드마다 6초짜리 "한 줄 스토리" CSS 루프. 섹션 단일 틴트(sky) — 로테이션은 섹션 단위. */
 
 type Scene = { tint: Parameters<typeof GFrame>[0]['tint']; body: JSX.Element }
 
@@ -138,7 +138,7 @@ const SCENES: Record<string, Scene> = {
   },
   /* 현장 실행: 워킹 미팅에서 실무 타일로 체크가 하나씩 퍼진다 */
   people: {
-    tint: 'peach',
+    tint: 'sky',
     body: (
       <GStack>
         <GNode tone="dark" icon="flow">
@@ -160,7 +160,7 @@ const SCENES: Record<string, Scene> = {
   },
   /* 공동 구축: 블록이 순서대로 조립되고 사내 도구가 배포된다 */
   build: {
-    tint: 'lilac',
+    tint: 'sky',
     body: (
       <GStack>
         <GNode icon="build">co-build</GNode>
@@ -181,7 +181,7 @@ const SCENES: Record<string, Scene> = {
   },
   /* 정착: 분기 리뷰 사이클이 돌고 활용 지표가 차오른다 */
   cloud: {
-    tint: 'mint',
+    tint: 'sky',
     body: (
       <GStack>
         <GNode icon="gear">사내 정착 · 운영</GNode>

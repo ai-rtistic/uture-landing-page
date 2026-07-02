@@ -3,7 +3,7 @@ import { Container } from '../ui/primitives'
 
 export function ProcessColumns() {
   return (
-    <section className="section process" id="process">
+    <section className="section process band-dark" id="process">
       <Container>
         <div className="split-head">
           <h2 className="split-title reveal">

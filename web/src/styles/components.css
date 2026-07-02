@@ -305,7 +305,7 @@
   place-items: center;
   overflow: hidden;
 }
-/* 패럴랙스 배경 필드 — 핀 구간 동안 반대 방향으로 흐르는 소프트 캡슐/도트 */
+/* 패럴랙스 배경 필드 — 얇은 와이어프레임 실루엣 (단일 amber, 채움 소량) */
 .narrative-bg {
   position: absolute;
   inset: -30% 0;
@@ -313,27 +313,32 @@
   pointer-events: none;
   will-change: transform;
 }
-.n-cap {
+.n-shape {
   position: absolute;
-  width: 190px;
-  height: 72px;
-  border-radius: 100px;
-  filter: blur(16px);
-  opacity: 0.38;
+  border: 1.5px solid color-mix(in srgb, var(--c-amber) 34%, var(--border));
+  opacity: 0.75;
 }
-.n-cap-peach { background: linear-gradient(90deg, var(--c-peach), #ffe6cf); }
-.n-cap-sky { background: linear-gradient(90deg, var(--c-sky), #dcebfb); }
-.n-cap-amber { background: linear-gradient(90deg, var(--c-amber), #ffeccb); }
-.n-cap-lilac { background: linear-gradient(90deg, var(--c-lilac), #e9e2fb); }
-.n-cap-rose { background: linear-gradient(90deg, var(--c-rose), #ffd9e6); }
-.n-cap-mint { background: linear-gradient(90deg, var(--c-mint), #dcf5ea); }
+.n-cap {
+  width: 170px;
+  height: 58px;
+  border-radius: 100px;
+}
+.n-tile {
+  width: 120px;
+  height: 82px;
+  border-radius: 16px;
+}
+.n-shape.is-fill {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--c-amber) 13%, transparent);
+}
 .n-dot {
   position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 3px;
-  background: var(--border-strong);
-  opacity: 0.65;
+  width: 9px;
+  height: 9px;
+  border-radius: 2.5px;
+  background: color-mix(in srgb, var(--c-amber) 26%, var(--border-strong));
+  opacity: 0.55;
 }
 @media (prefers-reduced-motion: reduce) {
   .narrative-bg { display: none; }
@@ -386,16 +391,10 @@
   font-weight: 500;
   text-wrap: balance;
 }
-/* 키워드 강조 — 스텝별 장면 카드와 같은 파스텔 계열 (가독 위해 살짝 어둡게) */
-.narrative-hl { font-style: normal; }
-.narrative-step[data-tint='amber'] .narrative-hl {
-  color: color-mix(in srgb, var(--c-amber) 72%, var(--text-2));
-}
-.narrative-step[data-tint='sky'] .narrative-hl {
-  color: color-mix(in srgb, var(--c-sky) 72%, var(--text-2));
-}
-.narrative-step[data-tint='rose'] .narrative-hl {
-  color: color-mix(in srgb, var(--c-rose) 72%, var(--text-2));
+/* 키워드 강조 — 섹션 틴트(amber) 하나만, 채도는 절제 */
+.narrative-hl {
+  font-style: normal;
+  color: color-mix(in srgb, var(--c-amber) 62%, var(--text-2));
 }
 
 /* ---- 장면 카드 (문장과 짝지어진 스팟 그래픽) ---- */
@@ -585,7 +584,7 @@
   pointer-events: none;
   background:
     radial-gradient(42% 58% at 10% 22%, color-mix(in srgb, var(--c-sky) 9%, transparent), transparent 70%),
-    radial-gradient(38% 52% at 90% 78%, color-mix(in srgb, var(--c-peach) 9%, transparent), transparent 70%);
+    radial-gradient(38% 52% at 90% 78%, color-mix(in srgb, var(--c-sky) 6%, transparent), transparent 70%);
 }
 .testimonial-inner { position: relative; z-index: 1; text-align: center; }
 .testimonial-badge { display: flex; justify-content: center; margin-bottom: 40px; }
@@ -929,7 +928,7 @@
   pointer-events: none;
   background:
     radial-gradient(40% 56% at 88% 18%, color-mix(in srgb, var(--c-rose) 8%, transparent), transparent 70%),
-    radial-gradient(42% 58% at 8% 80%, color-mix(in srgb, var(--c-amber) 8%, transparent), transparent 70%);
+    radial-gradient(42% 58% at 8% 80%, color-mix(in srgb, var(--c-rose) 5%, transparent), transparent 70%);
 }
 .case-quote-inner { position: relative; z-index: 1; text-align: center; }
 .case-quote-inner > .reveal:first-child { display: flex; justify-content: center; margin-bottom: 36px; }
@@ -1037,7 +1036,7 @@
   pointer-events: none;
   background:
     radial-gradient(44% 60% at 14% 76%, color-mix(in srgb, var(--c-lilac) 8%, transparent), transparent 70%),
-    radial-gradient(38% 52% at 86% 20%, color-mix(in srgb, var(--c-mint) 7%, transparent), transparent 70%);
+    radial-gradient(38% 52% at 86% 20%, color-mix(in srgb, var(--c-lilac) 5%, transparent), transparent 70%);
 }
 .philosophy-inner { position: relative; z-index: 1; text-align: center; }
 .philosophy-inner > .reveal:first-child { display: flex; justify-content: center; margin-bottom: 30px; }

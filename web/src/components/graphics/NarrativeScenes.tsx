@@ -2,7 +2,7 @@ import { GNode } from './primitives'
 
 /**
  * 내러티브 3단계(pain)와 1:1로 짝지어지는 장면 카드.
- * 스팟 그래픽 문법(뉴트럴 + 파스텔 한 방울) — 틴트는 amber/sky/rose 로테이션.
+ * 스팟 그래픽 문법(뉴트럴 + 파스텔 한 방울) — 섹션 단일 틴트(amber).
  * 전환(크로스페이드)은 PinnedNarrative의 스크럽 타임라인이 담당한다.
  */
 
@@ -29,7 +29,7 @@ function SceneLecture() {
 /** 02 — 실무 단절: 강의 노트와 월요일의 실제 업무 사이가 끊겨 있다. */
 function SceneGap() {
   return (
-    <div className="ns-card g-tint-sky">
+    <div className="ns-card g-tint-amber">
       <span className="ns-glow" aria-hidden />
       <GNode icon="text">강의 수료 노트</GNode>
       <span className="ns-break" aria-hidden>
@@ -43,7 +43,7 @@ function SceneGap() {
 /** 03 — 안 맞는 범용 툴: 정책에 막히고, 정작 맞는 도구는 없다. */
 function SceneMisfit() {
   return (
-    <div className="ns-card g-tint-rose">
+    <div className="ns-card g-tint-amber">
       <span className="ns-glow" aria-hidden />
       <GNode icon="sparkle">범용 AI 툴</GNode>
       <div className="ns-tags">

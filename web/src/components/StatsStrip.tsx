@@ -27,7 +27,7 @@ function Stat({
 
 export function StatsStrip() {
   return (
-    <section className="section stats-strip">
+    <section className="section stats-strip band-dark">
       <Container>
         <div className="stats-grid">
           {stats.map((s) => (

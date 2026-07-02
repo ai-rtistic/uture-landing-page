@@ -135,6 +135,23 @@ button {
   border-top: 1px solid var(--border);
 }
 
+/* ---------- dark band — 페이지 중반의 무게추 (레퍼런스의 라이트↔다크 리듬) ----------
+   토큰만 뒤집으므로 내부 컴포넌트는 그대로 동작한다. */
+.band-dark {
+  --text: #f5f3f1;
+  --text-2: #c9c6c1;
+  --muted: #94908b;
+  --border: #2e2c29;
+  --border-2: #343230;
+  --border-strong: #403d3a;
+  --surface: #232120;
+  --surface-2: #2a2827;
+  --panel: #242220;
+  background: #1a1817;
+  /* color는 body에서 '계산된 값'으로 상속되므로 여기서 재평가시켜야 한다 */
+  color: var(--text);
+}
+
 /* ---------- global grain — 빈 배경이 '벌판'이 아니라 '지면'으로 읽히게 ---------- */
 body::after {
   content: '';

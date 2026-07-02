@@ -10,8 +10,8 @@ import { gsap, prefersReduced } from '../lib/gsap'
  * 배경의 파스텔 캡슐 필드는 핀 구간 동안 반대 방향으로 흘러 깊이를 만든다.
  */
 
-// 스텝별 키워드 틴트 — 장면 카드(amber/sky/rose)와 동일 계열
-const STEP_TINTS = ['amber', 'sky', 'rose'] as const
+// 섹션 단일 틴트(amber) — 색 로테이션은 섹션 단위로만 (전문성 원칙)
+const STEP_TINTS = ['amber', 'amber', 'amber'] as const
 
 /** content.ts의 `**단어**` 마크업을 강조 span으로 렌더 */
 function renderHighlighted(text: string) {
@@ -26,14 +26,14 @@ function renderHighlighted(text: string) {
   )
 }
 
-// 패럴랙스 배경 필드 — 소프트 캡슐 + 도트 (핀보다 길게 깔고 스크럽으로 흘림)
-const BG_CAPS = [
-  { top: '4%', left: '6%', rot: -18, tint: 'peach' },
-  { top: '14%', left: '78%', rot: 14, tint: 'sky' },
-  { top: '36%', left: '40%', rot: -10, tint: 'amber' },
-  { top: '52%', left: '4%', rot: 12, tint: 'lilac' },
-  { top: '66%', left: '82%', rot: -16, tint: 'rose' },
-  { top: '84%', left: '30%', rot: 8, tint: 'mint' },
+// 패럴랙스 배경 필드 — 얇은 와이어프레임 UI 실루엣 (단일 amber 틴트, 채움은 소량만)
+const BG_SHAPES = [
+  { top: '4%', left: '7%', rot: -14, kind: 'cap' },
+  { top: '15%', left: '80%', rot: 10, kind: 'tile' },
+  { top: '35%', left: '42%', rot: -8, kind: 'cap', fill: true },
+  { top: '52%', left: '5%', rot: 8, kind: 'tile' },
+  { top: '66%', left: '84%', rot: -12, kind: 'cap' },
+  { top: '84%', left: '32%', rot: 6, kind: 'tile', fill: true },
 ] as const
 
 const BG_DOTS = [
@@ -117,9 +117,9 @@ export function PinnedNarrative() {
 
       <div className="narrative-pin" ref={pinRef}>
         <div className="narrative-bg" aria-hidden>
-          {BG_CAPS.map((c, i) => (
+          {BG_SHAPES.map((c, i) => (
             <span
-              className={`n-cap n-cap-${c.tint}`}
+              className={`n-shape n-${c.kind} ${'fill' in c && c.fill ? 'is-fill' : ''}`}
               key={i}
               style={{ top: c.top, left: c.left, rotate: `${c.rot}deg` }}
             />
