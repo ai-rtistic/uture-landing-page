@@ -1,19 +1,21 @@
 import { useEffect, useRef, useState } from 'react'
+import { prefersReduced } from './gsap'
 
-/** Counts from 0 → value once the element scrolls into view. */
+/** Counts from 0 → value once the element scrolls into view.
+ *  reduced-motion이면 카운트업 없이 최종값을 즉시 표기한다. */
 export function useCountUp(value: number, decimals = 0) {
   const ref = useRef<HTMLSpanElement>(null)
-  const [display, setDisplay] = useState('0')
+  const format = (n: number) =>
+    n.toLocaleString('en-US', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    })
+  const [display, setDisplay] = useState(() => (prefersReduced ? format(value) : '0'))
 
   useEffect(() => {
     const el = ref.current
-    if (!el) return
+    if (!el || prefersReduced) return
     let done = false
-    const format = (n: number) =>
-      n.toLocaleString('en-US', {
-        minimumFractionDigits: decimals,
-        maximumFractionDigits: decimals,
-      })
 
     const io = new IntersectionObserver(
       (entries) => {
