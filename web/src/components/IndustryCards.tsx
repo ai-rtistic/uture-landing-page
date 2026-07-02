@@ -21,7 +21,10 @@ export function IndustryCards() {
         <div className="industry-grid">
           {industries.cards.map((c, i) => (
             <article className="industry-card reveal" key={c.title} data-delay={i * 100}>
-              <span className="industry-tag mono">{c.tag}</span>
+              <div className="fsd-head">
+                <span className="fsd-num">0{i + 1}</span>
+                <span className="fsd-tag">{c.tag}</span>
+              </div>
               <h3 className="industry-title">{c.title}</h3>
               <p className="industry-desc">{c.desc}</p>
               <div className="industry-stat">
@@ -29,7 +32,7 @@ export function IndustryCards() {
                 <span className="industry-stat-label">{c.statLabel}</span>
               </div>
               <a className="industry-link" href="#contact">
-                더 알아보기 <Arrow up={false} />
+                도입 문의 <Arrow up={false} />
               </a>
             </article>
           ))}
