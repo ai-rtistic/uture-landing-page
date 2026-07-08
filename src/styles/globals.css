@@ -1,0 +1,339 @@
+@import 'tailwindcss';
+
+/* ============================================================
+   유쳐 — design tokens (twelvelabs.io reference, 1:1)
+   ============================================================ */
+:root {
+  /* ---- colour (measured from twelvelabs.io live) ---- */
+  --bg: #f5f5f5; /* body */
+  --panel: #f4f3f3; /* sections / badges */
+  --surface: #ffffff;
+  --surface-2: #ececec;
+  --text: #1d1c1b;
+  --text-2: #3a3937;
+  --muted: #6b6967; /* AA on --bg (~5:1) — was #8e8d8d (~3:1, failed AA) */
+  --border: #e0e0e0; /* hairline divider */
+  --border-strong: #d3d1cf;
+  --border-2: #dbdad8;
+
+  /* ---- 유쳐 brand palette — orange-led, soft/pastel, one tonal family ---- */
+  --brand: #ff7a33; /* main */
+  --c-orange: #ff7a33;
+  --c-peach: #ff9e6b;
+  --c-amber: #efb34a;
+  --c-rose: #ff8fa8;
+  --c-lilac: #b49df5;
+  --c-sky: #82b4f0;
+  --c-mint: #5fcba0;
+  --brand-glow: rgba(255, 122, 51, 0.2);
+
+  /* aliases kept so existing rules resolve into the brand family */
+  --c-pink: var(--c-rose);
+  --c-blue: var(--c-sky);
+  --c-green: var(--c-mint);
+  --c-purple: var(--c-lilac);
+  --c-neon: var(--c-peach); /* warm glow accent */
+
+  /* ---- layout (measured) ---- */
+  --container: 1600px;
+  --pad-x: 40px;
+  --text-col: 640px; /* narrow text column inside wide container */
+  --section-y: 88px;
+
+  /* ---- type scale (measured px / line-height / letter-spacing) ---- */
+  --fs-display: clamp(36px, 5vw, 56px);
+  --lh-display: 1.07; /* 64/56 */
+  --fs-statement: clamp(28px, 4vw, 48px);
+  --lh-statement: 1.16; /* 56/48 */
+  --fs-title: 20px;
+  --fs-body: 16px;
+  --lh-body: 1.5; /* 24/16 */
+  --fs-caption: 12px;
+  --ls-tight: -0.02em;
+
+  /* ---- radius (measured) ---- */
+  --r-btn: 14px;
+  --r-pill: 7px; /* labels · tags · badges */
+  --r-node: 10px; /* graphic nodes · tiles */
+  --r-card: 22px; /* cards · graphic frames */
+
+  --font-sans: 'Pretendard Variable', Pretendard, 'Geist', -apple-system,
+    BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', sans-serif;
+  --font-display: 'Geist', 'Pretendard Variable', Pretendard, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', 'JetBrains Mono', ui-monospace, monospace;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* premium expo-out for reveals */
+
+  /* 확산 그림자 시스템 — 하드한 단일 그림자 금지, 다층 앰비언트로 */
+  --shadow-card:
+    0 1px 2px rgba(29, 28, 27, 0.03),
+    0 12px 32px -16px rgba(29, 28, 27, 0.1),
+    0 40px 80px -48px rgba(29, 28, 27, 0.14);
+  --shadow-float:
+    0 2px 4px rgba(29, 28, 27, 0.04),
+    0 24px 48px -24px rgba(29, 28, 27, 0.16),
+    0 72px 128px -64px rgba(29, 28, 27, 0.22);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  overflow-x: hidden;
+  /* 한국어 가독성 — 단어 중간 개행 금지 ("돌아가/면" 방지), 긴 영문·URL은 안전 개행 */
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* Latin/number runs render in Geist for that twelvelabs feel */
+.geist {
+  font-family: var(--font-display);
+}
+.mono {
+  font-family: var(--font-mono);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  text-wrap: balance; /* 고아 단어 방지 — 헤드라인 줄바꿈 균형 */
+}
+
+/* 키보드 포커스 — 마우스 클릭에는 안 뜨고, 탭 이동에만 선명하게 */
+:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--c-orange) 75%, var(--text));
+  outline-offset: 3px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--c-neon);
+  color: var(--text);
+}
+
+/* ---------- layout helpers ---------- */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--pad-x);
+}
+
+.section {
+  position: relative;
+  padding-block: var(--section-y);
+}
+
+.hairline {
+  border-top: 1px solid var(--border);
+}
+
+/* ---------- dark band — 페이지 중반의 무게추 (레퍼런스의 라이트↔다크 리듬) ----------
+   토큰만 뒤집으므로 내부 컴포넌트는 그대로 동작한다. */
+.band-dark {
+  --text: #f5f3f1;
+  --text-2: #c9c6c1;
+  --muted: #94908b;
+  --border: #2e2c29;
+  --border-2: #343230;
+  --border-strong: #403d3a;
+  --surface: #232120;
+  --surface-2: #2a2827;
+  --panel: #242220;
+  background: #1a1817;
+  /* color는 body에서 '계산된 값'으로 상속되므로 여기서 재평가시켜야 한다 */
+  color: var(--text);
+}
+
+/* ---------- global grain — 빈 배경이 '벌판'이 아니라 '지면'으로 읽히게 ---------- */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px;
+  opacity: 0.038;
+}
+
+/* ---------- reveal (scroll entrance: graceful rise + focus-in) ---------- */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  filter: blur(6px);
+  transition: opacity 0.7s var(--ease-out), transform 0.9s var(--ease-out),
+    filter 0.7s var(--ease-out);
+  will-change: opacity, transform, filter;
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+}
+/* headline-weight entrance: a touch more travel + a longer settle */
+.reveal-title,
+.hero-line.reveal,
+.narrative-title.reveal,
+.split-title.reveal,
+.axmap-title.reveal,
+.services-head-title.reveal,
+.philosophy-title.reveal,
+.final-cta-title.reveal {
+  transform: translate3d(0, 30px, 0);
+  filter: blur(10px);
+  transition: opacity 0.8s var(--ease-out), transform 1.05s var(--ease-out),
+    filter 0.8s var(--ease-out);
+}
+/* 이 블록이 `.reveal.is-in`보다 뒤에 오므로(동일 특이도) 도착 상태를
+   명시적으로 다시 이겨줘야 한다 — 없으면 제목이 영구 블러로 남는다. */
+.reveal-title.is-in,
+.hero-line.reveal.is-in,
+.narrative-title.reveal.is-in,
+.split-title.reveal.is-in,
+.axmap-title.reveal.is-in,
+.services-head-title.reveal.is-in,
+.philosophy-title.reveal.is-in,
+.final-cta-title.reveal.is-in {
+  transform: none;
+  filter: blur(0);
+}
+
+/* ---------- pill / badge ---------- */
+.pill {
+  /* measured 1:1 from twelvelabs "고객 이야기" badge */
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2.5px 6px 1px;
+  border: 1px solid var(--text);
+  border-radius: var(--r-pill);
+  background: transparent;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  font-weight: 400;
+  color: var(--text);
+}
+
+/* muted sibling of .pill — meta labels / tags / in-graphic captions.
+   same DNA (radius 7 · 12px · LS0.25 · 1px border), greyer. */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2.5px 6px 1px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  background: transparent;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.25px;
+  font-weight: 400;
+  color: var(--text-2);
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: var(--r-btn);
+  font-size: var(--fs-body);
+  letter-spacing: 0.01em;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: transform 0.25s var(--ease), background 0.25s var(--ease),
+    opacity 0.25s var(--ease);
+}
+.btn:hover {
+  transform: translateY(-1px);
+}
+.btn:active {
+  /* 물리적 눌림 — 인터랙션에 질량감 */
+  transform: translateY(0) scale(0.98);
+  transition-duration: 0.1s;
+}
+/* 화살표는 맨몸으로 두지 않는다 — 버튼 속 원형 칩에 담아 (button-in-button) */
+.btn > svg {
+  width: 22px;
+  height: 22px;
+  padding: 5.5px;
+  border-radius: 50%;
+  flex: none;
+  transition: transform 0.35s var(--ease), background 0.35s var(--ease);
+}
+.btn:hover > svg {
+  transform: translate(1.5px, -1.5px);
+}
+.btn-dark {
+  background: var(--text);
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+.btn-dark > svg {
+  background: rgba(255, 255, 255, 0.16);
+}
+.btn-dark:hover {
+  opacity: 0.9;
+}
+.btn-ghost {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+}
+.btn-ghost > svg {
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+}
+.btn-ghost:hover {
+  background: var(--surface-2);
+}
+
+@media (max-width: 720px) {
+  :root {
+    --pad-x: 20px;
+  }
+  .section {
+    padding-block: 88px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+  * {
+    scroll-behavior: auto !important;
+  }
+}

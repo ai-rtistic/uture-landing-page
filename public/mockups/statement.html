@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>목업 — 센터 스테이트먼트 내러티브 (uture-motion-diagrams 문법)</title>
+<style>
+  /* ============ 토큰 (uture design system · Light aurora) ============ */
+  @font-face {
+    font-family: 'Pretendard Variable';
+    src: url('/fonts/PretendardVariable.woff2') format('woff2-variations');
+    font-weight: 45 920;
+    font-display: swap;
+  }
+  :root {
+    --bg: #f5f5f5;
+    --ink: #1d1c1b;
+    --muted: #75726e;
+    --wire: #c9c6c1;          /* 뉴트럴 헤어라인 */
+    --surface: #ffffff;
+    --orange: #ff8a3c;        /* 펄스 오렌지 — 씬당 하나 */
+    --lav: #e9d5fc;           /* 오로라 페어 */
+    --peach: #ffd2a8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Pretendard Variable', Pretendard, 'Apple SD Gothic Neo', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ============ 인트로/아웃트로 (문맥용) ============ */
+  .dummy {
+    min-height: 92vh;
+    display: grid;
+    place-items: center;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .dummy span { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .dummy i { font-style: normal; font-size: 20px; animation: nudge 1.6s ease-in-out infinite; }
+  @keyframes nudge { 0%,100% { transform: translateY(0); } 50% { transform: translateY(7px); } }
+
+  /* ============ 핀 스테이지 ============ */
+  .stage-wrap { height: 420vh; position: relative; }
+  .stage { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+
+  /* ---- 연속 드리프트 레이어: 대형 아웃라인 캡슐 + 오로라 글로우 1곳 (지나가는 배경) ---- */
+  .drift { position: absolute; inset: 0; pointer-events: none; }
+  .drift-inner { position: relative; height: 220vh; will-change: transform; }
+  .big-cap {
+    position: absolute;
+    border: 1.25px solid color-mix(in srgb, var(--ink) 9%, transparent);
+    border-radius: 999px;
+  }
+  .aurora {
+    position: absolute;
+    border-radius: 999px;
+    background: linear-gradient(115deg, var(--lav), var(--peach));
+    filter: blur(46px);
+    opacity: 0.34;
+  }
+
+  /* ---- 씬(배경 다이어그램) — 문구와 같은 진행도로 교체, 내러티브 순서 스태거 ---- */
+  .scene { position: absolute; inset: 0; pointer-events: none; }
+  .scene-strip {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 71%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  .scene-strip > * { will-change: opacity, transform; }
+
+  /* 시스템 아톰 — 캡슐/라운드 사각 + 1.25px 헤어라인. filled는 씬당 정확히 하나 */
+  .pill {
+    border: 1.25px solid var(--wire);
+    border-radius: 999px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    background: var(--surface);
+    white-space: nowrap;
+  }
+  .pill.is-fill {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: #fff;
+    font-weight: 600;
+  }
+  .pill.is-dash {
+    border-style: dashed;
+    border-color: color-mix(in srgb, var(--orange) 62%, var(--wire));
+    background: color-mix(in srgb, var(--surface) 55%, transparent);
+    color: var(--muted);
+  }
+  .card {
+    width: 208px;
+    border: 1.25px solid var(--wire);
+    border-radius: 16px;
+    background: var(--surface);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .card b { font-size: 13.5px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+  .card i { display: block; height: 3px; border-radius: 2px; background: #e4e2df; }
+  .card i:nth-of-type(1) { width: 82%; }
+  .card i:nth-of-type(2) { width: 58%; }
+  .card.is-dim { border-style: dashed; background: color-mix(in srgb, var(--surface) 55%, transparent); }
+  .card.is-dim b { color: var(--muted); }
+  .wire { width: 30px; height: 1.25px; background: var(--wire); flex: none; }
+  .wire.is-dash { background: repeating-linear-gradient(90deg, var(--wire) 0 5px, transparent 5px 10px); }
+  .xchip {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    background: var(--orange);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    flex: none;
+  }
+  .team-row { display: flex; gap: 10px; }
+  .team-row .pill { padding: 9px 15px; font-size: 13.5px; }
+  .brick-row { display: flex; gap: 8px; }
+  .brick {
+    border: 1.25px solid var(--wire);
+    border-radius: 11px;
+    padding: 9px 13px;
+    font-family: ui-monospace, Menlo, monospace;
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--surface);
+    white-space: nowrap;
+  }
+
+  /* ---- 센터 스테이트먼트 (TWL 실측 스펙) ---- */
+  .stmts { position: absolute; inset: 0; }
+  .stmt {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    display: flex;
+    justify-content: center;
+    will-change: opacity, transform, filter;
+  }
+  .stmt-inner {
+    width: min(940px, calc(100% - 48px));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .stmt-chip {
+    font-family: ui-monospace, Menlo, monospace;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    color: var(--ink);
+    border: 1px solid color-mix(in srgb, var(--ink) 38%, transparent);
+    border-radius: 999px;
+    padding: 4px 8px;
+    background: color-mix(in srgb, var(--bg) 65%, transparent);
+  }
+  .stmt-line {
+    width: 1px;
+    height: 50px;
+    background: color-mix(in srgb, var(--ink) 35%, transparent);
+    margin: 8px 0 30px;
+  }
+  .stmt-text {
+    font-size: clamp(30px, 3.6vw, 48px);
+    line-height: 1.28;
+    letter-spacing: -0.02em;
+    font-weight: 540;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .stmt-text em { font-style: normal; color: inherit; }
+
+  /* 진행 도트 — 뉴트럴 (씬의 오렌지 강조와 색 경쟁 금지) */
+  .dots {
+    position: absolute;
+    right: 34px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .dots i {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--wire);
+    transition: background 0.25s, height 0.25s;
+  }
+  .dots i.on { background: var(--ink); height: 20px; }
+
+  @media (max-width: 900px) {
+    .scene-strip { transform: scale(0.72); gap: 10px; }
+    .card { width: 176px; }
+  }
+  /* QA 모드 (#p=… 해시): 더미 제거 + 스테이지 최상단 고정 — 헤드리스 캡처용 */
+  body.qa .dummy { display: none; }
+  body.qa .stage-wrap { height: 100vh; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stage-wrap { height: auto; }
+    .stage { position: relative; height: auto; overflow: visible; padding: 10vh 0; }
+    .drift, .dots, .scene { display: none; }
+    .stmts { position: relative; inset: auto; display: grid; gap: 16vh; }
+    .stmt { position: relative; top: auto; opacity: 1 !important; filter: none !important; transform: none !important; }
+    .dummy i { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<section class="dummy"><span>이전 섹션 (문맥용) <i>↓</i></span></section>
+
+<div class="stage-wrap" id="wrap">
+  <div class="stage">
+    <!-- 연속 드리프트: 대형 캡슐 아웃라인 + 오로라 1곳 — 가장자리 배치, 센터 텍스트 존 회피 -->
+    <div class="drift" aria-hidden>
+      <div class="drift-inner" id="drift">
+        <span class="big-cap" style="top: 6vh; left: -14vw; width: 44vw; height: 15vw;"></span>
+        <span class="aurora" style="top: 30vh; right: -12vw; width: 36vw; height: 13vw;"></span>
+        <span class="big-cap" style="top: 96vh; right: -16vw; width: 46vw; height: 16vw;"></span>
+        <span class="big-cap" style="top: 165vh; left: -12vw; width: 40vw; height: 14vw;"></span>
+      </div>
+    </div>
+
+    <!-- 씬 01 — 같은 강의: filled 소스 캡슐(강조 1) → 와이어 → 네 직무 필 -->
+    <div class="scene" data-i="0" aria-hidden>
+      <div class="scene-strip">
+        <span class="pill is-fill" data-k="0">전사 공통 강의 · 180min</span>
+        <i class="wire" data-k="1"></i>
+        <div class="team-row" data-k="2">
+          <span class="pill">영업</span>
+          <span class="pill">개발</span>
+          <span class="pill">재무</span>
+          <span class="pill">인사</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 씬 02 — 실무 단절: 카드 – 파선 – ✕(강조 1) – 파선 – 어긋난 카드 -->
+    <div class="scene" data-i="1" aria-hidden>
+      <div class="scene-strip">
+        <div class="card" data-k="0"><b>강의 수료 노트</b><i></i><i></i></div>
+        <i class="wire is-dash" data-k="1"></i>
+        <span class="xchip" data-k="2">✕</span>
+        <i class="wire is-dash" data-k="3"></i>
+        <div class="card is-dim is-off" data-k="4"><b>월요일 아침, 내 실제 업무</b><i></i><i></i></div>
+      </div>
+    </div>
+
+    <!-- 씬 03 — 안 맞는 툴: 필 → 정책 브릭 → 비어 있는 자리(오렌지 파선 = 강조 1) -->
+    <div class="scene" data-i="2" aria-hidden>
+      <div class="scene-strip">
+        <span class="pill" data-k="0">범용 AI 툴</span>
+        <i class="wire" data-k="1"></i>
+        <div class="brick-row" data-k="2">
+          <span class="brick">보안 정책 ✕</span>
+          <span class="brick">사내 데이터 ✕</span>
+        </div>
+        <i class="wire is-dash" data-k="3"></i>
+        <span class="pill is-dash" data-k="4">우리 업무에 맞는 도구 — 아직 없음</span>
+      </div>
+    </div>
+
+    <!-- 센터 스테이트먼트 3개 -->
+    <div class="stmts">
+      <article class="stmt" data-i="0">
+        <div class="stmt-inner">
+          <span class="stmt-chip">01</span>
+          <span class="stmt-line" aria-hidden></span>
+          <h2 class="stmt-text">모두에게 <em>같은 강의만</em> 반복되는 교육.<br />직무도 숙련도도 다른데, 정작<br /><em>"내 업무에 어떻게?"</em>가 빠집니다.</h2>
+        </div>
+      </article>
+      <article class="stmt" data-i="1">
+        <div class="stmt-inner">
+          <span class="stmt-chip">02</span>
+          <span class="stmt-line" aria-hidden></span>
+          <h2 class="stmt-text">강의는 들었지만 다음 날<br />자기 일에 적용할 길이 막막한,<br /><em>실무로 이어지지 않는 학습.</em></h2>
+        </div>
+      </article>
+      <article class="stmt" data-i="2">
+        <div class="stmt-inner">
+          <span class="stmt-chip">03</span>
+          <span class="stmt-line" aria-hidden></span>
+          <h2 class="stmt-text">보안 · 정책과 어긋나는 범용 툴.<br />정작 <em>우리 업무에 필요한 도구</em>는<br />어디에도 없습니다.</h2>
+        </div>
+      </article>
+    </div>
+
+    <div class="dots" aria-hidden><i></i><i></i><i></i></div>
+  </div>
+</div>
+
+<section class="dummy"><span>다음 섹션 (문맥용)</span></section>
+
+<script>
+  // 모든 모션이 스크롤 진행도의 순수 함수 (스크럽 감각, 어느 지점이든 상태 재현)
+  const wrap = document.getElementById('wrap');
+  const drift = document.getElementById('drift');
+  const stmts = Array.from(document.querySelectorAll('.stmt'));
+  const scenes = Array.from(document.querySelectorAll('.scene'));
+  const dots = Array.from(document.querySelectorAll('.dots i'));
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp01 = (t) => Math.max(0, Math.min(1, t));
+  const EASE = (t) => 1 - Math.pow(1 - t, 3); // cubic-bezier(.22,1,.36,1)급 감속
+
+  // QA/리뷰용: #p=0.5 해시로 특정 진행도 강제 (스크롤 없이 그 순간 재현)
+  const forcedP = () => { const m = location.hash.match(/p=([\d.]+)/); return m ? parseFloat(m[1]) : NaN; };
+  if (!isNaN(forcedP())) document.body.classList.add('qa');
+
+  function update() {
+    if (reduced) return;
+    const total = wrap.offsetHeight - innerHeight;
+    const fp = forcedP();
+    const p = isNaN(fp) ? clamp01(-wrap.getBoundingClientRect().top / total) : clamp01(fp);
+    const n = stmts.length;
+
+    // 연속 드리프트 — 핀 전체에 걸쳐 아래→위 통과
+    drift.style.transform = `translateY(${(-p * (drift.offsetHeight - innerHeight)).toFixed(1)}px)`;
+
+    let active = 0, best = 1e9;
+    stmts.forEach((el, i) => {
+      const center = (i + 0.5) / n;
+      const d = Math.abs(p - center) * n;            // 0=밴드 중심, 0.5=경계
+      const vis = clamp01((0.60 - d) / 0.20);        // 홀드 후 경계에서 크로스페이드
+      const dir = p < center ? 1 : -1;
+      el.style.opacity = vis.toFixed(3);
+      el.style.filter = `blur(${((1 - vis) * 6).toFixed(1)}px)`;
+      el.style.transform = `translateY(calc(-50% + ${((1 - vis) * 42 * dir).toFixed(1)}px))`;
+      el.style.visibility = vis <= 0 ? 'hidden' : 'visible';
+      if (d < best) { best = d; active = i; }
+
+      // 씬 다이어그램 — 문구와 동기 + 내러티브 순서 스태거 (등장 순서 = 설명 순서).
+      // 스트립은 문구보다 좁은 밴드로: 먼저 떠나고 늦게 도착 — 전환 중 "02 문구 + 01 다이어그램" 겹침 방지
+      const visS = clamp01((0.50 - d) / 0.14);
+      const lp = clamp01((p - i / n) * n);           // 밴드 내 로컬 진행도
+      scenes[i].querySelectorAll('[data-k]').forEach((node) => {
+        const k = Number(node.dataset.k);
+        const ev = EASE(clamp01((lp - 0.06 - k * 0.07) / 0.22)); // 120~180ms급 스태거의 스크롤 등가
+        const o = Math.min(ev, visS);
+        node.style.opacity = o.toFixed(3);
+        node.style.visibility = o <= 0 ? 'hidden' : 'visible';
+        const off = node.classList.contains('is-off') ? 16 : 0;  // 단절 — 의도된 축 어긋남
+        node.style.transform = `translateY(${(off + (1 - ev) * 10 + (1 - visS) * 14 * dir).toFixed(1)}px)`;
+      });
+    });
+    dots.forEach((d, i) => d.classList.toggle('on', i === active));
+  }
+
+  addEventListener('scroll', update, { passive: true });
+  addEventListener('resize', update);
+  update();
+</script>
+</body>
+</html>

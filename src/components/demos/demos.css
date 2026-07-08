@@ -1,0 +1,322 @@
+/* ============================================================
+   Demo stages — uture-motion-diagrams **라이트 오로라** 문법.
+   (테마 규칙: 호스트 섹션에 맞춤 — 라이트 페이지에는 라이트 그래머)
+   흰 카드 + 뉴트럴 헤어라인 와이어 + 오로라 캡슐(그라디언트 1곳)
+   + 펄스 오렌지(진행·성과·강조). 다크 밴드용 .is-dark 변형 포함.
+   모션(타이핑·연결선 드로우·스태거)은 GSAP 그대로.
+   ============================================================ */
+
+.dm-stage {
+  --dm-pulse: #FF8A3C;   /* 진행/성과/강조 */
+  --dm-wire: #C9C6C1;    /* 연결선 — 절대 오렌지/오로라 금지 */
+  width: 100%;
+  border: 1px solid var(--border-2);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--text);
+  overflow: hidden;
+  position: relative;
+  font-size: 14px;
+  text-align: left;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 0 0 5px color-mix(in srgb, #1d1c1b 3%, transparent),
+    var(--shadow-card);
+}
+/* 섹션 틴트 — 적중 링·보조 태그 등 은은한 포인트에만 사용 */
+.dm-sky   { --dm-tint: var(--c-sky); }
+.dm-lilac { --dm-tint: var(--c-lilac); }
+.dm-amber { --dm-tint: var(--c-amber); }
+.dm-mint  { --dm-tint: var(--c-mint); }
+.dm-peach { --dm-tint: var(--c-peach); }
+.dm-rose  { --dm-tint: var(--c-rose); }
+
+/* 유일하게 허용되는 그라디언트 — 오로라 (요청 캡슐 전용) */
+.dm-aurora {
+  background: linear-gradient(105deg, #b79cf7 0%, #d9c2fc 25%, #f7bfd3 50%, #ffc89b 75%, #ff9857 100%);
+  background-size: 200% 200%;
+  animation: dm-aurora 8s ease-in-out infinite alternate;
+  color: #1a1a1a;
+}
+@keyframes dm-aurora {
+  from { background-position: 0% 40%; }
+  to { background-position: 100% 60%; }
+}
+
+.dm-chrome {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.dm-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-strong);
+}
+.dm-chrome-label {
+  margin-left: 8px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.dm-body {
+  position: relative;
+  padding: 20px;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+/* ---------------- atoms ---------------- */
+
+/* 요청 버블 = 오로라 캡슐 (이 데모의 유일한 그라디언트) */
+.dm-bubble {
+  justify-self: end;
+  max-width: 88%;
+  border-radius: 999px;
+  padding: 10px 17px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  min-height: 40px;
+  background: linear-gradient(105deg, #b79cf7 0%, #d9c2fc 25%, #f7bfd3 50%, #ffc89b 75%, #ff9857 100%);
+  background-size: 200% 200%;
+  animation: dm-aurora 8s ease-in-out infinite alternate;
+  color: #1a1a1a;
+}
+.dm-caret {
+  display: inline-block;
+  width: 1.5px;
+  height: 1em;
+  margin-left: 2px;
+  background: currentColor;
+  vertical-align: text-bottom;
+  animation: dm-caret 0.9s steps(2) infinite;
+}
+@keyframes dm-caret {
+  50% { opacity: 0; }
+}
+
+/* 상태 칩 (예약 실행 등) */
+.dm-status {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--text-2);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  padding: 6px 12px;
+  background: var(--surface);
+}
+.dm-spin {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--dm-pulse) 40%, #e8e5e2);
+  border-top-color: var(--dm-pulse);
+  animation: dm-spin 0.8s linear infinite;
+}
+@keyframes dm-spin {
+  to { rotate: 360deg; }
+}
+
+/* 카드 — 흰 카드 + 헤어라인. is-hit = 펄스 오렌지 링 강조 */
+.dm-card {
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  border-radius: 14px;
+  padding: 12px 15px;
+  display: grid;
+  gap: 6px;
+}
+.dm-card.is-hit {
+  border-color: color-mix(in srgb, var(--dm-pulse) 55%, var(--border-strong));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--dm-pulse) 14%, transparent);
+}
+.dm-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.dm-title {
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--text);
+}
+.dm-meta {
+  font-size: 12px;
+  color: var(--muted);
+}
+.dm-tag {
+  font-size: 11px;
+  line-height: 1;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  padding: 4px 8px;
+  color: var(--text-2);
+  background: var(--surface);
+  white-space: nowrap;
+}
+/* is-accent = 펄스 오렌지 채움 (성과·딜리버리) */
+.dm-tag.is-accent {
+  background: var(--dm-pulse);
+  border-color: var(--dm-pulse);
+  color: #fff;
+  font-weight: 600;
+}
+.dm-tag.is-tint {
+  border-color: color-mix(in srgb, var(--dm-tint) 60%, var(--border-strong));
+  background: color-mix(in srgb, var(--dm-tint) 14%, var(--surface));
+}
+
+/* 진행 바 — 펄스 오렌지 채움 */
+.dm-bar {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: #f1efec;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.dm-bar > span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: 4px;
+  background: var(--dm-pulse);
+  transform-origin: left center;
+}
+
+/* 세로 연결선 — 뉴트럴 와이어 */
+.dm-wire {
+  justify-self: center;
+  width: 1.25px;
+  height: 18px;
+  border-radius: 1px;
+  background: var(--dm-wire);
+  transform-origin: top center;
+}
+
+/* 서브에이전트 칩 — 흰 칩, 체크는 펄스 오렌지 */
+.dm-agents {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.dm-agent {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  border: 1px solid var(--border-2);
+  border-radius: 999px;
+  padding: 6px 11px;
+  background: var(--surface);
+  color: var(--text-2);
+  white-space: nowrap;
+  box-shadow: 0 2px 8px -4px rgba(29, 28, 27, 0.12);
+}
+.dm-agent-state {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  display: inline-grid;
+  place-items: center;
+}
+.dm-agent-state .dm-spin {
+  position: absolute;
+  opacity: 0; /* 최종 프레임: 스피너 없음 */
+}
+.dm-agent-check {
+  position: absolute;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--dm-pulse);
+}
+.dm-agent-count {
+  font-size: 11px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+
+/* 딜리버리 행 */
+.dm-deliver {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.dm-deliver .dm-tag {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+/* 슬라이드 썸네일 */
+.dm-slides {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.dm-slide {
+  width: 52px;
+  height: 38px;
+  border-radius: 6px;
+  border: 1px solid var(--border-2);
+  background: var(--surface);
+  position: relative;
+}
+.dm-slide::after {
+  content: '';
+  position: absolute;
+  left: 7px;
+  right: 12px;
+  top: 9px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--border-strong);
+  box-shadow: 0 7px 0 -1px var(--border-2), 0 14px 0 -1px var(--border-2);
+}
+
+/* ---------------- 다크 변형 (.band-dark 안 등 다크 컨텍스트용) ---------------- */
+.dm-stage.is-dark {
+  --dm-ink: #262221;
+  --dm-accent: #FFD2A8;
+  --dm-wire: color-mix(in srgb, var(--dm-accent) 55%, transparent);
+  background: var(--dm-ink);
+  border: none;
+  color: var(--dm-accent);
+  box-shadow: 0 0 0 5px color-mix(in srgb, #1d1c1b 4%, transparent), var(--shadow-card);
+}
+.dm-stage.is-dark .dm-chrome { border-bottom: 1.25px solid color-mix(in srgb, var(--dm-accent) 26%, transparent); }
+.dm-stage.is-dark .dm-dot { background: transparent; border: 1.25px solid color-mix(in srgb, var(--dm-accent) 55%, transparent); }
+.dm-stage.is-dark .dm-chrome-label,
+.dm-stage.is-dark .dm-title,
+.dm-stage.is-dark .dm-meta,
+.dm-stage.is-dark .dm-tag,
+.dm-stage.is-dark .dm-agent { color: var(--dm-accent); background: transparent; }
+.dm-stage.is-dark .dm-bubble { background: transparent; border: 1.25px solid var(--dm-accent); color: var(--dm-accent); animation: none; font-weight: 500; }
+.dm-stage.is-dark .dm-card,
+.dm-stage.is-dark .dm-agent,
+.dm-stage.is-dark .dm-tag { border-color: var(--dm-accent); box-shadow: none; }
+.dm-stage.is-dark .dm-card { background: transparent; }
+.dm-stage.is-dark .dm-card.is-hit { background: var(--dm-accent); }
+.dm-stage.is-dark .dm-card.is-hit .dm-title,
+.dm-stage.is-dark .dm-card.is-hit .dm-meta { color: var(--dm-ink); }
+.dm-stage.is-dark .dm-tag.is-accent { background: var(--dm-accent); color: var(--dm-ink); }
+.dm-stage.is-dark .dm-agent-check { color: var(--dm-accent); }
+.dm-stage.is-dark .dm-spin { border-color: color-mix(in srgb, var(--dm-accent) 45%, transparent); border-top-color: var(--dm-accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .dm-caret,
+  .dm-spin,
+  .dm-bubble,
+  .dm-aurora {
+    animation: none;
+  }
+}

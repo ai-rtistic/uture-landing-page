@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>uture · 사내 문서 검색 — dark diagram</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<style>
+  /* 사내 문서 검색: 질문 → 문서 3건 탐색 → 근거 문서(강조) → 답변
+     Master loop 8s, lavender accent, 다크 아웃라인. */
+  :root {
+    --bg: #262221;
+    --accent: #E9D5FC;
+    --ink-on-accent: #262221;
+    --stroke-w: 1.25px;
+    --loop: 8s;
+  }
+  * { margin: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    font-family: 'Geist', 'Pretendard Variable', Pretendard, -apple-system, sans-serif;
+    color: var(--accent);
+    display: grid; place-items: center;
+  }
+  .canvas { position: relative; width: 1200px; height: 900px; }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: var(--stroke-w) solid var(--accent); border-radius: 999px;
+    padding: 10px 20px; font-size: 14px; font-weight: 500;
+  }
+  .chip {
+    width: 30px; height: 30px; flex: none;
+    border: var(--stroke-w) solid var(--accent); border-radius: 10px;
+    display: grid; place-items: center;
+  }
+  .chip svg { width: 15px; height: 15px; stroke: var(--accent); fill: none;
+              stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .card {
+    border: var(--stroke-w) solid var(--accent); border-radius: 22px;
+    padding: 18px 20px; display: flex; flex-direction: column; gap: 9px;
+    background: transparent;
+  }
+  .card .title { font-size: 13px; font-weight: 600; }
+  .card .line { height: 2px; border-radius: 2px; background: var(--accent); opacity: .5; }
+  .card.filled { background: var(--accent); }
+  .card.filled .title { color: var(--ink-on-accent); }
+  .card.filled .line { background: var(--ink-on-accent); opacity: .55; }
+  .card.filled .mono { color: var(--ink-on-accent); }
+  .mono { font-family: 'Geist Mono', 'JetBrains Mono', 'Pretendard Variable', Pretendard, ui-monospace, monospace; font-size: 11px; opacity: .85; }
+  .minipill {
+    display: inline-flex; align-self: flex-start;
+    border: var(--stroke-w) solid var(--ink-on-accent); border-radius: 999px;
+    padding: 2px 9px; font-size: 10px; letter-spacing: .04em; text-transform: uppercase;
+    color: var(--ink-on-accent);
+  }
+
+  .abs { position: absolute; }
+  #query   { top: 128px; left: 0; right: 0; display: flex; gap: 10px; align-items: center; justify-content: center; }
+  #docs    { top: 330px; left: 0; right: 0; display: flex; gap: 26px; justify-content: center; }
+  #docs .card { width: 250px; }
+  #answer  { top: 600px; left: 0; right: 0; display: flex; justify-content: center; }
+  #answer .card { width: 470px; }
+  #wires   { top: 0; left: 0; width: 1200px; height: 900px; pointer-events: none; }
+
+  @keyframes enter-0  { 0%,2%  {opacity:0; transform:translateY(10px) scale(.96);} 9%  {opacity:1; transform:none;} 91% {opacity:1;} 96%,100% {opacity:0;} }
+  @keyframes enter-1a { 0%,22% {opacity:0; transform:translateY(10px) scale(.96);} 29% {opacity:1; transform:none;} 91% {opacity:1;} 96%,100% {opacity:0;} }
+  @keyframes enter-1b { 0%,25% {opacity:0; transform:translateY(10px) scale(.96);} 32% {opacity:1; transform:none;} 91% {opacity:1;} 96%,100% {opacity:0;} }
+  @keyframes enter-1c { 0%,28% {opacity:0; transform:translateY(10px) scale(.96);} 35% {opacity:1; transform:none;} 91% {opacity:1;} 96%,100% {opacity:0;} }
+  @keyframes enter-2  { 0%,55% {opacity:0; transform:translateY(10px) scale(.96);} 62% {opacity:1; transform:none;} 91% {opacity:1;} 96%,100% {opacity:0;} }
+  @keyframes draw-1   { 0%,10% {stroke-dashoffset:1; opacity:1;} 22% {stroke-dashoffset:0;} 91% {stroke-dashoffset:0; opacity:1;} 96%,100% {opacity:0;} }
+  @keyframes draw-2   { 0%,44% {stroke-dashoffset:1; opacity:1;} 56% {stroke-dashoffset:0;} 91% {stroke-dashoffset:0; opacity:1;} 96%,100% {opacity:0;} }
+  /* 적중 문서: 아웃라인으로 등장했다가 근거로 확정되며 채워진다.
+     주의: opacity는 enter 애니메이션 소유 — 여기 섞으면 덮어써서 카드가 사라진다. */
+  @keyframes fill-hit {
+    0%,42%  { background-color: transparent; }
+    48%,91% { background-color: var(--accent); }
+    96%,100% { background-color: transparent; }
+  }
+
+  .anim { animation-duration: var(--loop); animation-iteration-count: infinite;
+          animation-timing-function: cubic-bezier(.22,1,.36,1); animation-fill-mode: both; }
+  #query { animation-name: enter-0; }
+  #doc-a { animation-name: enter-1a; }
+  #doc-b { animation-name: enter-1b, fill-hit; }
+  #doc-c { animation-name: enter-1c; }
+  #answer .card { animation-name: enter-2; }
+  #wires path.w1 { stroke-dasharray: 1; animation: draw-1 var(--loop) cubic-bezier(.22,1,.36,1) infinite both; }
+  #wires path.w2 { stroke-dasharray: 1; animation: draw-2 var(--loop) cubic-bezier(.22,1,.36,1) infinite both; }
+
+  /* hit 카드 내부는 채워진 뒤에만 잉크색 — 전환을 부드럽게 */
+  #doc-b .title, #doc-b .mono { transition: color .4s; }
+  #doc-b .line { transition: background .4s, opacity .4s; }
+  @keyframes ink-hit { 0%,42% {color: var(--accent);} 48%,91% {color: var(--ink-on-accent);} 96%,100% {color: var(--accent);} }
+  @keyframes ink-line { 0%,42% {background-color: var(--accent);} 48%,91% {background-color: var(--ink-on-accent);} 96%,100% {background-color: var(--accent);} }
+  #doc-b .title, #doc-b .mono { animation: ink-hit var(--loop) linear infinite both; }
+  #doc-b .line { animation: ink-line var(--loop) linear infinite both; }
+  @keyframes pop-badge { 0%,46% {opacity:0; transform:scale(.8);} 52% {opacity:1; transform:none;} 91% {opacity:1;} 96%,100% {opacity:0;} }
+  #hit-badge { animation: pop-badge var(--loop) cubic-bezier(.22,1,.36,1) infinite both; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .anim, #wires path, #hit-badge, #doc-b .title, #doc-b .mono, #doc-b .line { animation: none !important; opacity: 1; stroke-dashoffset: 0; }
+    #doc-b { background: var(--accent); }
+    #doc-b .title, #doc-b .mono { color: var(--ink-on-accent); }
+    #doc-b .line { background: var(--ink-on-accent); }
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <!-- 1. 질문 -->
+  <div id="query" class="abs anim">
+    <span class="chip"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.2-4.2"/></svg></span>
+    <span class="pill">경비정산 규정, 뭐가 바뀌었죠?</span>
+  </div>
+
+  <!-- 연결선: 질문 → 가운데 문서, 가운데 문서 → 답변 -->
+  <svg id="wires" class="abs" viewBox="0 0 1200 900" fill="none">
+    <g stroke="var(--accent)" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+      <path class="w1" pathLength="1" d="M600 176 V330"/>
+      <path class="w2" pathLength="1" d="M600 476 V600"/>
+    </g>
+  </svg>
+
+  <!-- 2. 문서 3건 — 가운데가 근거로 확정되며 채워짐 -->
+  <div id="docs" class="abs">
+    <div id="doc-a" class="card anim">
+      <span class="title">국내 출장 가이드</span>
+      <div class="line" style="width:84%"></div>
+      <div class="line" style="width:62%"></div>
+      <span class="mono">총무팀 · 사내위키</span>
+    </div>
+    <div id="doc-b" class="card anim">
+      <span id="hit-badge" class="minipill">근거</span>
+      <span class="title">경비정산 규정 v3.2</span>
+      <div class="line" style="width:88%"></div>
+      <div class="line" style="width:70%"></div>
+      <span class="mono">재무팀 · 2026.03 개정</span>
+    </div>
+    <div id="doc-c" class="card anim">
+      <span class="title">법인카드 사용 매뉴얼</span>
+      <div class="line" style="width:76%"></div>
+      <div class="line" style="width:58%"></div>
+      <span class="mono">재무팀 · PDF</span>
+    </div>
+  </div>
+
+  <!-- 3. 답변 -->
+  <div id="answer" class="abs">
+    <div class="card anim">
+      <span class="title">숙박비 상한이 12만원 → 15만원으로 올랐어요.</span>
+      <div class="line" style="width:90%"></div>
+      <div class="line" style="width:66%"></div>
+      <span class="mono">근거 · 경비정산 규정 v3.2 §4</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

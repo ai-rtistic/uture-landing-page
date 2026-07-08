@@ -1,0 +1,535 @@
+/* ============================================================
+   Spot-graphics — branded UI illustration primitives
+   (paired with components/graphics/*.tsx)
+   ============================================================ */
+
+.g-frame {
+  --g-accent: var(--c-orange);
+  --g-glow: rgba(255, 122, 51, 0.22);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  border-radius: var(--r-card);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 30px;
+}
+/* tints are intentionally faint — monochrome-first, colour only as a whisper */
+.g-tint-peach { --g-accent: var(--c-orange); --g-glow: rgba(255, 158, 107, 0.12); }
+.g-tint-amber { --g-accent: var(--c-amber); --g-glow: rgba(239, 179, 74, 0.12); }
+.g-tint-sky { --g-accent: var(--c-sky); --g-glow: rgba(130, 180, 240, 0.12); }
+.g-tint-rose { --g-accent: var(--c-rose); --g-glow: rgba(255, 143, 168, 0.12); }
+.g-tint-lilac { --g-accent: var(--c-lilac); --g-glow: rgba(180, 157, 245, 0.12); }
+.g-tint-mint { --g-accent: var(--c-mint); --g-glow: rgba(95, 203, 160, 0.12); }
+.g-tint-neutral { --g-accent: var(--muted); --g-glow: rgba(0, 0, 0, 0.04); }
+
+.g-glow {
+  /* 다이어그램 문법 전환: 글로우 워시 제거 — 흰 카드 + 헤어라인만 (상황별 테마 규칙) */
+  display: none;
+}
+@keyframes g-glow-pulse {
+  from { opacity: 0.45; transform: scale(0.95); }
+  to { opacity: 0.7; transform: scale(1.05); }
+}
+.g-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 26px 26px;
+  opacity: 0.35;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 75%);
+  pointer-events: none;
+}
+.g-stage { position: relative; z-index: 1; width: 100%; display: grid; place-items: center; }
+.g-stack { display: flex; flex-direction: column; align-items: center; }
+
+/* ---- node (pill chip) ---- */
+.g-node {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-node);
+  background: var(--surface);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  box-shadow: 0 6px 16px -12px rgba(29, 28, 27, 0.5);
+  white-space: nowrap;
+}
+.g-node-ico { display: grid; place-items: center; color: var(--text-2); }
+.g-node-dark { background: var(--text); color: #fff; border-color: var(--text); }
+.g-node-dark .g-node-ico { color: #fff; }
+.g-node-ghost { background: transparent; box-shadow: none; }
+
+/* ---- connector ---- */
+.g-conn {
+  width: 1.5px;
+  background: var(--border);
+  position: relative;
+  overflow: hidden;
+  flex: none;
+  margin: 4px 0;
+}
+.g-conn.is-flow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent, var(--muted), transparent);
+  height: 55%;
+  opacity: 0.7;
+  animation: g-flow 2.2s linear infinite;
+}
+@keyframes g-flow {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(260%); }
+}
+
+/* ---- tiles ---- */
+.g-grid-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: min(360px, 80%);
+}
+.g-tile {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--border);
+  border-radius: var(--r-node);
+  background: var(--surface);
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  overflow: hidden;
+}
+/* match tile stays monochrome — distinguished only by its tag + a faint accent ring */
+.g-tile.is-active {
+  border-color: color-mix(in srgb, var(--g-accent) 55%, var(--border));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--g-accent) 35%, transparent);
+}
+.g-tile-ico { display: grid; place-items: center; }
+.g-tile-tag {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  padding: 2px 6px;
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+}
+.g-tile-thumb { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---- strip (scene/waveform bars) ---- */
+.g-strip { display: flex; gap: 6px; width: 100%; max-width: 230px; }
+.g-bar {
+  height: 16px;
+  border-radius: 5px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  flex-basis: 0;
+}
+/* filled bars are a muted tint, not a saturated accent */
+.g-bar.is-fill {
+  background: color-mix(in srgb, var(--g-accent) 32%, #d6d4d1);
+  border-color: transparent;
+}
+.g-strip.is-dashed .g-bar { border-style: dashed; background: transparent; }
+.g-strip.is-dashed .g-bar.is-fill {
+  background: color-mix(in srgb, var(--g-accent) 32%, #d6d4d1);
+  border-style: solid;
+}
+
+/* ---- embedding dots ---- */
+.g-embed { display: flex; align-items: center; gap: 16px; width: 100%; justify-content: center; }
+.g-embed-inputs { display: flex; flex-direction: column; gap: 10px; }
+.g-bracket {
+  width: 22px;
+  align-self: stretch;
+  margin: 18px 0;
+  border: 1px solid var(--border);
+  border-left: none;
+  border-radius: 0 10px 10px 0;
+  flex: none;
+}
+.g-dots {
+  position: relative;
+  width: 190px;
+  height: 190px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.g-dot {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+  background: var(--text);
+  transform: translate(-50%, -50%);
+  animation: g-dot-float 4s ease-in-out infinite alternate;
+}
+@keyframes g-dot-float {
+  from { transform: translate(-50%, -50%); }
+  to { transform: translate(-50%, -64%); }
+}
+.g-dots-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--g-accent);
+  box-shadow: 0 0 0 6px var(--g-glow);
+}
+
+/* ---- document (analyze) ---- */
+.g-doc {
+  position: relative;
+  width: min(260px, 78%);
+  padding: 22px 20px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.g-doc-spark { color: var(--g-accent); margin-bottom: 4px; }
+
+/* ---- feature scene grid ---- */
+.g-scene-grid { display: flex; flex-direction: column; gap: 9px; width: 100%; align-items: center; }
+
+/* ============================================================
+   fsd — uture-motion-diagrams 패널 (라이트 문법).
+   구조: 번호+태그 헤더 → 다이어그램 스테이지 → 강조는 펄스 오렌지 하나.
+   base 상태 = 최종 프레임 (reduced-motion 폴백).
+   ============================================================ */
+.fsd-panel {
+  --fsd-pulse: #ff8a3c;
+  --fsd-wire: #c9c6c1;
+  border: 1px solid var(--border-strong);
+  border-radius: 22px;
+  background: var(--surface);
+  padding: 18px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 240px;
+  box-shadow: 0 2px 10px -6px rgba(29, 28, 27, 0.08);
+}
+.fsd-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.fsd-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+.fsd-tag {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+.fsd-stage {
+  flex: 1;
+  display: grid;
+  place-items: center;
+}
+.fsd-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.fsd-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  padding: 6px 13px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-2);
+  background: var(--surface);
+  white-space: nowrap;
+}
+.fsd-pill.is-fill {
+  background: var(--fsd-pulse);
+  border-color: var(--fsd-pulse);
+  color: #fff;
+  font-weight: 600;
+}
+.fsd-wire {
+  width: 1.25px;
+  height: 16px;
+  border-radius: 1px;
+  background: var(--fsd-wire);
+}
+
+/* -- 진단: 스캔 라인이 업무 타일을 훑고 P1 점등 -- */
+.fs-scanwrap {
+  position: relative;
+  width: 100%;
+  max-width: 236px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.fs-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.fs-tile {
+  position: relative;
+  font-size: 10.5px;
+  padding: 10px 4px;
+  text-align: center;
+  border: 1px solid var(--border-strong);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--muted);
+  animation: fs-lit 6s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.4s);
+  white-space: nowrap;
+}
+@keyframes fs-lit {
+  0%, 6% { border-color: var(--border-strong); color: var(--muted); }
+  10%, 16% {
+    border-color: color-mix(in srgb, var(--fsd-pulse) 60%, var(--border-strong));
+    color: var(--text-2);
+  }
+  24%, 100% { border-color: var(--border-strong); color: var(--muted); }
+}
+.fs-scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--fsd-pulse), transparent);
+  opacity: 0;
+  animation: fs-scan 6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes fs-scan {
+  0% { transform: translateY(0); opacity: 0; }
+  6% { opacity: 0.85; }
+  38% { transform: translateY(96px); opacity: 0.85; }
+  46%, 100% { transform: translateY(96px); opacity: 0; }
+}
+.fs-p1tag {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 2.5px 6px;
+  border-radius: 999px;
+  background: var(--fsd-pulse);
+  color: #fff;
+  animation: fs-pop 6s ease-in-out infinite;
+}
+@keyframes fs-pop {
+  0%, 44% { opacity: 0; transform: scale(0.6); }
+  52%, 100% { opacity: 1; transform: scale(1); }
+}
+
+/* -- 실행: 미팅에서 체크가 실무 타일로 확산 -- */
+.fs-checkdot {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  width: 16px;
+  height: 16px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--fsd-pulse) 60%, var(--border-strong));
+  color: var(--fsd-pulse);
+  font-size: 9px;
+  font-weight: 700;
+  animation: fs-pop 6s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.55s);
+}
+
+/* -- 구축: 블록이 조립되어 사내 도구 완성 -- */
+.fs-blocks {
+  display: flex;
+  gap: 7px;
+}
+.fs-block {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  border: 1px solid var(--border-strong);
+  background: color-mix(in srgb, var(--fsd-pulse) 12%, var(--surface));
+  animation: fs-block-in 6s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.5s);
+}
+@keyframes fs-block-in {
+  0%, 4% { opacity: 0; transform: translateY(10px); }
+  12%, 100% { opacity: 1; transform: translateY(0); }
+}
+.fs-toolnode {
+  animation: fs-pop 6s ease-in-out infinite;
+}
+
+/* -- 정착: 리뷰 사이클이 돌고 지표가 차오름 -- */
+.fs-ring {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1.25px solid var(--border-strong);
+  display: grid;
+  place-items: center;
+  font-size: 9.5px;
+  color: var(--text-2);
+  text-align: center;
+  line-height: 1.25;
+}
+.fs-ringdot {
+  position: absolute;
+  inset: -5px;
+  animation: fs-orbit 6s linear infinite;
+}
+.fs-ringdot::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  border-radius: 50%;
+  background: var(--fsd-pulse);
+}
+@keyframes fs-orbit {
+  to { transform: rotate(360deg); }
+}
+.fs-meters {
+  display: grid;
+  gap: 7px;
+  width: 100%;
+  max-width: 170px;
+}
+.fs-meter {
+  height: 8px;
+  border-radius: 4px;
+  background: #f1efec;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.fs-meter > span {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  width: var(--w, 70%);
+  background: var(--fsd-pulse);
+  transform-origin: left center;
+  animation: fs-fill 6s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.5s);
+}
+@keyframes fs-fill {
+  0%, 8% { transform: scaleX(0.1); }
+  40%, 100% { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fs-tile,
+  .fs-scan,
+  .fs-p1tag,
+  .fs-checkdot,
+  .fs-block,
+  .fs-toolnode,
+  .fs-ringdot,
+  .fs-meter > span {
+    animation: none;
+  }
+  .fs-scan { opacity: 0; }
+}
+
+@media (max-width: 540px) {
+  .g-frame { min-height: 240px; padding: 22px; }
+  .g-grid-tiles { width: 90%; }
+}
+
+/* ---- Remotion video embed (full-bleed framed panel) ---- */
+.g-video-frame {
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.g-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---- Placeholder (sized media slot) ---- */
+.ph {
+  position: relative;
+  width: 100%;
+  border-radius: var(--r-node);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: linear-gradient(135deg,
+    rgba(255, 158, 107, 0.55),
+    rgba(180, 157, 245, 0.5) 50%,
+    rgba(130, 180, 240, 0.5));
+  display: grid;
+  place-items: center;
+}
+.ph-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px);
+  background-size: 22px 22px;
+  opacity: 0.4;
+}
+.ph-tag {
+  position: relative;
+  z-index: 1;
+  font-size: 11px;
+  letter-spacing: 0.25px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+  border-radius: var(--r-pill);
+}
+
+/* ---- AX asset: classification buckets ---- */
+.g-buckets { display: flex; gap: 8px; }
