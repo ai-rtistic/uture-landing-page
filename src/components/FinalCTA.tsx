@@ -103,12 +103,12 @@ export function FinalCTA() {
           </button>
           {sent === 'google' && (
             <p className="cta-form-done" role="status">
-              접수되었습니다 — 1영업일 안에 남겨주신 연락처로 회신드립니다.
+              접수되었습니다 — 3영업일 안에 남겨주신 연락처로 회신드립니다.
             </p>
           )}
           {sent === 'mail' && (
             <p className="cta-form-done" role="status">
-              메일 초안이 열렸습니다 — 그대로 보내주시면 1영업일 안에 회신드립니다.
+              메일 초안이 열렸습니다 — 그대로 보내주시면 3영업일 안에 회신드립니다.
               창이 열리지 않으면 <a href={`mailto:${footer.company.email}`}>{footer.company.email}</a>로
               보내주세요.
             </p>

@@ -10,22 +10,37 @@ import { Container, Pill } from '../ui/primitives'
  */
 const CANVAS_W = 1600
 const CANVAS_H = 900
+// 모바일: 데스크톱 캔버스를 축소하면 글자가 뭉개진다 → 세로형 전용 아티팩트(390×560)로 교체
+const CANVAS_M_W = 390
+const CANVAS_M_H = 560
 
 export function ArchitectureTabs() {
   const [active, setActive] = useState(0)
   const viewerRef = useRef<HTMLDivElement>(null)
   const [scale, setScale] = useState(0.8)
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 720px)').matches,
+  )
   const item = architecture.items[active]
+  const cw = isMobile ? CANVAS_M_W : CANVAS_W
+  const ch = isMobile ? CANVAS_M_H : CANVAS_H
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 720px)')
+    const onMq = () => setIsMobile(mq.matches)
+    mq.addEventListener('change', onMq)
+    return () => mq.removeEventListener('change', onMq)
+  }, [])
 
   useEffect(() => {
     const el = viewerRef.current
     if (!el) return
-    const update = () => setScale(el.clientWidth / CANVAS_W)
+    const update = () => setScale(el.clientWidth / cw)
     update()
     const ro = new ResizeObserver(update)
     ro.observe(el)
     return () => ro.disconnect()
-  }, [])
+  }, [cw])
 
   return (
     <section className="section arch" id="architecture">
@@ -41,7 +56,10 @@ export function ArchitectureTabs() {
           </h2>
           <p className="services-head-intro services-head-intro--lines reveal" data-delay="160">
             {architecture.intro.map((l, i) => (
-              <span key={i}>{l}</span>
+              <span key={i}>
+                {l}
+                {i < architecture.intro.length - 1 && ' '}
+              </span>
             ))}
           </p>
         </div>
@@ -58,15 +76,15 @@ export function ArchitectureTabs() {
               </button>
             ))}
           </div>
-          <div className="arch-viewer" ref={viewerRef}>
+          <div className={`arch-viewer${isMobile ? ' is-mobile' : ''}`} ref={viewerRef}>
             <iframe
-              key={item.id}
-              src={item.file}
+              key={`${item.id}-${isMobile ? 'm' : 'd'}`}
+              src={isMobile && item.fileMobile ? item.fileMobile : item.file}
               title={item.label}
               loading="lazy"
               style={{
-                width: CANVAS_W,
-                height: CANVAS_H,
+                width: cw,
+                height: ch,
                 transform: `scale(${scale})`,
               }}
             />

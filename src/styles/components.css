@@ -285,6 +285,9 @@
 }
 .hero-rules::before { left: max(20px, calc((100% - var(--container)) / 2 - 28px)); }
 .hero-rules::after { right: max(20px, calc((100% - var(--container)) / 2 - 28px)); }
+@media (max-width: 1040px) {
+  .hero-rules { display: none; } /* 모바일: 괘선이 텍스트와 붙어 답답 (오너 피드백) */
+}
 /* 오로라 프레임 — 브랜드 색(라벤더→피치)을 비주얼 카드 안에 가둔다 */
 .hero--clean .hero-seq {
   width: 552px;
@@ -754,6 +757,11 @@
   .nc-doc { width: 176px; }
 }
 /* reduced-motion: 핀/드리프트 없이 3문장 정적 나열 */
+@media (max-width: 720px) {
+  .nc-text { font-size: 22px; line-height: 1.45; }
+  .nc-leader { height: 34px; margin-bottom: 22px; }
+  .nc-strip { top: 74%; }
+}
 @media (prefers-reduced-motion: reduce) {
   .nc-pin { height: auto; overflow: visible; padding-block: 8vh; }
   .nc-drift, .nc-scene, .nc-dots { display: none; }
@@ -1595,6 +1603,7 @@
     0 0 0 5px color-mix(in srgb, #1d1c1b 3%, transparent),
     var(--shadow-card);
 }
+.arch-viewer.is-mobile { aspect-ratio: 39 / 56; }
 .arch-viewer iframe {
   position: absolute;
   left: 0;
@@ -1825,6 +1834,9 @@ button.cta-form-submit {
 @media (max-width: 560px) {
   .cta-form { padding: 20px 18px 18px; }
   .cta-form-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .hs-stage { min-height: 356px; } /* 모바일 카드 폭에 맞춘 스테이지 높이 */
 }
 /* 히어로 FlowChain과 같은 프로스트 글라스 문법 — 무채색 유리 + 오렌지 소수 */
 .capsule {

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>uture — 사내 데이터 기반 챗봇 (mobile / dark)</title>
+<style>
+  @font-face { font-family:'Pretendard Variable';
+    src:url('/fonts/PretendardVariable.woff2') format('woff2-variations');
+    font-weight:45 920; font-display:swap; }
+  @font-face { font-family:'Geist Mono';
+    src:url('/fonts/GeistMono-Variable-latin.woff2') format('woff2-variations');
+    font-weight:100 900; font-display:swap; }
+
+  :root { --bg:#262221; --accent:#E9D5FC; --ink-on:#262221;
+          --soft:color-mix(in srgb, #E9D5FC 58%, transparent);
+          --hair:color-mix(in srgb, #E9D5FC 55%, transparent);
+          --faint:color-mix(in srgb, #E9D5FC 26%, transparent);
+          --loop:9s; }
+  * { margin:0; box-sizing:border-box; }
+  html,body { height:100%; }
+  body { background:var(--bg); color:var(--accent); display:grid; place-items:center;
+         font-family:'Pretendard Variable',Pretendard,'Apple SD Gothic Neo',system-ui,sans-serif; }
+  .mono { font-family:'Geist Mono',ui-monospace,Menlo,monospace; }
+  .canvas { width:390px; height:560px; display:flex; flex-direction:column; align-items:center;
+            justify-content:center; padding:26px 18px; }
+  .tag { font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--soft);
+         font-weight:500; font-family:'Geist Mono',ui-monospace,monospace; }
+  h1 { font-size:19px; font-weight:700; letter-spacing:-.02em; margin-top:8px; margin-bottom:28px; }
+  .flow { display:flex; flex-direction:column; align-items:center; width:100%; }
+  .pillrow { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; max-width:344px; }
+  .pill { border:1.25px solid var(--soft); border-radius:999px; padding:8px 15px; font-size:13px;
+          font-weight:500; white-space:nowrap; }
+  .pill.is-fill { background:var(--accent); border-color:var(--accent); color:var(--ink-on); font-weight:600; }
+  .card { border:1.25px solid var(--accent); border-radius:14px; padding:11px 18px; text-align:center; }
+  .card b { display:block; font-size:14px; font-weight:600; letter-spacing:-.01em; }
+  .card span { display:block; font-size:10px; color:var(--soft); margin-top:3px;
+               font-family:'Geist Mono',ui-monospace,Menlo,monospace; }
+  .wire { width:1.5px; height:24px; background:var(--hair); transform-origin:top center; }
+  /* 코어 비주얼 카드 */
+  .viz { width:312px; border:1.25px solid var(--hair); border-radius:16px; padding:10px 12px 8px; }
+  .viz .vlabel { font-size:9px; letter-spacing:.08em; text-transform:uppercase; color:var(--soft);
+                 font-family:'Geist Mono',ui-monospace,monospace; margin-bottom:4px; display:block; }
+  .viz svg { display:block; width:100%; }
+  /* 등장 리듬 */
+  .in   { animation:ain var(--loop) cubic-bezier(.22,1,.36,1) infinite both; animation-delay:var(--d,0s); }
+  .draw { animation:adraw var(--loop) cubic-bezier(.22,1,.36,1) infinite both; animation-delay:var(--d,0s); }
+  @keyframes ain   { 0%,1% {opacity:0; transform:translateY(8px);} 6% {opacity:1; transform:none;}
+                     92% {opacity:1;} 98%,100% {opacity:0;} }
+  @keyframes adraw { 0%,1% {transform:scaleY(0); opacity:1;} 6% {transform:scaleY(1);}
+                     92% {transform:scaleY(1); opacity:1;} 98%,100% {opacity:0;} }
+  /* 비주얼 내부 공용 윈도우 (마스터 루프 %) */
+  .hit    { animation:vhit var(--loop) ease-in-out infinite both; }
+  .hit2   { animation:vhit var(--loop) ease-in-out infinite both; animation-delay:.35s; }
+  .hit3   { animation:vhit var(--loop) ease-in-out infinite both; animation-delay:.7s; }
+  @keyframes vhit { 0%,34% {opacity:0;} 40% {opacity:1;} 92% {opacity:1;} 98%,100% {opacity:0;} }
+  .edgedraw { stroke-dasharray:1; stroke-dashoffset:1;
+              animation:vedge var(--loop) cubic-bezier(.22,1,.36,1) infinite both; }
+  @keyframes vedge { 0%,32% {stroke-dashoffset:1; opacity:0;} 36% {opacity:1;}
+                     46% {stroke-dashoffset:0;} 92% {stroke-dashoffset:0; opacity:1;} 98%,100% {opacity:0;} }
+  @media (prefers-reduced-motion: reduce) { .in,.draw,.hit,.hit2,.hit3,.edgedraw { animation:none; }
+    .edgedraw { stroke-dashoffset:0; } }
+
+</style></head>
+<body><div class="canvas">
+  <div class="tag">INTERNAL DATA · RAG</div>
+  <h1>사내 데이터 기반 챗봇</h1>
+  <div class="flow">
+        <div class="pillrow"><span class="pill in" style="--d:0.25s">문서 · PDF</span><span class="pill in" style="--d:0.70s">사내 위키</span><span class="pill in" style="--d:1.15s">업무 DB</span></div>
+    <i class="wire draw" style="--d:1.60s"></i>
+    <div class="viz in" style="--d:2.05s"><span class="vlabel">지식 그래프 · 근접 노드 검색</span><svg viewBox="0 0 300 126" fill="none"><g stroke="var(--faint)" stroke-width="1"><line x1="28" y1="62" x2="56" y2="24"/>
+<line x1="28" y1="62" x2="66" y2="98"/>
+<line x1="56" y1="24" x2="108" y2="52"/>
+<line x1="66" y1="98" x2="108" y2="52"/>
+<line x1="108" y1="52" x2="148" y2="20"/>
+<line x1="108" y1="52" x2="146" y2="88"/>
+<line x1="148" y1="20" x2="188" y2="56"/>
+<line x1="146" y1="88" x2="188" y2="56"/>
+<line x1="188" y1="56" x2="228" y2="26"/>
+<line x1="188" y1="56" x2="232" y2="96"/>
+<line x1="228" y1="26" x2="272" y2="62"/>
+<line x1="232" y1="96" x2="272" y2="62"/>
+<line x1="100" y1="108" x2="146" y2="88"/>
+<line x1="206" y1="110" x2="232" y2="96"/>
+<line x1="66" y1="98" x2="100" y2="108"/>
+<line x1="228" y1="26" x2="206" y2="110"/></g><line pathLength="1" class="edgedraw" x1="108" y1="52" x2="188" y2="56" stroke="var(--accent)" stroke-width="2"/>
+<line pathLength="1" class="edgedraw" x1="188" y1="56" x2="272" y2="62" stroke="var(--accent)" stroke-width="2"/><circle cx="28" cy="62" r="4" fill="var(--bg)" stroke="var(--soft)" stroke-width="1.25"/>
+<circle cx="56" cy="24" r="4" fill="var(--bg)" stroke="var(--soft)" stroke-width="1.25"/>
+<circle cx="66" cy="98" r="4" fill="var(--bg)" stroke="var(--soft)" stroke-width="1.25"/>
+<circle cx="108" cy="52" r="4" fill="var(--bg)" stroke="var(--soft)" stroke-width="1.25"/>
+<circle cx="148" cy="20" r="4" fill="var(--bg)" stroke="var(--soft)" stroke-width="1.25"/>
+<circle cx="146" cy="88" r="4" fill="var(--bg)" stroke="var(--soft)" stroke-width="1.25"/>
+<circle cx="188" cy="56" r="4" fill="var(--bg)" stroke="var(--soft)" stroke-width="1.25"/>
+<circle cx="228" cy="26" r="4" fill="var(--bg)" stroke="var(--soft)" stroke-width="1.25"/>
+<circle cx="232" cy="96" r="4" fill="var(--bg)" stroke="var(--soft)" stroke-width="1.25"/>
+<circle cx="272" cy="62" r="4" fill="var(--bg)" stroke="var(--soft)" stroke-width="1.25"/>
+<circle cx="100" cy="108" r="4" fill="var(--bg)" stroke="var(--soft)" stroke-width="1.25"/>
+<circle cx="206" cy="110" r="4" fill="var(--bg)" stroke="var(--soft)" stroke-width="1.25"/><circle class="hit" cx="108" cy="52" r="5.5" fill="var(--accent)"/>
+<circle class="hit2" cx="188" cy="56" r="5.5" fill="var(--accent)"/>
+<circle class="hit3" cx="272" cy="62" r="5.5" fill="var(--accent)"/></svg></div>
+    <i class="wire draw" style="--d:2.50s"></i>
+    <span class="pill in" style="--d:2.95s">“연차 이월 규정 알려줘”</span>
+    <i class="wire draw" style="--d:3.40s"></i>
+    <div class="card in" style="--d:3.85s"><b>근거 문서와 함께 답변</b><span>출처 2건 표시</span></div>
+  </div>
+</div></body></html>

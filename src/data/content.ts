@@ -259,12 +259,12 @@ export const architecture = {
   // 문장 단위 수제 줄바꿈 (가독성 원칙)
   intro: ['요구는 팀마다 다릅니다.', '유쳐가 실제로 설계 · 구축하는 대표 아키텍처 — 사내 환경과 보안에 맞춰 조정됩니다.'],
   items: [
-    { id: 'rag', label: '사내 데이터 챗봇', file: '/diagrams/ax-01-rag-chatbot-dark.html' },
-    { id: 'doc', label: '문서 업무 자동화', file: '/diagrams/ax-02-doc-automation-dark.html' },
-    { id: 'cs', label: 'CS 상담 자동화', file: '/diagrams/ax-03-cs-automation-dark.html' },
-    { id: 'search', label: '지식 통합 검색', file: '/diagrams/ax-07-knowledge-search-dark.html' },
-    { id: 'sales', label: '영업 미팅 · 리드', file: '/diagrams/ax-08-sales-crm-dark.html' },
-    { id: 'forecast', label: '수요 예측', file: '/diagrams/ax-10-demand-forecast-dark.html' },
+    { id: 'rag', label: '사내 데이터 챗봇', file: '/diagrams/ax-01-rag-chatbot-dark.html', fileMobile: '/diagrams/ax-01-rag-chatbot-mobile.html' },
+    { id: 'doc', label: '문서 업무 자동화', file: '/diagrams/ax-02-doc-automation-dark.html', fileMobile: '/diagrams/ax-02-doc-automation-mobile.html' },
+    { id: 'cs', label: 'CS 상담 자동화', file: '/diagrams/ax-03-cs-automation-dark.html', fileMobile: '/diagrams/ax-03-cs-automation-mobile.html' },
+    { id: 'search', label: '지식 통합 검색', file: '/diagrams/ax-07-knowledge-search-dark.html', fileMobile: '/diagrams/ax-07-knowledge-search-mobile.html' },
+    { id: 'sales', label: '영업 미팅 · 리드', file: '/diagrams/ax-08-sales-crm-dark.html', fileMobile: '/diagrams/ax-08-sales-crm-mobile.html' },
+    { id: 'forecast', label: '수요 예측', file: '/diagrams/ax-10-demand-forecast-dark.html', fileMobile: '/diagrams/ax-10-demand-forecast-mobile.html' },
   ],
 }
 
