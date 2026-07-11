@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /terms.html
-Disallow: /privacy.html
 
-Sitemap: https://uture.kr/sitemap.xml
+Sitemap: https://www.uture.kr/sitemap.xml
