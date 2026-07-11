@@ -2,6 +2,8 @@ import { testimonial } from '../data/content'
 import { Pill } from '../ui/primitives'
 import { WordReveal } from '../ui/WordReveal'
 
+const QUOTE_ACCENT_WORDS = ['이해한']
+
 export function Testimonial() {
   return (
     <section className="section testimonial">
@@ -9,7 +11,11 @@ export function Testimonial() {
         <div className="testimonial-badge reveal">
           <Pill>{testimonial.badgeQuote}</Pill>
         </div>
-        <WordReveal className="testimonial-quote" text={`“${testimonial.quote}”`} />
+        <WordReveal
+          className="testimonial-quote"
+          text={`“${testimonial.quote}”`}
+          accentWords={QUOTE_ACCENT_WORDS}
+        />
         <div className="testimonial-author reveal">
           <img
             src={testimonial.quoteAvatar}

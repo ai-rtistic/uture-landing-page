@@ -18,6 +18,8 @@ const ACCENT_AT = (i: number) => i % 5 === 2
 type Props = {
   text: string
   className?: string
+  /** words to accent explicitly; falls back to the sparse decorative pattern */
+  accentWords?: string[]
   /** scroll distance over which the reveal plays, in viewport heights */
   scrub?: boolean
 }
@@ -26,7 +28,7 @@ type Props = {
  * twelvelabs signature: a quote whose words fill in from grey → palette colour
  * as the section scrolls through the viewport.
  */
-export function WordReveal({ text, className }: Props) {
+export function WordReveal({ text, className, accentWords }: Props) {
   const ref = useRef<HTMLParagraphElement>(null)
 
   useEffect(() => {
@@ -34,8 +36,17 @@ export function WordReveal({ text, className }: Props) {
     if (!el) return
     const words = Array.from(el.querySelectorAll<HTMLElement>('[data-word]'))
 
+    const shouldAccent = (word: HTMLElement, index: number) =>
+      accentWords?.length
+        ? accentWords.includes(word.textContent ?? '')
+        : ACCENT_AT(index)
+
     if (prefersReduced) {
-      words.forEach((w) => (w.style.color = 'var(--text)'))
+      words.forEach((word, index) => {
+        word.style.color = shouldAccent(word, index)
+          ? PALETTE[index % PALETTE.length]
+          : 'var(--text)'
+      })
       return
     }
 
@@ -54,7 +65,7 @@ export function WordReveal({ text, className }: Props) {
       })
       // a few words pop into a soft palette colour for the multicolour accent
       words.forEach((w, i) => {
-        if (ACCENT_AT(i)) {
+        if (shouldAccent(w, i)) {
           gsap.fromTo(
             w,
             { color: BASE },
@@ -75,7 +86,7 @@ export function WordReveal({ text, className }: Props) {
     }, el)
 
     return () => ctx.revert()
-  }, [text])
+  }, [accentWords, text])
 
   const tokens = text.split(/(\s+)/)
   return (
