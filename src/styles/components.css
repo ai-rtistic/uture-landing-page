@@ -7,14 +7,10 @@
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 50;
-  transition: background 0.4s var(--ease), backdrop-filter 0.4s var(--ease),
-    border-color 0.4s var(--ease);
-  border-bottom: 1px solid transparent;
+  pointer-events: none;
 }
 .nav.is-scrolled {
-  background: rgba(244, 243, 243, 0.72);
-  backdrop-filter: saturate(150%) blur(14px);
-  border-bottom-color: var(--border);
+  background: transparent;
 }
 .nav-inner {
   display: flex;
@@ -22,6 +18,32 @@
   justify-content: space-between;
   height: 72px;
   gap: 24px;
+  pointer-events: auto;
+  border: 1px solid transparent;
+  transition:
+    width 0.42s var(--ease),
+    height 0.42s var(--ease),
+    margin-top 0.42s var(--ease),
+    padding 0.42s var(--ease),
+    background 0.35s var(--ease),
+    border-color 0.35s var(--ease),
+    border-radius 0.42s var(--ease),
+    box-shadow 0.35s var(--ease),
+    backdrop-filter 0.35s var(--ease);
+}
+.nav.is-scrolled .nav-inner {
+  width: calc(100% - 24px);
+  max-width: calc(var(--container) - 24px);
+  height: 60px;
+  margin-top: 10px;
+  padding-inline: clamp(14px, 2.5vw, 28px);
+  background: rgba(248, 247, 246, 0.86);
+  border-color: rgba(255, 255, 255, 0.72);
+  border-radius: 18px;
+  box-shadow:
+    0 1px 0 rgba(29, 28, 27, 0.08),
+    0 12px 32px -18px rgba(29, 28, 27, 0.28);
+  backdrop-filter: saturate(160%) blur(18px);
 }
 .nav-brand {
   display: flex;
@@ -32,12 +54,16 @@
   height: 22px;
   width: auto;
   display: block;
+  transition: height 0.42s var(--ease);
 }
 .nav-logotype {
   height: 19px;
   width: auto;
   display: block;
+  transition: height 0.42s var(--ease);
 }
+.nav.is-scrolled .nav-symbol { height: 20px; }
+.nav.is-scrolled .nav-logotype { height: 17px; }
 .nav-links {
   display: flex;
   gap: 30px;
@@ -90,8 +116,9 @@
 
 .nav-scrim {
   position: fixed;
-  inset: 72px 0 0;
+  inset: 0;
   z-index: -1;
+  pointer-events: none;
   border: none;
   background: rgba(20, 19, 18, 0.28);
   backdrop-filter: blur(2px);
@@ -99,18 +126,22 @@
   visibility: hidden;
   transition: opacity 0.3s var(--ease), visibility 0.3s;
 }
-.nav-scrim.is-open { opacity: 1; visibility: visible; }
+.nav-scrim.is-open { opacity: 1; visibility: visible; pointer-events: auto; }
 
 .nav-sheet {
   position: absolute;
-  inset: 100% 0 auto 0;
+  top: 78px;
+  left: 12px;
+  right: 12px;
   background: rgba(245, 244, 243, 0.985);
   backdrop-filter: saturate(150%) blur(18px);
-  border-bottom: 1px solid var(--border);
+  border: 1px solid rgba(255, 255, 255, 0.74);
+  border-radius: 18px;
   box-shadow: 0 24px 40px -28px rgba(20, 19, 18, 0.45);
-  padding: 10px var(--pad-x) 22px;
+  padding: 10px 16px 18px;
   display: grid;
   gap: 6px;
+  pointer-events: auto;
   transform: translateY(-8px);
   opacity: 0;
   visibility: hidden;
@@ -1848,10 +1879,26 @@ button.cta-form-submit {
   animation: capsule-float 16s ease-in-out infinite alternate;
 }
 .capsule-0 { top: 8%; left: -4%; transform: rotate(-18deg); filter: blur(14px); }
-.capsule-1 { background: linear-gradient(115deg, #ffc59e 0%, var(--c-peach) 40%, var(--c-orange) 72%, #ffb27e 100%); top: 22%; right: -3%; transform: rotate(22deg); animation-delay: -3s; }
+.capsule-1 {
+  background: linear-gradient(115deg, #ffc59e 0%, var(--c-peach) 40%, var(--c-orange) 72%, #ffb27e 100%);
+  top: 34%;
+  right: -8%;
+  transform: rotate(22deg);
+  animation-delay: -3s;
+  opacity: 0.38;
+  filter: blur(14px);
+}
 .capsule-2 { bottom: 14%; left: 4%; transform: rotate(12deg); animation-delay: -6s; }
 .capsule-3 { bottom: 6%; right: 8%; transform: rotate(-12deg); filter: blur(12px); animation-delay: -2s; }
 .capsule-4 { background: linear-gradient(115deg, #e6d8fc, #b79cf7 55%, #d9c2fc); top: 46%; left: 42%; transform: rotate(28deg); animation-delay: -8s; opacity: 0.5; filter: blur(16px); }
+@media (max-width: 560px) {
+  .capsule-1 {
+    top: 35%;
+    right: -30%;
+    opacity: 0.24;
+    filter: blur(18px);
+  }
+}
 @keyframes capsule-float {
   from { transform: translateY(0) rotate(var(--r, 0deg)); }
   to { transform: translateY(-26px) rotate(8deg); }

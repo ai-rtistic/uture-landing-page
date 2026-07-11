@@ -22,7 +22,7 @@ export function FinalCTA() {
     const v = (k: string) => String(f.get(k) ?? '').trim()
     const company = v('company')
     const name = v('name')
-    const contact = v('contact')
+    const email = v('contact')
     const note = v('note')
 
     if (gfReady) {
@@ -30,7 +30,7 @@ export function FinalCTA() {
       const body = new FormData()
       body.append(gf.fields.company, company)
       body.append(gf.fields.name, name)
-      body.append(gf.fields.contact, contact)
+      body.append(gf.fields.contact, email)
       body.append(gf.fields.note, note || '(작성 안 함)')
       fetch(gf.action, { method: 'POST', mode: 'no-cors', body }).catch(() => {})
       form.reset()
@@ -42,7 +42,7 @@ export function FinalCTA() {
     const mailBody = [
       `회사명: ${company}`,
       `담당자: ${name}`,
-      `연락처: ${contact}`,
+      `이메일: ${email}`,
       '',
       '고민 내용:',
       note || '(작성 안 함)',
@@ -79,13 +79,14 @@ export function FinalCTA() {
               <input name="name" type="text" required placeholder="이름 · 직함" autoComplete="name" />
             </label>
             <label className="cta-field cta-field-wide">
-              <span>연락처</span>
+              <span>이메일</span>
               <input
                 name="contact"
-                type="text"
+                type="email"
                 required
-                placeholder="이메일 또는 전화번호"
+                placeholder="name@company.com"
                 autoComplete="email"
+                inputMode="email"
               />
             </label>
             <label className="cta-field cta-field-wide">
@@ -103,7 +104,7 @@ export function FinalCTA() {
           </button>
           {sent === 'google' && (
             <p className="cta-form-done" role="status">
-              접수되었습니다 — 3영업일 안에 남겨주신 연락처로 회신드립니다.
+              접수되었습니다 — 3영업일 안에 남겨주신 이메일로 회신드립니다.
             </p>
           )}
           {sent === 'mail' && (
