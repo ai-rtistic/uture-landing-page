@@ -16,6 +16,16 @@ const AGENTS = [
 ]
 
 export function HeroAutomation() {
+  return (
+    <div className="hero-seq" aria-hidden>
+      <AutomationCard />
+      <span className="tag ha-cap mono">요청 → 에이전트 팀 → 메일 · 자산으로</span>
+    </div>
+  )
+}
+
+/** 카드 본체 — HeroShowcase(캐러셀 슬라이드)와 단독(HeroAutomation) 양쪽에서 재사용 */
+export function AutomationCard({ onLoop }: { onLoop?: () => void } = {}) {
   const build = useCallback((tl: gsap.core.Timeline, root: HTMLDivElement) => {
     tl.set('.js-wire1, .js-wire2', { scaleY: 0 })
     tl.set('.js-agent', { autoAlpha: 0, y: 8 })
@@ -54,17 +64,16 @@ export function HeroAutomation() {
     tl.to('.js-badge', { autoAlpha: 1, scale: 1, duration: 0.35, ease: 'back.out(2.2)' }, '-=0.9')
     tl.to({}, { duration: 2.6 }) // 홀드
   }, [])
-  const ref = useLoopTimeline(build)
+  const ref = useLoopTimeline(build, onLoop)
 
   return (
-    <div className="hero-seq" aria-hidden>
-      <div className="ha-card" ref={ref}>
-        <div className="dm-chrome">
-          <span className="dm-dot" />
-          <span className="dm-dot" />
-          <span className="dm-dot" />
-          <span className="dm-chrome-label mono">uture agent</span>
-        </div>
+    <div className="ha-card" ref={ref}>
+      <div className="dm-chrome">
+        <span className="dm-dot" />
+        <span className="dm-dot" />
+        <span className="dm-dot" />
+        <span className="dm-chrome-label mono">uture agent</span>
+      </div>
         <div className="ha-flow">
           {/* 1. 요청 */}
           <div className="dm-bubble">
@@ -100,9 +109,7 @@ export function HeroAutomation() {
             <span className="ha-row-team">재무팀</span>
             <span className="tag ha-live js-badge">운영중</span>
           </div>
-        </div>
       </div>
-      <span className="tag ha-cap mono">요청 → 에이전트 팀 → 메일 · 자산으로</span>
     </div>
   )
 }

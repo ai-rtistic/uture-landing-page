@@ -11,14 +11,23 @@ import { gsap, prefersReduced } from '../../lib/gsap'
  */
 export function useLoopTimeline(
   build: (tl: gsap.core.Timeline, root: HTMLDivElement) => void,
+  onLoop?: () => void,
 ) {
   const rootRef = useRef<HTMLDivElement>(null)
+  const onLoopRef = useRef(onLoop)
+  onLoopRef.current = onLoop
   useEffect(() => {
     const root = rootRef.current
     if (!root || prefersReduced) return
     let tl: gsap.core.Timeline | null = null
     const ctx = gsap.context(() => {
-      tl = gsap.timeline({ repeat: -1, repeatDelay: 1.4, paused: true })
+      tl = gsap.timeline({
+        repeat: -1,
+        repeatDelay: 1.4,
+        paused: true,
+        // 한 사이클 완주 시점 알림 — 캐러셀이 "시퀀스가 끝나면" 다음 카드로 넘어갈 수 있게
+        onRepeat: () => onLoopRef.current?.(),
+      })
       build(tl, root)
     }, root)
     const io = new IntersectionObserver(

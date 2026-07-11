@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { nav, brand } from '../data/content'
+import { nav } from '../data/content'
 import { Arrow } from '../ui/primitives'
 
 export function Nav() {
@@ -28,8 +28,10 @@ export function Nav() {
   return (
     <header className={`nav ${scrolled || open ? 'is-scrolled' : ''}`}>
       <div className="nav-inner container">
+        {/* 정식 브랜드 로고 — 스파클 심볼 + 라운드 워드마크 (brand-asset SVG, 레티나 무손실) */}
         <a href="#top" className="nav-brand" aria-label="유쳐 홈" onClick={() => setOpen(false)}>
-          <img src={brand.logo} alt="유쳐" />
+          <img className="nav-symbol" src="/assets/brand/symbol.svg" alt="" aria-hidden />
+          <img className="nav-logotype" src="/assets/brand/wordmark.svg" alt="유쳐" />
         </a>
 
         <nav className="nav-links">

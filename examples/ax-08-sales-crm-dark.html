@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>영업 AX — 미팅 자동 기록 · 리드 스코어링 — uture motion diagram</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     uture-motion-diagrams / dark / PURPLE accent (#E9D5FC)
+     Scene: 영업 AX — 미팅 자동 기록 · 리드 스코어링
+       1) 영업 미팅(음성)  → 파형 캡처
+       2) AI 요약 · 핵심 니즈 추출
+       3) CRM 자동 기록
+       4) 리드 스코어 산출  (THE single filled node · mono 87)
+       5) 후속 액션 제안
+     Horizontal 5-stage pipeline. Master loop 9s; every animation
+     shares the 9s duration w/ percentage windows → seamless loop.
+     ============================================================ */
+  :root {
+    --bg: #262221;
+    --accent: #E9D5FC;            /* lavender-purple, brand main */
+    --ink-on-accent: #262221;
+    --stroke-w: 1.25px;
+    --loop: 9s;
+  }
+  * { margin: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--accent);
+    display: grid; place-items: center;
+  }
+  .canvas { position: relative; width: 1600px; height: 900px; }
+
+  /* ---------- shape primitives ---------- */
+  .pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: var(--stroke-w) solid var(--accent); border-radius: 999px;
+    padding: 9px 18px; font-size: 14px; font-weight: 500; white-space: nowrap;
+  }
+  .chip {
+    width: 30px; height: 30px; flex: none;
+    border: var(--stroke-w) solid var(--accent); border-radius: 10px;
+    display: grid; place-items: center;
+  }
+  .chip svg { width: 16px; height: 16px; stroke: var(--accent); fill: none;
+              stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .chip.onink svg { stroke: var(--ink-on-accent); }
+  .card {
+    border: var(--stroke-w) solid var(--accent); border-radius: 22px;
+    padding: 18px 20px; display: flex; flex-direction: column; gap: 12px;
+    background: var(--bg);
+  }
+  .card.filled { background: var(--accent); color: var(--ink-on-accent); }
+  .card.filled .chip { border-color: var(--ink-on-accent); }
+  .card .head { display: flex; align-items: center; gap: 12px; font-size: 15px; font-weight: 600; }
+  .card .line { height: 2px; border-radius: 2px; background: var(--accent); opacity: .5; }
+  .mono { font-family: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace; }
+  .tag  { text-transform: uppercase; letter-spacing: .04em; font-size: 11px; font-weight: 500; }
+
+  /* mini outlined data pill (small/inline data slots) */
+  .mini {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid var(--accent); border-radius: 999px;
+    padding: 3px 10px; font-size: 11px;
+  }
+  .card.filled .mini { border-color: var(--ink-on-accent); color: var(--ink-on-accent); }
+
+  /* ---------- layout (absolute, centered scene) ----------
+     Never center animated elements with translateX(-50%): enter
+     keyframes animate transform and would override → drift. */
+  .abs { position: absolute; }
+
+  /* title block, top-center */
+  #title { top: 84px; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+
+  /* 5 stages sit on a shared vertical axis, cards top ~ 356px, centers ~ y=412.
+     x column centers: 150 / 460 / 770 / 1080 / 1390 (edge-to-edge spread). */
+
+  /* 1. 영업 미팅 (음성) — waveform card */
+  #s1 { top: 356px; left: 64px; width: 210px; }
+  #wave { display: flex; align-items: flex-end; gap: 4px; height: 34px; }
+  #wave span { flex: 1; background: var(--accent); border-radius: 2px; opacity: .8; transform-origin: bottom; }
+
+  /* 2. AI 요약 · 핵심 니즈 추출 */
+  #s2 { top: 344px; left: 356px; width: 230px; }
+  #s2 .needs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  /* 3. CRM 자동 기록 */
+  #s3 { top: 344px; left: 664px; width: 230px; }
+  #s3 .rows { display: flex; flex-direction: column; gap: 8px; }
+  #s3 .row { display: flex; align-items: center; gap: 8px; font-size: 11px; }
+  #s3 .row .k { width: 54px; opacity: .7; }
+  #s3 .row .v { flex: 1; height: 2px; border-radius: 2px; background: var(--accent); opacity: .5; }
+
+  /* 4. 리드 스코어 — THE single filled node, bare display mono score */
+  #s4 { top: 336px; left: 984px; width: 216px; align-items: center; text-align: center; }
+  #s4 .score { font-size: 58px; font-weight: 600; line-height: 1; letter-spacing: -.02em; }
+  #s4 .grade { font-size: 12px; font-weight: 600; letter-spacing: .06em; }
+  #s4 .bar { width: 150px; height: 6px; border-radius: 999px;
+             background: color-mix(in srgb, var(--ink-on-accent) 20%, transparent); overflow: hidden; }
+  #s4 .bar .fill { display: block; height: 100%; background: var(--ink-on-accent); border-radius: 999px; }
+
+  /* 5. 후속 액션 제안 */
+  #s5 { top: 344px; left: 1300px; width: 234px; }
+  #s5 .acts { display: flex; flex-direction: column; gap: 9px; }
+  #s5 .act { display: flex; align-items: center; gap: 9px; font-size: 12.5px; }
+  #s5 .dot { width: 16px; height: 16px; flex: none; border: 1.25px solid var(--accent); border-radius: 6px;
+             display: grid; place-items: center; }
+  #s5 .dot svg { width: 10px; height: 10px; stroke: var(--accent); fill: none; stroke-width: 2;
+                 stroke-linecap: round; stroke-linejoin: round; }
+
+  /* connectors */
+  #wires { top: 0; left: 0; width: 1600px; height: 900px; pointer-events: none; }
+
+  /* ---------- master-loop animation windows ----------
+     narrative: title → s1(mic) → s2 → s3 → s4 score → s5, connectors
+     drawing between each. shared exit 92%→97%. */
+  @keyframes enter    { 0%,3%  {opacity:0; transform:translateY(10px) scale(.96);} 10% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes enter-1  { 0%,8%  {opacity:0; transform:translateY(10px) scale(.96);} 15% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes enter-2  { 0%,22% {opacity:0; transform:translateY(10px) scale(.96);} 29% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes enter-3  { 0%,36% {opacity:0; transform:translateY(10px) scale(.96);} 43% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes enter-4  { 0%,50% {opacity:0; transform:translateY(10px) scale(.96);} 57% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes enter-5  { 0%,66% {opacity:0; transform:translateY(10px) scale(.96);} 73% {opacity:1; transform:none;} 92% {opacity:1;} 97%,100% {opacity:0;} }
+
+  /* connector draw-in windows, one per gap */
+  @keyframes draw-a { 0%,16% {stroke-dashoffset:1; opacity:1;} 24% {stroke-dashoffset:0;} 92% {stroke-dashoffset:0; opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes draw-b { 0%,30% {stroke-dashoffset:1; opacity:1;} 38% {stroke-dashoffset:0;} 92% {stroke-dashoffset:0; opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes draw-c { 0%,44% {stroke-dashoffset:1; opacity:1;} 52% {stroke-dashoffset:0;} 92% {stroke-dashoffset:0; opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes draw-d { 0%,60% {stroke-dashoffset:1; opacity:1;} 68% {stroke-dashoffset:0;} 92% {stroke-dashoffset:0; opacity:1;} 97%,100% {opacity:0;} }
+
+  /* score bar fill (linear) after s4 appears */
+  @keyframes fillbar { 0%,58% {width:0;} 72% {width:var(--w);} 92% {width:var(--w);} 97%,100% {width:var(--w);} }
+
+  /* waveform idle pulse — subtle, after s1 appears */
+  @keyframes wpulse { 0%,15% {transform:scaleY(.35);} 30% {transform:scaleY(1);} 45% {transform:scaleY(.55);} 60% {transform:scaleY(.9);} 75% {transform:scaleY(.4);} 92% {transform:scaleY(.7);} }
+
+  .anim { animation-duration: var(--loop); animation-iteration-count: infinite;
+          animation-timing-function: cubic-bezier(.22,1,.36,1); animation-fill-mode: both; }
+  #title { animation-name: enter; }
+  #s1 { animation-name: enter-1; }
+  #s2 { animation-name: enter-2; }
+  #s3 { animation-name: enter-3; }
+  #s4 { animation-name: enter-4; }
+  #s5 { animation-name: enter-5; }
+
+  #wires path.a { stroke-dasharray: 1; animation: draw-a var(--loop) cubic-bezier(.22,1,.36,1) infinite both; }
+  #wires path.b { stroke-dasharray: 1; animation: draw-b var(--loop) cubic-bezier(.22,1,.36,1) infinite both; }
+  #wires path.c { stroke-dasharray: 1; animation: draw-c var(--loop) cubic-bezier(.22,1,.36,1) infinite both; }
+  #wires path.d { stroke-dasharray: 1; animation: draw-d var(--loop) cubic-bezier(.22,1,.36,1) infinite both; }
+
+  #s4 .bar .fill { animation: fillbar var(--loop) linear infinite both; }
+  #wave span { animation: wpulse var(--loop) ease-in-out infinite both; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .anim, #wires path, #s4 .bar .fill, #wave span { animation: none !important; opacity: 1; stroke-dashoffset: 0; transform: none; }
+    #s4 .bar .fill { width: var(--w); }
+    #wave span { transform: scaleY(.8); }
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <!-- title -->
+  <div id="title" class="abs anim">
+    <span class="tag" style="opacity:.7">Sales · AX</span>
+    <span style="font-size:23px; font-weight:600; letter-spacing:-.01em;">미팅 자동 기록 · 리드 스코어링</span>
+  </div>
+
+  <!-- 1. 영업 미팅 (음성) -->
+  <div id="s1" class="abs card anim">
+    <div class="head">
+      <span class="chip"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/></svg></span>
+      영업 미팅
+    </div>
+    <div id="wave">
+      <span style="animation-delay:.00s"></span><span style="animation-delay:-.6s"></span><span style="animation-delay:-1.2s"></span>
+      <span style="animation-delay:-1.8s"></span><span style="animation-delay:-2.4s"></span><span style="animation-delay:-3.0s"></span>
+      <span style="animation-delay:-3.6s"></span><span style="animation-delay:-4.2s"></span><span style="animation-delay:-4.8s"></span>
+      <span style="animation-delay:-5.4s"></span><span style="animation-delay:-6.0s"></span><span style="animation-delay:-6.6s"></span>
+    </div>
+    <span class="mini mono" style="align-self:flex-start">음성 녹음</span>
+  </div>
+
+  <!-- 2. AI 요약 · 핵심 니즈 추출 -->
+  <div id="s2" class="abs card anim">
+    <div class="head">
+      <span class="chip"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/></svg></span>
+      AI 요약 · 니즈 추출
+    </div>
+    <div class="needs">
+      <span class="mini mono">예산 규모</span>
+      <span class="mini mono">도입 시점</span>
+      <span class="mini mono">의사결정자</span>
+      <span class="mini mono">경쟁사</span>
+    </div>
+  </div>
+
+  <!-- 3. CRM 자동 기록 -->
+  <div id="s3" class="abs card anim">
+    <div class="head">
+      <span class="chip"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg></span>
+      CRM 자동 기록
+    </div>
+    <div class="rows">
+      <div class="row"><span class="k mono">고객사</span><span class="v" style="width:78%"></span></div>
+      <div class="row"><span class="k mono">담당자</span><span class="v" style="width:62%"></span></div>
+      <div class="row"><span class="k mono">미팅 요약</span><span class="v" style="width:88%"></span></div>
+      <div class="row"><span class="k mono">다음 단계</span><span class="v" style="width:70%"></span></div>
+    </div>
+  </div>
+
+  <!-- 4. 리드 스코어 — THE single filled emphasis, bare display mono -->
+  <div id="s4" class="abs card filled anim">
+    <span class="tag" style="opacity:.85">Lead Score</span>
+    <span class="score mono">87</span>
+    <span class="bar"><span class="fill" style="--w:87%"></span></span>
+    <span class="grade mono">HOT · 상위 10%</span>
+  </div>
+
+  <!-- 5. 후속 액션 제안 -->
+  <div id="s5" class="abs card anim">
+    <div class="head">
+      <span class="chip"><svg viewBox="0 0 24 24"><path d="M5 12h12M13 6l6 6-6 6"/></svg></span>
+      후속 액션 제안
+    </div>
+    <div class="acts">
+      <div class="act"><span class="dot"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></span>제안서 발송 예약</div>
+      <div class="act"><span class="dot"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></span>결정권자 미팅 요청</div>
+      <div class="act"><span class="dot"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></span>3일 뒤 팔로업 알림</div>
+    </div>
+  </div>
+
+  <!-- connectors: straight hairline links on the shared y=412 axis,
+       each ending exactly on adjacent card edges. -->
+  <svg id="wires" class="abs" viewBox="0 0 1600 900" fill="none">
+    <g stroke="var(--accent)" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+      <path class="a" pathLength="1" d="M274 412 H356"/>
+      <path class="b" pathLength="1" d="M586 412 H664"/>
+      <path class="c" pathLength="1" d="M894 412 H984"/>
+      <path class="d" pathLength="1" d="M1200 412 H1300"/>
+    </g>
+  </svg>
+
+</div>
+</body>
+</html>

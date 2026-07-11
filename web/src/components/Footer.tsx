@@ -1,4 +1,4 @@
-import { footer, brand } from '../data/content'
+import { footer } from '../data/content'
 import { Container } from '../ui/primitives'
 
 export function Footer() {
@@ -37,10 +37,6 @@ export function Footer() {
         </div>
       </Container>
 
-      <div className="footer-wordmark" aria-hidden>
-        <div className="footer-wordmark-bg" />
-        <span className="geist">{brand.nameEn}</span>
-      </div>
       <div className="footer-copy">
         <Container>
           {footer.copyright} · 유쳐 uture | AI·AX 에이전시

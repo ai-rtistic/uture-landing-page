@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>사내 지식 통합 검색 — uture motion diagram</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     uture-motion-diagrams / dark template — ORANGE accent
+     Scene: 흩어진 소스(문서·위키·메신저·이메일)
+            → 통합 임베딩 인덱스 → 자연어 질문 → 출처 표시 답변
+     Master loop: 9s (4-stage narrative + hold ≥1.2s).
+     ============================================================ */
+  :root {
+    --bg: #262221;
+    --accent: #FFD2A8;            /* peach-orange brand main */
+    --ink-on-accent: #262221;
+    --stroke-w: 1.25px;
+    --loop: 9s;
+  }
+  * { margin: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--accent);
+    display: grid; place-items: center;
+  }
+  .canvas { position: relative; width: 1600px; height: 900px; }
+
+  /* ---------- shape primitives ---------- */
+  .pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: var(--stroke-w) solid var(--accent); border-radius: 999px;
+    padding: 9px 18px; font-size: 14px; font-weight: 500; white-space: nowrap;
+    background: var(--bg);
+  }
+  .pill.filled { background: var(--accent); color: var(--ink-on-accent); border-color: var(--accent); }
+  .chip {
+    width: 30px; height: 30px; flex: none;
+    border: var(--stroke-w) solid var(--accent); border-radius: 10px;
+    display: grid; place-items: center;
+  }
+  .chip svg { width: 16px; height: 16px; stroke: var(--accent); fill: none;
+              stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .filled .chip { border-color: var(--ink-on-accent); }
+  .filled .chip svg { stroke: var(--ink-on-accent); }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; }
+  .tag  { text-transform: uppercase; letter-spacing: .04em; font-size: 11px; }
+
+  /* ---------- source nodes (left column) ---------- */
+  .abs { position: absolute; }
+  #sources { top: 0; left: 90px; width: 300px; height: 900px; }
+  #sources .pill { position: absolute; left: 0; }
+  #src-a { top: 300px; }
+  #src-b { top: 400px; }
+  #src-c { top: 500px; }
+  #src-d { top: 600px; }
+
+  /* ---------- unified embedding index (center card) ---------- */
+  #index {
+    top: 370px; left: 560px; width: 300px; height: 260px;
+    border: var(--stroke-w) solid var(--accent); border-radius: 26px;
+    padding: 20px; display: flex; flex-direction: column; gap: 14px;
+  }
+  #index .idx-head { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; }
+  #index .grid {
+    flex: 1; display: grid; grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(5, 1fr); gap: 8px;
+  }
+  #index .cell { border: 1px solid var(--accent); border-radius: 5px; opacity: .22; }
+  #index .cell.on { background: var(--accent); opacity: .9; border-color: var(--accent); }
+  #index .idx-cap { font-size: 11px; opacity: .7; text-align: center; letter-spacing: .02em; }
+
+  /* ---------- query pill (top right) ---------- */
+  #query { top: 260px; left: 1000px; width: 430px; display: flex; align-items: center; gap: 10px; }
+  #query .qpill {
+    flex: 1; border: var(--stroke-w) solid var(--accent); border-radius: 999px;
+    padding: 12px 20px; font-size: 15px; display: flex; align-items: center; gap: 12px;
+  }
+  #query .qpill svg { width: 17px; height: 17px; stroke: var(--accent); fill: none;
+                      stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  #query .cursor { width: 1.5px; height: 18px; background: var(--accent); margin-left: -4px;
+                   animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 0%,50% {opacity:1;} 51%,100% {opacity:0;} }
+
+  /* ---------- answer card (bottom right) — the ONE filled emphasis ---------- */
+  #answer {
+    top: 450px; left: 1000px; width: 430px;
+    background: var(--accent); color: var(--ink-on-accent);
+    border-radius: 26px; padding: 22px 24px; display: flex; flex-direction: column; gap: 12px;
+  }
+  #answer .a-head { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; }
+  #answer .a-head svg { width: 16px; height: 16px; stroke: var(--ink-on-accent); fill: none;
+                        stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  #answer .a-line { height: 8px; border-radius: 4px; background: var(--ink-on-accent); opacity: .28; }
+  #answer .sources-row { display: flex; gap: 8px; margin-top: 4px; flex-wrap: wrap; }
+  #answer .cite {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1.25px solid var(--ink-on-accent); border-radius: 999px;
+    padding: 4px 11px; font-size: 11px; font-weight: 500;
+  }
+  #answer .cite svg { width: 11px; height: 11px; stroke: var(--ink-on-accent); fill: none;
+                      stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .a-label { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; opacity: .55; }
+
+  /* ---------- wires ---------- */
+  #wires { top: 0; left: 0; width: 1600px; height: 900px; pointer-events: none; }
+
+  /* ---------- master-loop animation windows ----------
+     narrative order: sources → index → query → answer   */
+  @keyframes enter { 0% {opacity:0; transform:translateY(10px) scale(.97);}
+                     100% {opacity:1; transform:none;} }
+  .anim { animation-duration: var(--loop); animation-iteration-count: infinite;
+          animation-timing-function: cubic-bezier(.22,1,.36,1); animation-fill-mode: both; }
+
+  #src-a { animation-name: e-src-a; }
+  #src-b { animation-name: e-src-b; }
+  #src-c { animation-name: e-src-c; }
+  #src-d { animation-name: e-src-d; }
+  @keyframes e-src-a { 0%,2% {opacity:0; transform:translateY(10px);} 8% {opacity:1; transform:none;} 93% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes e-src-b { 0%,4% {opacity:0; transform:translateY(10px);} 10% {opacity:1; transform:none;} 93% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes e-src-c { 0%,6% {opacity:0; transform:translateY(10px);} 12% {opacity:1; transform:none;} 93% {opacity:1;} 97%,100% {opacity:0;} }
+  @keyframes e-src-d { 0%,8% {opacity:0; transform:translateY(10px);} 14% {opacity:1; transform:none;} 93% {opacity:1;} 97%,100% {opacity:0;} }
+
+  #index { animation-name: e-index; }
+  @keyframes e-index { 0%,20% {opacity:0; transform:translateY(10px) scale(.97);} 27% {opacity:1; transform:none;} 93% {opacity:1;} 97%,100% {opacity:0;} }
+  /* index cells light up in a staggered fill */
+  #index .cell.on { animation: cell-on var(--loop) linear infinite both; }
+  @keyframes cell-on { 0%,30% {opacity:.22; background:transparent;} 40% {opacity:.9; background:var(--accent);} 93% {opacity:.9;} 97%,100% {opacity:0;} }
+
+  #query { animation-name: e-query; }
+  @keyframes e-query { 0%,44% {opacity:0; transform:translateY(10px) scale(.97);} 51% {opacity:1; transform:none;} 93% {opacity:1;} 97%,100% {opacity:0;} }
+
+  #answer { animation-name: e-answer; }
+  @keyframes e-answer { 0%,60% {opacity:0; transform:translateY(10px) scale(.97);} 67% {opacity:1; transform:none;} 93% {opacity:1;} 97%,100% {opacity:0;} }
+
+  /* connector draw-in */
+  #wires path.w { stroke-dasharray: 1; }
+  #wires .converge { animation: draw-conv var(--loop) cubic-bezier(.22,1,.36,1) infinite both; }
+  @keyframes draw-conv { 0%,14% {stroke-dashoffset:1; opacity:1;} 26% {stroke-dashoffset:0;} 93% {stroke-dashoffset:0; opacity:1;} 97%,100% {opacity:0;} }
+  #wires .toquery { animation: draw-q var(--loop) cubic-bezier(.22,1,.36,1) infinite both; }
+  @keyframes draw-q { 0%,51% {stroke-dashoffset:1; opacity:1;} 60% {stroke-dashoffset:0;} 93% {stroke-dashoffset:0; opacity:1;} 97%,100% {opacity:0;} }
+  #wires .toans { animation: draw-a var(--loop) cubic-bezier(.22,1,.36,1) infinite both; }
+  @keyframes draw-a { 0%,60% {stroke-dashoffset:1; opacity:1;} 68% {stroke-dashoffset:0;} 93% {stroke-dashoffset:0; opacity:1;} 97%,100% {opacity:0;} }
+
+  /* stage labels */
+  .stage-label { position: absolute; font-size: 11px; text-transform: uppercase;
+                 letter-spacing: .06em; opacity: .5; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .anim, #wires path, #index .cell.on { animation: none !important; opacity: 1 !important; stroke-dashoffset: 0 !important; }
+    #index .cell.on { background: var(--accent); }
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <!-- stage labels -->
+  <div class="stage-label" style="top:260px; left:90px;">흩어진 소스</div>
+  <div class="stage-label" style="top:338px; left:560px;">통합 임베딩 인덱스</div>
+  <div class="stage-label" style="top:228px; left:1000px;">자연어 질문 한 줄</div>
+  <div class="stage-label" style="top:418px; left:1000px;">출처가 표시된 답변</div>
+
+  <!-- 1. scattered source nodes -->
+  <div id="sources" class="abs">
+    <span id="src-a" class="pill anim">
+      <span class="chip"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6V3z"/><path d="M14 3v4h4"/></svg></span>
+      문서
+    </span>
+    <span id="src-b" class="pill anim">
+      <span class="chip"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M4 9h16"/><path d="M9 9v10"/></svg></span>
+      사내 위키
+    </span>
+    <span id="src-c" class="pill anim">
+      <span class="chip"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4V5z"/></svg></span>
+      메신저 대화
+    </span>
+    <span id="src-d" class="pill anim">
+      <span class="chip"><svg viewBox="0 0 24 24"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg></span>
+      이메일
+    </span>
+  </div>
+
+  <!-- 2. unified embedding index -->
+  <div id="index" class="abs anim">
+    <div class="idx-head">
+      <span class="chip"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="1.6" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="7" cy="18" r="1.6" fill="currentColor" stroke="none"/></svg></span>
+      임베딩 인덱스
+    </div>
+    <div class="grid">
+      <div class="cell on"></div><div class="cell"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell on"></div>
+      <div class="cell"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell on"></div><div class="cell"></div>
+      <div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell on"></div><div class="cell"></div><div class="cell on"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell on"></div>
+    </div>
+    <div class="idx-cap mono">1 vector space · all sources</div>
+  </div>
+
+  <!-- 3. natural-language query -->
+  <div id="query" class="abs anim">
+    <span class="chip"><svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></span>
+    <div class="qpill">
+      <span>작년 4분기 리텐션 정책 어떻게 바뀌었어?</span>
+      <span class="cursor"></span>
+    </div>
+  </div>
+
+  <!-- 4. answer card (the single filled emphasis) -->
+  <div id="answer" class="abs anim">
+    <div class="a-head">
+      <svg viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/></svg>
+      답변
+    </div>
+    <div class="a-line" style="width:96%"></div>
+    <div class="a-line" style="width:88%"></div>
+    <div class="a-line" style="width:72%"></div>
+    <div class="a-label">출처</div>
+    <div class="sources-row">
+      <span class="cite"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6V3z"/><path d="M14 3v4h4"/></svg>정책_v3.pdf</span>
+      <span class="cite"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M4 9h16"/><path d="M9 9v10"/></svg>사내위키/리텐션</span>
+      <span class="cite"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4V5z"/></svg>#product 채널</span>
+    </div>
+  </div>
+
+  <!-- connectors -->
+  <svg id="wires" class="abs" viewBox="0 0 1600 900" fill="none">
+    <g stroke="var(--accent)" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+      <!-- 4 sources converge onto the index's left edge (x=560, y=500) -->
+      <path class="w converge" pathLength="1" d="M235 317 H400 Q430 317 445 350 Q470 405 520 470 Q540 495 560 500"/>
+      <path class="w converge" pathLength="1" d="M258 417 H420 Q470 417 510 455 Q535 478 560 500"/>
+      <path class="w converge" pathLength="1" d="M282 517 H520 Q545 517 560 510 L560 502"/>
+      <path class="w converge" pathLength="1" d="M240 617 H420 Q470 617 510 575 Q535 545 560 512"/>
+      <!-- index → query: up and right -->
+      <path class="w toquery" pathLength="1" d="M860 430 H930 Q960 430 960 400 V312 Q960 290 985 290 H1000"/>
+      <!-- query → answer (thinking / retrieval) -->
+      <path class="w toans" pathLength="1" d="M1215 318 V450"/>
+    </g>
+  </svg>
+
+</div>
+</body>
+</html>

@@ -94,6 +94,9 @@ body {
   line-height: 1.5;
   letter-spacing: -0.01em;
   overflow-x: hidden;
+  /* 한국어 가독성 — 단어 중간 개행 금지 ("돌아가/면" 방지), 긴 영문·URL은 안전 개행 */
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 /* Latin/number runs render in Geist for that twelvelabs feel */

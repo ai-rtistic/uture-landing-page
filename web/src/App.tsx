@@ -7,10 +7,11 @@ import { LogoMarquee } from './components/LogoMarquee'
 import { Testimonial } from './components/Testimonial'
 import { FeatureCards } from './components/FeatureCards'
 import { IndustryCards } from './components/IndustryCards'
-import { ServiceTabs } from './components/ServiceTabs'
+// import { ServiceTabs } from './components/ServiceTabs' // 히어로 캐러셀로 흡수 — 복구용 보존
 import { ArchitectureTabs } from './components/ArchitectureTabs'
 import { CaseQuote } from './components/CaseQuote'
-import { GlowCTA } from './components/GlowCTA'
+// import { GlowCTA } from './components/GlowCTA' // PblSection으로 대체 — 복구용 보존
+import { PblSection } from './components/PblSection'
 import { ProcessColumns } from './components/ProcessColumns'
 import { StatsStrip } from './components/StatsStrip'
 import { Philosophy } from './components/Philosophy'
@@ -30,11 +31,14 @@ export default function App() {
         <LogoMarquee />
         <Testimonial />
         <FeatureCards />
-        <IndustryCards />
-        <ServiceTabs />
+        {/* 섹션 순서 = 내비 순서 (솔루션 → 고객 사례), 2026-07-08 오너 지시 */}
+        {/* ServiceTabs('이렇게 일합니다') — 히어로 쇼케이스 캐러셀로 흡수되어 비활성 (2026-07-07 오너 지시).
+            복구하려면 아래 주석 해제. */}
+        {/* <ServiceTabs /> */}
         <ArchitectureTabs />
+        <IndustryCards />
         <CaseQuote />
-        <GlowCTA />
+        <PblSection />
         <ProcessColumns />
         <StatsStrip />
         <Philosophy />

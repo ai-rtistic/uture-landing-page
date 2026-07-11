@@ -21,7 +21,11 @@ export function Testimonial() {
             <div className="testimonial-role">{testimonial.quoteRole}</div>
           </div>
         </div>
-        <p className="testimonial-philosophy reveal">{testimonial.philosophy}</p>
+        <div className="testimonial-philosophy reveal">
+          {testimonial.philosophy.map((para, i) => (
+            <p key={i}>{para}</p>
+          ))}
+        </div>
       </div>
     </section>
   )

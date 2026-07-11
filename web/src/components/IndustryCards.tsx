@@ -21,6 +21,9 @@ export function IndustryCards() {
         <div className="industry-grid">
           {industries.cards.map((c, i) => (
             <article className="industry-card reveal" key={c.title} data-delay={i * 100}>
+              {'photo' in c && c.photo && (
+                <img className="industry-photo" src={c.photo} alt="실제 교육 현장" loading="lazy" />
+              )}
               <div className="fsd-head">
                 <span className="fsd-num">0{i + 1}</span>
                 <span className="fsd-tag">{c.tag}</span>
@@ -35,6 +38,16 @@ export function IndustryCards() {
                 도입 문의 <Arrow up={false} />
               </a>
             </article>
+          ))}
+        </div>
+
+        <div className="industry-proof reveal" data-delay="120">
+          <span className="industry-proof-label">{industries.proof.label}</span>
+          {industries.proof.items.map((p) => (
+            <span className="industry-proof-item" key={p.label}>
+              <strong className="geist">{p.num}</strong>
+              {p.label}
+            </span>
           ))}
         </div>
       </Container>

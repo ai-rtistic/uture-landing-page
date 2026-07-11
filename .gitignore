@@ -14,3 +14,6 @@ uture-logo-fix*.png
 
 # Installed agent skills: keep markdown, drop any deps
 .agents/**/node_modules/
+
+# 원본 강의 사진 (블러 처리 전 — 얼굴·과정명 노출, 절대 커밋 금지)
+images/

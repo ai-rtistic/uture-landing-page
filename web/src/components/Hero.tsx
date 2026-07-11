@@ -1,7 +1,13 @@
 import { hero, stats } from '../data/content'
 import { Button, Pill } from '../ui/primitives'
 import { HeroAutomation } from './demos/HeroAutomation'
+import { HeroShowcase } from './demos/HeroShowcase'
 import { HeroTilesVideo } from './graphics/HeroTilesVideo'
+
+/** 히어로 변형 스위치 — 2026-07 AI 기업 리서치(Sierra·Glean·Decagon·Linear·채널톡) 결론:
+ *  배경은 침묵, 에너지는 컨테인드 제품 비주얼 하나(오로라 프레임 agent 패널)에 집중.
+ *  'video'로 바꾸면 기존 타일 필드 영상 배경으로 복귀. */
+const HERO_VARIANT: 'clean' | 'video' = 'clean'
 
 // 히어로 하단 신뢰 스트립 — 스탯 섹션의 핵심 3개만 미리 보여준다
 const PROOF = stats.slice(0, 3)
@@ -10,8 +16,9 @@ const fmt = (v: number, decimals?: number) =>
 
 export function Hero() {
   return (
-    <section className="hero" id="top">
-      <HeroTilesVideo />
+    <section className={`hero${HERO_VARIANT === 'clean' ? ' hero--clean' : ''}`} id="top">
+      {HERO_VARIANT === 'video' && <HeroTilesVideo />}
+      {HERO_VARIANT === 'clean' && <div className="hero-rules" aria-hidden />}
       <div className="container hero-inner">
         <div className="hero-badge reveal">
           <Pill>{hero.badge}</Pill>
@@ -48,7 +55,7 @@ export function Hero() {
           ))}
         </div>
       </div>
-      <HeroAutomation />
+      {HERO_VARIANT === 'clean' ? <HeroShowcase /> : <HeroAutomation />}
       <div className="hero-aura" aria-hidden />
     </section>
   )

@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { narrative } from '../data/content'
 import { Container } from '../ui/primitives'
 import { narrativeScenes } from './graphics/NarrativeScenes'
+import { NarrativeCenter } from './NarrativeCenter'
 import { gsap, prefersReduced } from '../lib/gsap'
 
 /**
@@ -9,6 +10,10 @@ import { gsap, prefersReduced } from '../lib/gsap'
  * 각 문장과 짝지어진 장면 카드(NarrativeScenes)가 함께 크로스페이드된다.
  * 배경의 파스텔 캡슐 필드는 핀 구간 동안 반대 방향으로 흘러 깊이를 만든다.
  */
+
+/** 레이아웃 변형 스위치 — 'center'로 바꾸면 TWL 센터 스테이트먼트 변형(NarrativeCenter)으로 전환.
+ *  센터 변형은 mockups/statement.html로 검증 완료, 오너 승인 시 한 단어 교체. */
+const NARRATIVE_VARIANT: 'split' | 'center' = 'center'
 
 // 섹션 단일 틴트(amber) — 색 로테이션은 섹션 단위로만 (전문성 원칙)
 const STEP_TINTS = ['amber', 'amber', 'amber'] as const
@@ -26,26 +31,46 @@ function renderHighlighted(text: string) {
   )
 }
 
-// 패럴랙스 배경 필드 — 얇은 와이어프레임 UI 실루엣 (단일 amber 틴트, 채움은 소량만)
-const BG_SHAPES = [
-  { top: '4%', left: '7%', rot: -14, kind: 'cap' },
-  { top: '15%', left: '80%', rot: 10, kind: 'tile' },
-  { top: '35%', left: '42%', rot: -8, kind: 'cap', fill: true },
-  { top: '52%', left: '5%', rot: 8, kind: 'tile' },
-  { top: '66%', left: '84%', rot: -12, kind: 'cap' },
-  { top: '84%', left: '32%', rot: 6, kind: 'tile', fill: true },
+// 패럴랙스 배경 필드 — 와이어프레임 UI 실루엣 (단일 amber 틴트).
+// 원칙: 크기 위계 3단(대형은 가장자리 크롭) + 콘텐츠(중앙 텍스트·우측 카드)를 피해
+// 프레임의 모서리에 배치 + 채움(is-fill)도 테두리를 유지해 '얼룩'이 아닌 형태로 읽히게.
+type BgShape = {
+  top: string
+  left: string
+  rot: number
+  kind: 'cap' | 'tile' | 'card'
+  w: number
+  h: number
+  fill?: boolean
+  dim?: boolean
+}
+const BG_SHAPES: BgShape[] = [
+  // 좌상 — 대형 캡슐, 모서리에서 크롭 (히어로 타일 스케일 에코)
+  { top: '-7%', left: '-7%', rot: -16, kind: 'cap', w: 400, h: 128 },
+  // 우상 — 카드 실루엣 (크롬 라인이 있는 UI 창)
+  { top: '6%', left: '82%', rot: 7, kind: 'card', w: 250, h: 168, fill: true },
+  // 우중 — 중형 캡슐 (원경, 흐림)
+  { top: '56%', left: '90%', rot: -9, kind: 'cap', w: 210, h: 68, dim: true },
+  // 좌하 — 대형 타일, 가장자리 크롭 + 워시
+  { top: '66%', left: '-5%', rot: 10, kind: 'tile', w: 250, h: 165, fill: true },
+  // 하중 — 소형 캡슐 (원경)
+  { top: '90%', left: '55%', rot: -5, kind: 'cap', w: 145, h: 48, dim: true },
 ] as const
 
+// 도트는 실루엣 궤도를 따라가는 별자리 느낌으로 소수만
 const BG_DOTS = [
-  [16, 24],
-  [70, 8],
-  [88, 44],
-  [8, 72],
-  [52, 90],
-  [92, 78],
+  [24, 12],
+  [76, 34],
+  [10, 52],
+  [66, 84],
 ] as const
 
 export function PinnedNarrative() {
+  if (NARRATIVE_VARIANT === 'center') return <NarrativeCenter />
+  return <PinnedNarrativeSplit />
+}
+
+function PinnedNarrativeSplit() {
   const pinRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -119,9 +144,9 @@ export function PinnedNarrative() {
         <div className="narrative-bg" aria-hidden>
           {BG_SHAPES.map((c, i) => (
             <span
-              className={`n-shape n-${c.kind} ${'fill' in c && c.fill ? 'is-fill' : ''}`}
+              className={`n-shape n-${c.kind}${c.fill ? ' is-fill' : ''}${c.dim ? ' is-dim' : ''}`}
               key={i}
-              style={{ top: c.top, left: c.left, rotate: `${c.rot}deg` }}
+              style={{ top: c.top, left: c.left, width: c.w, height: c.h, rotate: `${c.rot}deg` }}
             />
           ))}
           {BG_DOTS.map(([x, y], i) => (

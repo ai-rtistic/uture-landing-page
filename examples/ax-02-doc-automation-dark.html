@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>uture motion diagram — 문서 업무 자동화 파이프라인 (dark / gold)</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     uture-motion-diagrams / dark theme — GOLD accent
+     Scene: 문서 업무 자동화 파이프라인 (4 stages, L→R)
+       01 대량 업로드 (계약서·보고서 stack)
+       02 AI 분류 · 핵심 조항 추출  (sparkle=AI, filled = emphasis)
+       03 요약본 + 리스크 플래그 생성
+       04 담당자 검토 완료 (진행바 + 체크)
+     Master loop: 9s (4 stages + progress fill → don't squeeze).
+     All animations share the 9s duration with percentage-based
+     keyframe windows → seamless loop for screen recording.
+     Narrative order (a person explaining it):
+       stage 01 rises → connector draws → stage 02 (AI, filled)
+       → connector → stage 03 (two output chips stagger)
+       → connector → stage 04 progress pill fills (linear) →
+       check tick → hold ≥1.2s → shared fade-out → restart.
+     Invariants held:
+       1 one accent (gold)  2 all capsules/rounded  3 hierarchy =
+       filled(stage 02) vs outlined  4 hairline 1.25px  5 flat, no
+       shadow/glow/gradient  6 Inter labels + mono data slots
+       7 ~60% occupancy centered  8 narrative stagger + seamless loop
+     ============================================================ */
+  :root {
+    --bg: #262221;
+    --accent: #FFD2A8;            /* GOLD — the single accent */
+    --ink-on-accent: #262221;
+    --track: rgba(237,217,163,.15);
+    --sw: 1.25px;
+    --loop: 9s;
+  }
+  * { margin: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--accent);
+    display: grid; place-items: center;
+  }
+  .canvas { position: relative; width: 1200px; height: 900px; overflow: hidden; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; }
+    .fx { opacity: 1 !important; transform: none !important; }
+    .draw { stroke-dashoffset: 0 !important; }
+    .prog .fill { width: calc(100% - 10px) !important; }
+    .checkbadge { opacity: 1 !important; }
+    .tick { stroke-dashoffset: 0 !important; }
+  }
+
+  /* ---------- shape primitives ---------- */
+  .chip {
+    width: 34px; height: 34px; flex: none;
+    border: var(--sw) solid var(--accent); border-radius: 11px;
+    display: grid; place-items: center;
+  }
+  .chip svg { width: 17px; height: 17px; stroke: var(--accent); fill: none;
+              stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .tag {
+    text-transform: uppercase; letter-spacing: .04em;
+    font-size: 11px; font-weight: 500; opacity: .82;
+  }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; }
+  .minipill {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: var(--sw) solid var(--accent); border-radius: 999px;
+    padding: 4px 10px; opacity: .92;
+  }
+
+  /* ---------- stage card ---------- */
+  .stage {
+    position: absolute; top: 306px; width: 220px; height: 288px;
+    border: var(--sw) solid var(--accent); border-radius: 26px;
+    padding: 22px 20px; display: flex; flex-direction: column; gap: 14px;
+  }
+  .stage .head { display: flex; align-items: center; gap: 12px; }
+  .stage .num  { font-family: 'JetBrains Mono', ui-monospace, monospace;
+                 font-size: 12px; opacity: .6; margin-left: auto; }
+  .stage .title { font-size: 15px; font-weight: 600; line-height: 1.35; }
+  .stage .body { display: flex; flex-direction: column; gap: 10px; margin-top: 2px; }
+
+  /* stage 02 = the single filled emphasis point */
+  .stage.filled { background: var(--accent); color: var(--ink-on-accent); }
+  .stage.filled .chip { border-color: var(--ink-on-accent); }
+  .stage.filled .chip svg { stroke: var(--ink-on-accent); }
+  .stage.filled .num { opacity: .55; }
+  .stage.filled .minipill { border-color: var(--ink-on-accent); color: var(--ink-on-accent); }
+  .stage.filled .minipill svg { stroke: var(--ink-on-accent); }
+
+  /* stacked document sheets (stage 01) */
+  .docstack { position: relative; height: 96px; }
+  .sheet {
+    position: absolute; width: 118px; height: 78px; left: 0;
+    border: var(--sw) solid var(--accent); border-radius: 12px;
+    background: var(--bg);
+  }
+  .sheet .rows { position: absolute; left: 12px; right: 14px; top: 16px;
+                 display: flex; flex-direction: column; gap: 7px; }
+  .sheet .rows i { display: block; height: 2px; border-radius: 2px;
+                   background: var(--accent); opacity: .55; }
+  .sheet .rows i:nth-child(2){ width: 78%; }
+  .sheet .rows i:nth-child(3){ width: 58%; }
+
+  /* extract lines (stage 02) — highlighted clause rows */
+  .clause { display: flex; align-items: center; gap: 8px; }
+  .clause .bar { flex: 1; height: 8px; border-radius: 999px;
+                 border: var(--sw) solid var(--ink-on-accent); position: relative; overflow: hidden; }
+  .clause .bar::after { content:""; position: absolute; inset: 1.5px;
+                        border-radius: 999px; background: var(--ink-on-accent); opacity: .16;
+                        transform-origin: left; }
+  .clause.hot .bar::after { opacity: .85; }
+
+  /* output chips (stage 03) */
+  .out { display: flex; align-items: center; gap: 10px;
+         border: var(--sw) solid var(--accent); border-radius: 14px;
+         padding: 9px 12px; }
+  .out .lbl { font-size: 12.5px; font-weight: 500; }
+  .out .sub { font-size: 10.5px; opacity: .62; margin-left: auto;
+              font-family: 'JetBrains Mono', ui-monospace, monospace; }
+  .out .ic { width: 26px; height: 26px; flex: none; border: var(--sw) solid var(--accent);
+             border-radius: 9px; display: grid; place-items: center; }
+  .out .ic svg { width: 14px; height: 14px; stroke: var(--accent); fill: none;
+                 stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* progress pill (stage 04) */
+  .prog { border: var(--sw) solid var(--accent); border-radius: 999px;
+          height: 34px; position: relative; display: flex; align-items: center;
+          padding: 0 14px; overflow: hidden; }
+  .prog .track { position: absolute; left: 5px; right: 5px; top: 50%;
+                 transform: translateY(-50%); height: 10px; border-radius: 999px;
+                 background: var(--track); }
+  .prog .fill { position: absolute; left: 5px; top: 50%; transform: translateY(-50%);
+                height: 10px; border-radius: 999px; background: var(--accent); width: 0;
+                max-width: calc(100% - 10px); }
+  .prog .pct { position: relative; margin-left: auto; z-index: 2;
+               font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; }
+  .reviewers { display: flex; gap: 8px; margin-top: 2px; }
+  .reviewers .r { display: inline-flex; align-items: center; gap: 6px;
+                  border: var(--sw) solid var(--accent); border-radius: 999px;
+                  padding: 4px 10px; font-size: 11px; opacity: .55; }
+  .reviewers .r.done { opacity: 1; }
+  .reviewers .r .dot { width: 7px; height: 7px; border-radius: 999px;
+                       border: var(--sw) solid var(--accent); }
+  .reviewers .r.done .dot { background: var(--accent); }
+
+  /* completion check badge */
+  .checkbadge {
+    position: absolute; top: 284px; right: 34px;
+    width: 46px; height: 46px; border-radius: 999px;
+    border: var(--sw) solid var(--accent); background: var(--bg);
+    display: grid; place-items: center; opacity: 0;
+  }
+  .checkbadge svg { width: 24px; height: 24px; stroke: var(--accent);
+                    fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ---------- header ---------- */
+  .header { position: absolute; top: 92px; left: 0; right: 0; text-align: center; }
+  .header .kicker { display: inline-flex; align-items: center; gap: 8px; }
+  .header .kicker .tag { opacity: .7; }
+  .header h1 { font-size: 30px; font-weight: 600; margin-top: 14px; letter-spacing: -.01em; }
+  .header .dotline { display: inline-block; width: 5px; height: 5px; border-radius: 999px;
+                     background: var(--accent); vertical-align: middle; opacity: .6; }
+
+  /* footer step map */
+  .steps { position: absolute; bottom: 96px; left: 0; right: 0;
+           display: flex; justify-content: center; gap: 10px; }
+  .steps .s { display: inline-flex; align-items: center; gap: 8px;
+              border: var(--sw) solid var(--accent); border-radius: 999px;
+              padding: 6px 14px; font-size: 11.5px; opacity: .5; }
+  .steps .s .mono { opacity: .7; }
+
+  /* ---------- SVG connectors ---------- */
+  .wires { position: absolute; inset: 0; pointer-events: none; }
+  .wire { fill: none; stroke: var(--accent); stroke-width: var(--sw);
+          stroke-linecap: round; }
+  .draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  /* moving flow dot along each connector */
+  .flowdot { fill: var(--accent); r: 3.2; opacity: 0; }
+
+  /* ============================================================
+     MOTION — one 9s master loop, percentage keyframes
+     ============================================================ */
+  .fx { opacity: 0; }
+
+  /* entrance: fade + 10px rise (+ scale for cards) */
+  @keyframes rise {
+    0%,4%   { opacity: 0; transform: translateY(10px) scale(.97); }
+    12%,88% { opacity: 1; transform: translateY(0) scale(1); }
+    /* shared fade-out */
+    96%,100%{ opacity: 0; transform: translateY(0) scale(1); }
+  }
+  @keyframes riseSoft {
+    0%,7%   { opacity: 0; transform: translateY(10px); }
+    16%,88% { opacity: 1; transform: translateY(0); }
+    96%,100%{ opacity: 0; transform: translateY(0); }
+  }
+  /* header slightly earlier & holds full */
+  @keyframes header {
+    0%,2%   { opacity: 0; transform: translateY(8px); }
+    9%,90%  { opacity: .95; transform: translateY(0); }
+    97%,100%{ opacity: 0; }
+  }
+
+  .header       { animation: header var(--loop) both; }
+
+  /* per-stage staggered rise windows (120–180ms ≈ ~1.5–2% of 9s) */
+  @keyframes riseA { 0%,4%{opacity:0;transform:translateY(10px) scale(.97)} 12%,88%{opacity:1;transform:translateY(0) scale(1)} 96%,100%{opacity:0} }
+  @keyframes riseB { 0%,9%{opacity:0;transform:translateY(10px) scale(.97)} 17%,88%{opacity:1;transform:translateY(0) scale(1)} 96%,100%{opacity:0} }
+  @keyframes riseC { 0%,15%{opacity:0;transform:translateY(10px) scale(.97)} 23%,88%{opacity:1;transform:translateY(0) scale(1)} 96%,100%{opacity:0} }
+  @keyframes riseD { 0%,21%{opacity:0;transform:translateY(10px) scale(.97)} 29%,88%{opacity:1;transform:translateY(0) scale(1)} 96%,100%{opacity:0} }
+  .stage-1 { animation: riseA var(--loop) cubic-bezier(.22,1,.36,1) both; }
+  .stage-2 { animation: riseB var(--loop) cubic-bezier(.22,1,.36,1) both; }
+  .stage-3 { animation: riseC var(--loop) cubic-bezier(.22,1,.36,1) both; }
+  .stage-4 { animation: riseD var(--loop) cubic-bezier(.22,1,.36,1) both; }
+
+  /* connector draw-in, each after its upstream stage appears */
+  @keyframes draw1 { 0%,10%{stroke-dashoffset:1;opacity:0} 11%{opacity:1} 17%,90%{stroke-dashoffset:0;opacity:1} 96%,100%{opacity:0} }
+  @keyframes draw2 { 0%,16%{stroke-dashoffset:1;opacity:0} 17%{opacity:1} 23%,90%{stroke-dashoffset:0;opacity:1} 96%,100%{opacity:0} }
+  @keyframes draw3 { 0%,22%{stroke-dashoffset:1;opacity:0} 23%{opacity:1} 29%,90%{stroke-dashoffset:0;opacity:1} 96%,100%{opacity:0} }
+  .wire-1 { animation: draw1 var(--loop) cubic-bezier(.22,1,.36,1) both; }
+  .wire-2 { animation: draw2 var(--loop) cubic-bezier(.22,1,.36,1) both; }
+  .wire-3 { animation: draw3 var(--loop) cubic-bezier(.22,1,.36,1) both; }
+
+  /* flow dot travels each wire once it's drawn, then idles subtly */
+  @keyframes flow1 { 0%,17%{opacity:0;offset-distance:0%} 19%{opacity:.9} 30%{opacity:.9;offset-distance:100%} 33%,100%{opacity:0;offset-distance:100%} }
+  @keyframes flow2 { 0%,23%{opacity:0;offset-distance:0%} 25%{opacity:.9} 36%{opacity:.9;offset-distance:100%} 39%,100%{opacity:0;offset-distance:100%} }
+  @keyframes flow3 { 0%,29%{opacity:0;offset-distance:0%} 31%{opacity:.9} 42%{opacity:.9;offset-distance:100%} 45%,100%{opacity:0;offset-distance:100%} }
+  #fd1 { offset-path: path('M 278 450 H 346'); animation: flow1 var(--loop) ease-in-out both; }
+  #fd2 { offset-path: path('M 566 450 H 634'); animation: flow2 var(--loop) ease-in-out both; }
+  #fd3 { offset-path: path('M 854 450 H 922'); animation: flow3 var(--loop) ease-in-out both; }
+
+  /* stage 03 output chips stagger inside their card */
+  @keyframes outIn { 0%,24%{opacity:0;transform:translateY(8px)} 30%,88%{opacity:1;transform:translateY(0)} 96%,100%{opacity:0} }
+  @keyframes outIn2 { 0%,26%{opacity:0;transform:translateY(8px)} 32%,88%{opacity:1;transform:translateY(0)} 96%,100%{opacity:0} }
+  .out-1 { animation: outIn var(--loop) cubic-bezier(.22,1,.36,1) both; }
+  .out-2 { animation: outIn2 var(--loop) cubic-bezier(.22,1,.36,1) both; }
+
+  /* stage 02 clause rows highlight (extraction) sequentially */
+  @keyframes hotFillA { 0%,20%{transform:scaleX(0)} 28%,88%{transform:scaleX(1)} 96%,100%{transform:scaleX(1)} }
+  @keyframes hotFillB { 0%,23%{transform:scaleX(0)} 31%,88%{transform:scaleX(1)} 96%,100%{transform:scaleX(1)} }
+  @keyframes hotFillC { 0%,26%{transform:scaleX(0)} 34%,88%{transform:scaleX(1)} 96%,100%{transform:scaleX(1)} }
+  .clause .bar::after { transform: scaleX(0); }
+  .clause.a .bar::after { animation: hotFillA var(--loop) cubic-bezier(.22,1,.36,1) both; }
+  .clause.b .bar::after { animation: hotFillB var(--loop) cubic-bezier(.22,1,.36,1) both; }
+  .clause.c .bar::after { animation: hotFillC var(--loop) cubic-bezier(.22,1,.36,1) both; }
+
+  /* stage 04 progress fill — linear, then hold */
+  @keyframes fill {
+    0%,32%   { width: 0; }
+    52%      { width: calc(var(--to) * .58); }
+    62%,88%  { width: var(--to); }
+    96%,100% { width: var(--to); }
+  }
+  .prog .fill { --to: 100%; animation: fill var(--loop) linear both; }
+  @keyframes pctCount {
+    0%,32%{opacity:.3} 34%{opacity:1} 88%{opacity:1} 96%,100%{opacity:.3}
+  }
+  .prog .pct { animation: pctCount var(--loop) ease both; }
+
+  /* reviewer chip flips to done as progress completes */
+  @keyframes reviewerDone { 0%,60%{opacity:.55} 66%,88%{opacity:1} 96%,100%{opacity:1} }
+  .reviewers .r.done { opacity: .55; animation: reviewerDone var(--loop) ease both; }
+  @keyframes dotFill { 0%,60%{background:transparent} 66%,100%{background:var(--accent)} }
+  .reviewers .r.done .dot { background: transparent; animation: dotFill var(--loop) ease both; }
+
+  /* completion check badge appears + draws its tick at the end */
+  @keyframes badgeIn { 0%,60%{opacity:0;transform:scale(.9)} 66%,90%{opacity:1;transform:scale(1)} 96%,100%{opacity:0} }
+  .checkbadge { animation: badgeIn var(--loop) cubic-bezier(.22,1,.36,1) both; }
+  @keyframes tickDraw { 0%,63%{stroke-dashoffset:1} 71%,100%{stroke-dashoffset:0} }
+  .tick { stroke-dasharray: 1; stroke-dashoffset: 1; animation: tickDraw var(--loop) cubic-bezier(.22,1,.36,1) both; }
+
+  /* footer step map fades in late, gentle */
+  @keyframes stepsIn { 0%,30%{opacity:0} 40%,90%{opacity:.5} 97%,100%{opacity:0} }
+  .steps { animation: stepsIn var(--loop) ease both; }
+  @keyframes stepActive { 0%,60%{opacity:.5} 66%,90%{opacity:.95} 97%,100%{opacity:0} }
+  .steps .s.active { animation: stepActive var(--loop) ease both; }
+</style>
+</head>
+<body>
+  <div class="canvas">
+
+    <!-- header -->
+    <div class="header">
+      <span class="kicker">
+        <span class="tag">AX · Document Workflow Automation</span>
+      </span>
+      <h1>문서 업무 자동화 <span class="dotline"></span> 업로드에서 검토 완료까지</h1>
+    </div>
+
+    <!-- connectors (behind cards) -->
+    <svg class="wires" viewBox="0 0 1200 900" preserveAspectRatio="none">
+      <path class="wire draw wire-1" pathLength="1" d="M 278 450 H 346" />
+      <path class="wire draw wire-2" pathLength="1" d="M 566 450 H 634" />
+      <path class="wire draw wire-3" pathLength="1" d="M 854 450 H 922" />
+      <circle id="fd1" class="flowdot" cx="0" cy="0" />
+      <circle id="fd2" class="flowdot" cx="0" cy="0" />
+      <circle id="fd3" class="flowdot" cx="0" cy="0" />
+    </svg>
+
+    <!-- ============ STAGE 01 — 대량 업로드 ============ -->
+    <div class="stage stage-1" style="left:58px;">
+      <div class="head">
+        <span class="chip"><svg viewBox="0 0 24 24"><path d="M12 16V4M12 4l-4 4M12 4l4 4"/><path d="M5 20h14"/></svg></span>
+        <span class="num">01</span>
+      </div>
+      <div class="title">계약서·보고서<br>대량 업로드</div>
+      <div class="docstack">
+        <div class="sheet" style="top:18px; left:44px; opacity:.5;"></div>
+        <div class="sheet" style="top:9px; left:22px; opacity:.75;"></div>
+        <div class="sheet" style="top:0; left:0;">
+          <div class="rows"><i></i><i></i><i></i></div>
+        </div>
+      </div>
+      <div class="body" style="margin-top:auto;">
+        <span class="minipill"><span class="mono">1,240</span><span class="tag" style="opacity:.7">files · pdf·docx</span></span>
+      </div>
+    </div>
+
+    <!-- ============ STAGE 02 — AI 분류·추출 (FILLED = emphasis) ============ -->
+    <div class="stage filled stage-2" style="left:346px;">
+      <div class="head">
+        <span class="chip"><svg viewBox="0 0 24 24"><path d="M12 3l1.6 4.2L18 8.8l-4.4 1.6L12 15l-1.6-4.6L6 8.8l4.4-1.6z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/></svg></span>
+        <span class="num">02</span>
+      </div>
+      <div class="title">AI 자동 분류 ·<br>핵심 조항 추출</div>
+      <div class="body">
+        <div class="clause a hot"><span class="tag" style="opacity:.8">계약기간</span><span class="bar"></span></div>
+        <div class="clause b hot"><span class="tag" style="opacity:.8">위약·해지</span><span class="bar"></span></div>
+        <div class="clause c hot"><span class="tag" style="opacity:.8">배상책임</span><span class="bar"></span></div>
+      </div>
+      <div class="body" style="margin-top:auto;">
+        <span class="minipill"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h9"/></svg><span class="tag" style="opacity:.85">28 조항 추출</span></span>
+      </div>
+    </div>
+
+    <!-- ============ STAGE 03 — 요약 + 리스크 플래그 ============ -->
+    <div class="stage stage-3" style="left:634px;">
+      <div class="head">
+        <span class="chip"><svg viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6z"/><path d="M9 9h6M9 13h6M9 17h4"/></svg></span>
+        <span class="num">03</span>
+      </div>
+      <div class="title">요약본 + 리스크<br>플래그 생성</div>
+      <div class="body">
+        <div class="out out-1">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 11h16M4 16h10"/></svg></span>
+          <span class="lbl">자동 요약본</span>
+          <span class="sub">1p</span>
+        </div>
+        <div class="out out-2">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 4l8 15H4z"/><path d="M12 10v4M12 17h.01"/></svg></span>
+          <span class="lbl">리스크 플래그</span>
+          <span class="sub">×3</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ STAGE 04 — 담당자 검토 완료 ============ -->
+    <div class="stage stage-4" style="left:922px;">
+      <div class="head">
+        <span class="chip"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
+        <span class="num">04</span>
+      </div>
+      <div class="title">담당자 검토<br>완료</div>
+      <div class="body">
+        <div class="prog">
+          <span class="track"></span>
+          <span class="fill"></span>
+          <span class="pct">100%</span>
+        </div>
+        <div class="reviewers">
+          <span class="r done"><span class="dot"></span>법무</span>
+          <span class="r done"><span class="dot"></span>재무</span>
+        </div>
+      </div>
+      <div class="body" style="margin-top:auto;">
+        <span class="minipill"><span class="mono">28 / 28</span><span class="tag" style="opacity:.7">승인</span></span>
+      </div>
+    </div>
+
+    <!-- completion check badge over stage 04 -->
+    <div class="checkbadge">
+      <svg viewBox="0 0 24 24"><path class="tick" pathLength="1" d="M5 12.5l4.5 4.5L19 7"/></svg>
+    </div>
+
+    <!-- footer step map -->
+    <div class="steps">
+      <span class="s"><span class="mono">01</span> 업로드</span>
+      <span class="s"><span class="mono">02</span> 분류·추출</span>
+      <span class="s"><span class="mono">03</span> 요약·플래그</span>
+      <span class="s active"><span class="mono">04</span> 검토 완료</span>
+    </div>
+
+  </div>
+</body>
+</html>
